@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { LockKeyhole, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { navItems, siteConfig } from '@/lib/constants/site';
@@ -38,18 +37,14 @@ export function SiteHeader({ role }: { role: SessionRole | null }) {
           className="group flex items-center gap-3"
           aria-label="Phi Delta Theta Connecticut Epsilon home"
         >
-          <span
-            className="inline-flex h-11 w-11 shrink-0 items-center justify-center transition-transform group-hover:-translate-y-0.5"
+          <img
+            src="/brand/phi-delt-crest-transparent.png"
+            alt=""
+            width={35}
+            height={35}
             aria-hidden="true"
-          >
-            <Image
-              src="/brand/phi-delt-crest-transparent.png"
-              alt=""
-              width={35}
-              height={35}
-              style={{ width: '35px', height: '35px', objectFit: 'contain' }}
-            />
-          </span>
+            className="shrink-0 transition-transform group-hover:-translate-y-0.5"
+          />
           <span className="flex flex-col">
             <span className="font-serif text-lg font-semibold leading-tight text-fraternity-charcoal">
               {siteConfig.name}
