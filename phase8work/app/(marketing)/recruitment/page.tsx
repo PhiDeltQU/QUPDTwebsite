@@ -83,11 +83,11 @@ export default function RecruitmentPage() {
         <Container>
           <div className="surface flex flex-col items-center gap-4 p-8 text-center md:p-10">
             <Image
-              src="/brand/phi-delt-crest-tagline.jpg"
+              src="/brand/phi-delt-lockup.webp"
               alt="Phi Delta Theta — Become the Greatest Version of Yourself"
-              width={196}
-              height={183}
-              className="h-24 w-auto rounded-2xl"
+              width={647}
+              height={430}
+              className="h-32 w-auto rounded-2xl"
             />
             <p className="max-w-xl text-sm text-fraternity-slate">
               That&apos;s not just a slogan on a graphic — it&apos;s what recruitment at Connecticut Epsilon is actually about.

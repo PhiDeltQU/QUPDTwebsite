@@ -38,10 +38,10 @@ export function SiteHeader({ role }: { role: SessionRole | null }) {
           aria-label="Phi Delta Theta Connecticut Epsilon home"
         >
           <img
-            src="/brand/phi-delt-crest-transparent.png"
+            src="/brand/phi-delt-crest.webp"
             alt=""
-            width={35}
-            height={35}
+            width={30}
+            height={44}
             aria-hidden="true"
             className="shrink-0 transition-transform group-hover:-translate-y-0.5"
           />

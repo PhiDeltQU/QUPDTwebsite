@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 import { Container } from '@/components/layout/container';
 import { siteConfig } from '@/lib/constants/site';
@@ -10,18 +9,14 @@ export function SiteFooter() {
       <Container className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.35fr_0.8fr_0.8fr_0.9fr]">
         <div>
           <div className="flex items-center gap-3">
-            <span
-              className="inline-flex h-11 w-11 shrink-0 items-center justify-center"
+            <img
+              src="/brand/phi-delt-crest.webp"
+              alt=""
+              width={30}
+              height={44}
               aria-hidden="true"
-            >
-              <Image
-                src="/brand/phi-delt-crest-transparent.png"
-                alt=""
-                width={44}
-                height={44}
-                style={{ width: '44px', height: '44px', objectFit: 'contain' }}
-              />
-            </span>
+              className="shrink-0"
+            />
             <h3 className="text-xl font-semibold text-white">{siteConfig.name}</h3>
           </div>
           <p className="mt-4 text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-argent">
