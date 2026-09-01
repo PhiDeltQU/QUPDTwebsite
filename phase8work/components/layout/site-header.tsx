@@ -39,10 +39,16 @@ export function SiteHeader({ role }: { role: SessionRole | null }) {
           aria-label="Phi Delta Theta Connecticut Epsilon home"
         >
           <span
-            className="relative inline-flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5 transition-transform group-hover:-translate-y-0.5"
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center transition-transform group-hover:-translate-y-0.5"
             aria-hidden="true"
           >
-            <Image src="/brand/phi-delt-crest.jpg" alt="" fill sizes="44px" className="object-cover" />
+            <Image
+              src="/brand/phi-delt-crest-transparent.png"
+              alt=""
+              width={44}
+              height={44}
+              style={{ width: '44px', height: '44px', objectFit: 'contain' }}
+            />
           </span>
           <span className="flex flex-col">
             <span className="font-serif text-lg font-semibold leading-tight text-fraternity-charcoal">

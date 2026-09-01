@@ -2,6 +2,7 @@ import { PageHero } from '@/components/sections/page-hero';
 import { SectionShell } from '@/components/sections/section-shell';
 import { getEvents } from '@/lib/queries/public';
 import { EventCard } from '@/components/cards/event-card';
+import { EventsCalendar } from '@/components/sections/events-calendar';
 import { CTASection } from '@/components/sections/cta-section';
 import { Button } from '@/components/ui/button';
 
@@ -14,15 +15,19 @@ export default async function EventsPage() {
         title="Where the chapter comes together"
         description="From recruitment nights to formals, service days, and alumni gatherings — this is the calendar for everyone connected to Connecticut Epsilon."
       />
-      <SectionShell title="Featured this season" description="Lead with one flagship gathering and support it with the broader annual rhythm of chapter events.">
-        <div className="grid gap-6 lg:grid-cols-[1.25fr_1fr_1fr]">
-          {allEvents.map((event, index) => (
-            <div key={event.slug} className={index === 0 ? 'lg:col-span-1' : ''}>
-              <EventCard event={event} />
-            </div>
-          ))}
-        </div>
-      </SectionShell>
+      <section className="section-padding pb-0">
+        <EventsCalendar events={allEvents} />
+      </section>
+
+      {allEvents.length ? (
+        <SectionShell title="Upcoming events" description="Every event on the calendar, with full details.">
+          <div className="grid gap-6 lg:grid-cols-3">
+            {allEvents.map((event) => (
+              <EventCard key={event.slug} event={event} />
+            ))}
+          </div>
+        </SectionShell>
+      ) : null}
       <SectionShell eyebrow="A Full Chapter Calendar" title="Events for every part of the Connecticut Epsilon community" description="Recruitment nights, brotherhood traditions, service days, and alumni gatherings all live on the same calendar.">
         <div className="grid gap-6 md:grid-cols-3">
           {[

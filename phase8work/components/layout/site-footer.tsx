@@ -11,10 +11,16 @@ export function SiteFooter() {
         <div>
           <div className="flex items-center gap-3">
             <span
-              className="relative inline-flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-white"
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center"
               aria-hidden="true"
             >
-              <Image src="/brand/phi-delt-crest.jpg" alt="" fill sizes="44px" className="object-cover" />
+              <Image
+                src="/brand/phi-delt-crest-transparent.png"
+                alt=""
+                width={44}
+                height={44}
+                style={{ width: '44px', height: '44px', objectFit: 'contain' }}
+              />
             </span>
             <h3 className="text-xl font-semibold text-white">{siteConfig.name}</h3>
           </div>

@@ -141,7 +141,7 @@ export default async function HomePage() {
               <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-fraternity-azure/10 text-fraternity-azure">
                 <MapPin className="h-5 w-5" aria-hidden="true" />
               </span>
-              <p className="text-sm"><span className="font-semibold text-fraternity-charcoal">North Haven, Connecticut</span><br />Part of the Quinnipiac University community</p>
+              <p className="text-sm"><span className="font-semibold text-fraternity-charcoal">Hamden, Connecticut</span><br />Part of the Quinnipiac University community</p>
             </div>
           </div>
         </Container>

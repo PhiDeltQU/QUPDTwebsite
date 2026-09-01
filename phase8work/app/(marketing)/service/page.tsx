@@ -123,7 +123,7 @@ export default function ServicePage() {
               <HandHeart className="h-5 w-5" aria-hidden="true" />
             </span>
             <h3 className="mt-5 text-2xl">Local Volunteering</h3>
-            <p className="mt-4 text-sm">Building an ongoing volunteer program in North Haven and the greater Quinnipiac community.</p>
+            <p className="mt-4 text-sm">Building an ongoing volunteer program in Hamden and the greater Quinnipiac community.</p>
           </article>
         </div>
       </SectionShell>

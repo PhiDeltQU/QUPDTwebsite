@@ -10,18 +10,24 @@ export default async function NewsletterPage() {
     <>
       <PageHero
         eyebrow="Newsletter & Communication"
-        title="A newsletter system built for credibility and long-term deliverability"
-        description="This page now includes a real working signup form posting to an API route with validation, plus a usable archive structure for future issues."
+        title="Stay connected to chapter news"
+        description="Sign up to hear from Connecticut Epsilon directly, and catch up on past updates in the archive below."
       />
-      <SectionShell title="Newsletter signup" description="The form is production-minded: validated, API-backed, and ready to connect to Supabase or Resend once your environment is set up.">
+      <SectionShell title="Newsletter signup" description="Get chapter updates, event recaps, and alumni news sent directly to your inbox.">
         <NewsletterSignupForm />
       </SectionShell>
-      <SectionShell eyebrow="Archive" title="Recent issues" description="An archive reinforces chapter momentum and gives alumni a reason to return between major events.">
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {issues.map((issue) => (
-            <NewsletterCard key={issue.slug} issue={issue} />
-          ))}
-        </div>
+      <SectionShell eyebrow="Archive" title="Recent issues" description="Chapter updates and letters, archived here as they're published.">
+        {issues.length ? (
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {issues.map((issue) => (
+              <NewsletterCard key={issue.slug} issue={issue} />
+            ))}
+          </div>
+        ) : (
+          <div className="surface p-8">
+            <p className="text-fraternity-slate">The first chapter newsletter will be published here soon.</p>
+          </div>
+        )}
       </SectionShell>
     </>
   );

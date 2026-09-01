@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { PageHero } from "@/components/sections/page-hero";
 import { SectionShell } from "@/components/sections/section-shell";
-import { alumniProfiles } from "@/lib/constants/site";
 import { ProfileCard } from "@/components/cards/profile-card";
 import { MentorSignupForm } from "@/components/forms/mentor-signup-form";
 import { MenteeRequestForm } from "@/components/forms/mentee-request-form";
 import { getPublicMentorshipOpportunities } from "@/lib/queries/mentorship-opportunities";
+import { getAlumniProfiles } from "@/lib/queries/public";
 
 export const dynamic = "force-dynamic";
 
@@ -18,8 +18,11 @@ function formatOpportunityType(value?: string | null) {
 }
 
 export default async function MentorshipPage() {
-  const mentors = alumniProfiles.filter((profile) => profile.mentor);
-  const opportunities = await getPublicMentorshipOpportunities();
+  const [profiles, opportunities] = await Promise.all([
+    getAlumniProfiles(),
+    getPublicMentorshipOpportunities(),
+  ]);
+  const mentors = profiles.filter((profile) => profile.mentor);
 
   return (
     <>
@@ -111,13 +114,19 @@ export default async function MentorshipPage() {
 
       <SectionShell
         title="Mentor spotlights"
-        description="Highlight willing alumni so the program feels active and credible from the first launch."
+        description="Alumni who have volunteered to mentor active brothers and future members."
       >
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {mentors.map((profile) => (
-            <ProfileCard key={profile.name} profile={profile} />
-          ))}
-        </div>
+        {mentors.length ? (
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {mentors.map((profile) => (
+              <ProfileCard key={profile.name} profile={profile} />
+            ))}
+          </div>
+        ) : (
+          <div className="surface p-8">
+            <p className="text-fraternity-slate">No mentors are listed yet. Alumni can opt in through the alumni portal.</p>
+          </div>
+        )}
       </SectionShell>
     </>
   );
