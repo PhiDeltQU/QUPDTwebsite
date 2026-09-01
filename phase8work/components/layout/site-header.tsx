@@ -45,9 +45,9 @@ export function SiteHeader({ role }: { role: SessionRole | null }) {
             <Image
               src="/brand/phi-delt-crest-transparent.png"
               alt=""
-              width={44}
-              height={44}
-              style={{ width: '44px', height: '44px', objectFit: 'contain' }}
+              width={35}
+              height={35}
+              style={{ width: '35px', height: '35px', objectFit: 'contain' }}
             />
           </span>
           <span className="flex flex-col">
