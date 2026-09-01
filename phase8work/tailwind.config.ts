@@ -11,8 +11,8 @@ const config: Config = {
     extend: {
       colors: {
         fraternity: {
-          burgundy: '#7DB9E8',
-          burgundyDeep: '#4D8FC5',
+          burgundy: '#0067B1',
+          burgundyDeep: '#004F87',
           cream: '#F7F1E8',
           parchment: '#EFE6D8',
           charcoal: '#1F1F1F',

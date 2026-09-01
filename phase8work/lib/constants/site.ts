@@ -2,41 +2,39 @@ import { AboutPageContent, AlumniProfile, EventItem, HomePageContent, LegacyVaul
 
 export const siteConfig = {
   name: 'Phi Delta Theta',
-  chapter: 'Alumni Network',
+  chapter: 'Connecticut Epsilon',
   description:
-    'A modern digital home for alumni, active brothers, and supporters of Phi Delta Theta — built to preserve legacy, strengthen lifelong brotherhood, and keep the chapter connected for years to come.'
+    'The digital home of Phi Delta Theta Connecticut Epsilon, connecting active brothers, alumni, future members, families, and friends of the chapter.'
 };
 
 export const navItems: NavItem[] = [
-  { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
-  { label: 'Alumni', href: '/alumni' },
+  { label: 'Our Chapter', href: '/about' },
+  { label: 'Brotherhood', href: '/brotherhood' },
+  { label: 'Service', href: '/service' },
+  { label: 'Recruitment', href: '/recruitment' },
   { label: 'Events', href: '/events' },
-  { label: 'Newsletter', href: '/newsletter' },
-  { label: 'Mentorship', href: '/mentorship' },
-  { label: 'Legacy Vault', href: '/legacy-vault' },
-  { label: 'Contact', href: '/contact' }
+  { label: 'Alumni', href: '/alumni' }
 ];
 
 export const chapterStats: Stat[] = [
-  { value: 'SOON', label: 'Connected Alumni', description: 'A growing network of brothers, supporters, and chapter friends.' },
-  { value: 'SOON', label: 'Mentors & Volunteers', description: 'Alumni already positioned to help with guidance and opportunity.' },
-  { value: '~2', label: 'Annual Signature Events', description: 'Recurring touchpoints designed to keep the chapter active year-round.' },
-  { value: '.5', label: 'Years of Chapter History', description: 'A legacy worth preserving in a more permanent digital home.' }
+  { value: '2025', label: 'Chapter Founded', description: 'The beginning of Connecticut Epsilon at Quinnipiac University.' },
+  { value: '4', label: 'Ways to Belong', description: 'Active brothers, alumni, future members, and chapter supporters.' },
+  { value: 'Year-round', label: 'Chapter Connection', description: 'Events, updates, service, mentorship, and brotherhood in one place.' },
+  { value: '1', label: 'Shared Digital Home', description: 'A platform designed to serve the chapter across generations.' }
 ];
 
 export const values = [
   {
-    title: 'Brotherhood for Life',
-    description: 'Create a lifelong connection between alumni and active brothers grounded in trust, pride, and shared experience.'
+    title: 'Friendship',
+    description: 'Build genuine relationships that begin on campus and continue through every season of life.'
   },
   {
-    title: 'Leadership & Service',
-    description: 'Highlight the professional, civic, and philanthropic impact of Phi Delta Theta beyond graduation.'
+    title: 'Sound Learning',
+    description: 'Support academic growth, thoughtful leadership, and the confidence to keep learning beyond college.'
   },
   {
-    title: 'Legacy Preservation',
-    description: 'Document chapter milestones, stories, photos, traditions, and memories so they remain accessible for future generations.'
+    title: 'Rectitude',
+    description: 'Lead with integrity, responsibility, and service to the chapter, campus, and wider community.'
   }
 ];
 
@@ -241,22 +239,17 @@ export const timeline: TimelineEntry[] = [
   {
     year: '2025',
     title: 'Chapter Founded',
-    description: ''
+    description: 'Connecticut Epsilon begins building a Phi Delta Theta experience rooted in friendship, sound learning, and rectitude.'
   },
   {
-    year: '3025',
-    title: 'First Alumni Event',
-    description: 'Promised to us 1000 years ago'
+    year: 'Today',
+    title: 'Building the Foundation',
+    description: 'Active brothers are establishing the traditions, service programs, and leadership culture that will define the chapter.'
   },
   {
-    year: '4000',
-    title: 'idk',
-    description: ''
-  },
-  {
-    year: '5000',
-    title: 'etc. etc. we get the point atp',
-    description: ' '
+    year: 'Next',
+    title: 'Growing Across Generations',
+    description: 'The chapter hub will preserve institutional memory and keep future members, active brothers, and alumni connected.'
   }
 ];
 
@@ -293,51 +286,51 @@ export const legacyVaultItems: LegacyVaultItem[] = [
 
 
 export const defaultHomePageContent: HomePageContent = {
-  heroEyebrow: 'Phi Delta Theta Alumni Network',
-  heroTitle: 'Brotherhood That Endures Beyond Graduation',
-  heroDescription: 'A digital home built to strengthen alumni connection, and create meaningful opportunities for mentorship, events, and lifelong engagement.',
-  missionEyebrow: 'Our Purpose',
-  missionTitle: 'A modern home for lifelong brotherhood',
-  missionDescription: 'When brothers graduate, they don’t stop being part of the chapter. This site is designed to keep every brother connected, informed, and involved for years to come.',
+  heroEyebrow: 'Phi Delta Theta Connecticut Epsilon',
+  heroTitle: 'One chapter. Every generation. One home.',
+  heroDescription: 'The central home for chapter life at Quinnipiac University - connecting active brothers, future members, alumni, families, and friends.',
+  missionEyebrow: 'Chapter Hub',
+  missionTitle: 'Built for every stage of brotherhood',
+  missionDescription: 'Discover chapter life, explore recruitment, stay connected after graduation, and find meaningful ways to support Connecticut Epsilon.',
   valuesEyebrow: 'Values',
-  valuesTitle: 'The principles that should shape every section of the site',
-  valuesDescription: 'The visual style may feel modern, but the site should still communicate fraternity tradition, chapter pride, and service-minded leadership.',
-  statsEyebrow: 'At a Glance',
-  statsTitle: 'The chapter, measured in connection and continuity',
-  statsDescription: 'A premium alumni site should communicate substance right away: history, engagement, and opportunities to stay involved.',
-  eventsEyebrow: 'Featured Event',
-  eventsTitle: 'Gatherings that keep the brotherhood active',
-  eventsDescription: 'From formal banquets to networking nights and reunions, events should be easy to discover and feel worth attending.',
-  newsletterEyebrow: 'Latest Communication',
-  newsletterTitle: 'Chapter updates that keep alumni informed',
-  newsletterDescription: 'The newsletter experience should feel polished and official, with clear archives and simple signup for ongoing communication.',
-  spotlightEyebrow: 'Featured Story',
-  spotlightTitle: 'Celebrate the brothers shaping life beyond the chapter',
-  spotlightDescription: 'Alumni stories help future graduates see what this network can become and remind returning brothers why staying connected matters.',
+  valuesTitle: 'The principles behind the chapter experience',
+  valuesDescription: 'Friendship, sound learning, and rectitude guide how Connecticut Epsilon learns, leads, serves, and grows together.',
+  statsEyebrow: 'Find Your Place',
+  statsTitle: 'One hub with a path for everyone',
+  statsDescription: 'Whether you are exploring membership, active in the chapter, returning as an alumnus, or supporting from the community, there is a place to begin.',
+  eventsEyebrow: 'Chapter Calendar',
+  eventsTitle: 'Come together on campus and beyond',
+  eventsDescription: 'Discover brotherhood, service, professional, and alumni events that keep the Connecticut Epsilon community connected.',
+  newsletterEyebrow: 'Chapter News',
+  newsletterTitle: 'Stay connected to what is happening now',
+  newsletterDescription: 'Read chapter updates, event recaps, alumni stories, and opportunities to take part in what comes next.',
+  spotlightEyebrow: 'Brotherhood in Action',
+  spotlightTitle: 'A chapter experience that keeps growing',
+  spotlightDescription: 'The chapter hub brings today\'s brotherhood together with the alumni network and the members who will carry it forward.',
   legacyEyebrow: 'Legacy Vault',
-  legacyTitle: 'Preserve the chapter memory with care',
-  legacyDescription: 'Build a digital archive for composite boards, reunion photos, letters, milestone documents, and stories that deserve to outlast any one generation.',
-  finalCtaEyebrow: 'Get involved',
-  finalCtaTitle: 'Help shape the next era of the chapter',
-  finalCtaDescription: 'Encourage alumni to update their information, mentor active brothers, attend events, and contribute memories that strengthen the chapter over time.'
+  legacyTitle: 'Preserve the story as the chapter grows',
+  legacyDescription: 'Keep composite boards, photos, letters, milestone documents, and shared memories accessible to the generations that follow.',
+  finalCtaEyebrow: 'Your Next Step',
+  finalCtaTitle: 'Find your place in Connecticut Epsilon',
+  finalCtaDescription: 'Explore recruitment, attend an event, reconnect through the alumni network, or support the chapter with your time and experience.'
 };
 
 export const defaultAboutPageContent: AboutPageContent = {
-  heroEyebrow: 'About the Chapter',
-  heroTitle: 'A chapter built on tradition, service, and connection',
-  heroDescription: 'This pages function is to tell a bit about our chapter. Im lazy and dont feel like writing it right now',
-  overviewTitle: 'Chapter overview',
-  overviewDescription: '',
-  overviewBody: '',
-  overviewBodySecondary: ' ',
-  themesTitle: 'Core themes to emphasize',
-  themeOneTitle: 'Founding identity',
-  themeOneDescription: '',
-  themeTwoTitle: 'Traditions',
-  themeTwoDescription: 'Rituals, annual moments, and shared experiences that brothers still remember.',
-  themeThreeTitle: 'Legacy',
-  themeThreeDescription: 'The chapter’s impact on leadership, service, career development, and lifelong connection.',
-  timelineEyebrow: 'Timeline',
-  timelineTitle: 'Major moments in chapter history',
-  timelineDescription: 'Use this format to preserve institutional memory in a way future officers can actually maintain.'
+  heroEyebrow: 'Our Chapter',
+  heroTitle: 'Building the Connecticut Epsilon story together',
+  heroDescription: 'Founded at Quinnipiac University, Connecticut Epsilon is creating a chapter culture centered on friendship, learning, integrity, leadership, and service.',
+  overviewTitle: 'A young chapter with a long view',
+  overviewDescription: 'The chapter is building traditions today with the intention that they will strengthen brothers and connect generations for decades to come.',
+  overviewBody: 'Connecticut Epsilon gives members a place to form close friendships, take on meaningful responsibility, contribute to campus life, and grow into principled leaders.',
+  overviewBodySecondary: 'This digital hub supports that mission by bringing chapter information, recruitment, events, member access, alumni connection, and history into one lasting home.',
+  themesTitle: 'What defines the chapter',
+  themeOneTitle: 'Brotherhood',
+  themeOneDescription: 'A culture of trust, accountability, shared experience, and lifelong friendship.',
+  themeTwoTitle: 'Growth',
+  themeTwoDescription: 'Academic, personal, and leadership development shaped by real responsibility and support.',
+  themeThreeTitle: 'Service',
+  themeThreeDescription: 'A commitment to leave the chapter, campus, and surrounding community stronger than we found them.',
+  timelineEyebrow: 'Our Story',
+  timelineTitle: 'A foundation future generations can build on',
+  timelineDescription: 'Connecticut Epsilon is still writing its earliest chapters. This timeline will grow alongside the milestones, traditions, and brothers who shape it.'
 };

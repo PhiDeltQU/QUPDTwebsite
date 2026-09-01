@@ -1,0 +1,53 @@
+-- Repositions the public site from an alumni-only experience to the
+-- Connecticut Epsilon chapter hub while preserving the existing content model.
+
+insert into site_content (page_slug, content_key, content_value)
+values
+  ('home', 'heroEyebrow', 'Phi Delta Theta Connecticut Epsilon'),
+  ('home', 'heroTitle', 'One chapter. Every generation. One home.'),
+  ('home', 'heroDescription', 'The central home for chapter life at Quinnipiac University - connecting active brothers, future members, alumni, families, and friends.'),
+  ('home', 'missionEyebrow', 'Chapter Hub'),
+  ('home', 'missionTitle', 'Built for every stage of brotherhood'),
+  ('home', 'missionDescription', 'Discover chapter life, explore recruitment, stay connected after graduation, and find meaningful ways to support Connecticut Epsilon.'),
+  ('home', 'valuesEyebrow', 'Values'),
+  ('home', 'valuesTitle', 'The principles behind the chapter experience'),
+  ('home', 'valuesDescription', 'Friendship, sound learning, and rectitude guide how Connecticut Epsilon learns, leads, serves, and grows together.'),
+  ('home', 'statsEyebrow', 'Find Your Place'),
+  ('home', 'statsTitle', 'One hub with a path for everyone'),
+  ('home', 'statsDescription', 'Whether you are exploring membership, active in the chapter, returning as an alumnus, or supporting from the community, there is a place to begin.'),
+  ('home', 'eventsEyebrow', 'Chapter Calendar'),
+  ('home', 'eventsTitle', 'Come together on campus and beyond'),
+  ('home', 'eventsDescription', 'Discover brotherhood, service, professional, and alumni events that keep the Connecticut Epsilon community connected.'),
+  ('home', 'newsletterEyebrow', 'Chapter News'),
+  ('home', 'newsletterTitle', 'Stay connected to what is happening now'),
+  ('home', 'newsletterDescription', 'Read chapter updates, event recaps, alumni stories, and opportunities to take part in what comes next.'),
+  ('home', 'spotlightEyebrow', 'Brotherhood in Action'),
+  ('home', 'spotlightTitle', 'A chapter experience that keeps growing'),
+  ('home', 'spotlightDescription', 'The chapter hub brings today''s brotherhood together with the alumni network and the members who will carry it forward.'),
+  ('home', 'legacyEyebrow', 'Legacy Vault'),
+  ('home', 'legacyTitle', 'Preserve the story as the chapter grows'),
+  ('home', 'legacyDescription', 'Keep composite boards, photos, letters, milestone documents, and shared memories accessible to the generations that follow.'),
+  ('home', 'finalCtaEyebrow', 'Your Next Step'),
+  ('home', 'finalCtaTitle', 'Find your place in Connecticut Epsilon'),
+  ('home', 'finalCtaDescription', 'Explore recruitment, attend an event, reconnect through the alumni network, or support the chapter with your time and experience.'),
+  ('about', 'heroEyebrow', 'Our Chapter'),
+  ('about', 'heroTitle', 'Building the Connecticut Epsilon story together'),
+  ('about', 'heroDescription', 'Founded at Quinnipiac University, Connecticut Epsilon is creating a chapter culture centered on friendship, learning, integrity, leadership, and service.'),
+  ('about', 'overviewTitle', 'A young chapter with a long view'),
+  ('about', 'overviewDescription', 'The chapter is building traditions today with the intention that they will strengthen brothers and connect generations for decades to come.'),
+  ('about', 'overviewBody', 'Connecticut Epsilon gives members a place to form close friendships, take on meaningful responsibility, contribute to campus life, and grow into principled leaders.'),
+  ('about', 'overviewBodySecondary', 'This digital hub supports that mission by bringing chapter information, recruitment, events, member access, alumni connection, and history into one lasting home.'),
+  ('about', 'themesTitle', 'What defines the chapter'),
+  ('about', 'themeOneTitle', 'Brotherhood'),
+  ('about', 'themeOneDescription', 'A culture of trust, accountability, shared experience, and lifelong friendship.'),
+  ('about', 'themeTwoTitle', 'Growth'),
+  ('about', 'themeTwoDescription', 'Academic, personal, and leadership development shaped by real responsibility and support.'),
+  ('about', 'themeThreeTitle', 'Service'),
+  ('about', 'themeThreeDescription', 'A commitment to leave the chapter, campus, and surrounding community stronger than we found them.'),
+  ('about', 'timelineEyebrow', 'Our Story'),
+  ('about', 'timelineTitle', 'A foundation future generations can build on'),
+  ('about', 'timelineDescription', 'Connecticut Epsilon is still writing its earliest chapters. This timeline will grow alongside the milestones, traditions, and brothers who shape it.')
+on conflict (page_slug, content_key)
+do update set
+  content_value = excluded.content_value,
+  updated_at = now();

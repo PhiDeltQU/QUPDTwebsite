@@ -11,7 +11,7 @@ html {
 }
 
 body {
-  @apply bg-fraternity-cream text-fraternity-charcoal antialiased;
+  @apply min-h-screen bg-fraternity-cream text-fraternity-charcoal antialiased;
 }
 
 ::selection {
@@ -26,14 +26,26 @@ body {
   p {
     @apply leading-7 text-fraternity-slate;
   }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-fraternity-burgundy ring-offset-2 ring-offset-fraternity-cream;
+  }
 }
 
 @layer components {
   .surface {
-    @apply rounded-3xl border border-black/5 bg-white/80 shadow-soft backdrop-blur-sm;
+    @apply rounded-3xl border border-black/5 bg-white shadow-soft;
   }
 
   .section-padding {
     @apply py-16 md:py-24;
+  }
+
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.22em] text-fraternity-burgundy;
+  }
+
+  .image-frame {
+    @apply relative overflow-hidden rounded-[2rem] bg-fraternity-parchment shadow-soft;
   }
 }

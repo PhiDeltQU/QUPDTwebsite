@@ -1,33 +1,72 @@
 import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 import { Container } from '@/components/layout/container';
+import { siteConfig } from '@/lib/constants/site';
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-black/5 bg-white/70 py-12">
-      <Container className="grid gap-10 md:grid-cols-3">
+    <footer className="border-t border-white/10 bg-fraternity-charcoal py-14 text-white">
+      <Container className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.35fr_0.8fr_0.8fr_0.9fr]">
         <div>
-          <h3 className="text-xl font-semibold text-fraternity-burgundy">Phi Delta Theta</h3>
-          <p className="mt-3 max-w-md text-sm">
-            Built to preserve chapter legacy, strengthen alumni connection, and create a lasting digital home for lifelong brotherhood.
+          <div className="flex items-center gap-3">
+            <span
+              className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-fraternity-burgundy font-serif text-sm font-semibold tracking-[0.08em] text-white"
+              aria-hidden="true"
+            >
+              ΦΔΘ
+            </span>
+            <h3 className="text-xl font-semibold text-white">{siteConfig.name}</h3>
+          </div>
+          <p className="mt-4 text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-gold">
+            {siteConfig.chapter}
+          </p>
+          <p className="mt-3 max-w-sm text-sm text-white/65">
+            The chapter home for brothers, future members, alumni, families, and friends at Quinnipiac University.
           </p>
         </div>
+
         <div>
-          <h4 className="text-sm font-semibold uppercase tracking-[0.2em] text-fraternity-slate">Explore</h4>
-          <div className="mt-4 space-y-2 text-sm">
-            <Link href="/alumni" className="block hover:text-fraternity-burgundy">Alumni Directory</Link>
-            <Link href="/events" className="block hover:text-fraternity-burgundy">Events</Link>
-            <Link href="/mentorship" className="block hover:text-fraternity-burgundy">Mentorship</Link>
-            <Link href="/legacy-vault" className="block hover:text-fraternity-burgundy">Legacy Vault</Link>
+          <h4 className="text-sm font-semibold uppercase tracking-[0.2em] text-fraternity-gold">Discover</h4>
+          <div className="mt-4 space-y-3 text-sm text-white/70">
+            <Link href="/about" className="block transition hover:text-white">Our Chapter</Link>
+            <Link href="/brotherhood" className="block transition hover:text-white">Brotherhood</Link>
+            <Link href="/service" className="block transition hover:text-white">Service & Community</Link>
+            <Link href="/recruitment" className="block transition hover:text-white">Recruitment</Link>
           </div>
         </div>
+
         <div>
-          <h4 className="text-sm font-semibold uppercase tracking-[0.2em] text-fraternity-slate">Contact</h4>
-          <div className="mt-4 space-y-2 text-sm text-fraternity-slate">
-            <p>alumni@phidelt.example</p>
-            <p>Chapter Communications Office</p>
-            <p>Built for long-term chapter stewardship</p>
+          <h4 className="text-sm font-semibold uppercase tracking-[0.2em] text-fraternity-gold">Stay Connected</h4>
+          <div className="mt-4 space-y-3 text-sm text-white/70">
+            <Link href="/events" className="block transition hover:text-white">Events</Link>
+            <Link href="/newsletter" className="block transition hover:text-white">Chapter News</Link>
+            <Link href="/alumni" className="block transition hover:text-white">Alumni Network</Link>
+            <Link href="/mentorship" className="block transition hover:text-white">Mentorship</Link>
           </div>
         </div>
+
+        <div>
+          <h4 className="text-sm font-semibold uppercase tracking-[0.2em] text-fraternity-gold">Take Part</h4>
+          <div className="mt-4 space-y-3 text-sm text-white/70">
+            <Link href="/get-involved" className="block transition hover:text-white">Get Involved</Link>
+            <Link href="/contact" className="block transition hover:text-white">Contact the Chapter</Link>
+            <Link href="/access" className="block transition hover:text-white">Member Sign In</Link>
+            <a
+              href="https://www.qu.edu/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 transition hover:text-white"
+            >
+              Quinnipiac University <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+      </Container>
+
+      <Container className="mt-12 border-t border-white/10 pt-6">
+        <p className="text-xs text-white/45">
+          © {new Date().getFullYear()} Phi Delta Theta Connecticut Epsilon. Chapter website.
+        </p>
       </Container>
     </footer>
   );

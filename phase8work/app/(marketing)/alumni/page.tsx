@@ -15,7 +15,7 @@ export default async function AlumniPage() {
   const session = await getSessionUser();
 
   if (!session || !isAllowedRole(session.role)) {
-    redirect("/active/login");
+    redirect("/access");
   }
 
   const profiles = await getAlumniProfiles();
