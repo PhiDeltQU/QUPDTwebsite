@@ -25,7 +25,7 @@ export function AdminListCard({
                   <p className="mt-1 text-sm text-fraternity-slate">{item.secondary}</p>
                 </div>
 
-                <span className="rounded-full bg-fraternity-burgundy/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-burgundy">
+                <span className="rounded-full bg-fraternity-azure/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-azure">
                   {item.status}
                 </span>
               </div>

@@ -18,7 +18,7 @@ export default async function ActiveClaimCompletePage({
         <ActiveClaimCompleteForm token={token} email={record.auth_email} />
       ) : (
         <div className="surface mx-auto max-w-2xl p-8 md:p-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
             Active access
           </p>
           <h1 className="mt-3 text-4xl">This setup link is no longer valid</h1>
@@ -26,7 +26,7 @@ export default async function ActiveClaimCompletePage({
             Claim links expire after a short window or become invalid once they are used. Request a new link to finish setting up your account.
           </p>
           <div className="mt-6">
-            <Link href="/active/claim" className="inline-flex rounded-full bg-fraternity-burgundy px-4 py-2 font-medium text-white">
+            <Link href="/active/claim" className="inline-flex rounded-full bg-fraternity-azure px-4 py-2 font-medium text-white">
               Request a new link
             </Link>
           </div>

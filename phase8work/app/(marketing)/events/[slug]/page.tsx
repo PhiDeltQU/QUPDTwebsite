@@ -16,7 +16,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
       <SectionShell title="About this event" description={event.description}>
         <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="surface p-8">
-            {event.audience ? <p className="text-sm font-semibold uppercase tracking-[0.2em] text-fraternity-burgundy">Audience: {event.audience}</p> : null}
+            {event.audience ? <p className="text-sm font-semibold uppercase tracking-[0.2em] text-fraternity-azure">Audience: {event.audience}</p> : null}
             <div className="mt-5 space-y-4">
               {event.body?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             </div>

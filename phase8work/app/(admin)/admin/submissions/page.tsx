@@ -6,7 +6,7 @@ export default async function SubmissionsAdminPage() {
   return (
     <div className="space-y-8 py-2">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">Admin module</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">Admin module</p>
         <h1 className="mt-3 text-4xl capitalize">submissions management</h1>
         <p className="mt-4 max-w-3xl text-fraternity-slate">
           This module is now positioned as a real continuation point instead of a dead-end placeholder. Current data source: <strong>{overview.dataSource}</strong>.

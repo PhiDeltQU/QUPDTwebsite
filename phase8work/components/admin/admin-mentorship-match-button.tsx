@@ -39,7 +39,7 @@ export function AdminMentorshipMatchButton({
       type="button"
       onClick={handleClick}
       disabled={state === "saving"}
-      className="rounded-full bg-fraternity-burgundy px-4 py-2 text-sm font-medium text-white"
+      className="rounded-full bg-fraternity-azure px-4 py-2 text-sm font-medium text-white"
     >
       {state === "saving"
         ? "Matching..."

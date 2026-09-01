@@ -79,7 +79,7 @@ export function OpportunityApplicationReviewForm({
           type="button"
           onClick={() => submitReview("accepted")}
           disabled={isSubmitting}
-          className="inline-flex items-center justify-center rounded-full bg-fraternity-burgundy px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex items-center justify-center rounded-full bg-fraternity-azure px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isSubmitting ? "Saving..." : "Accept"}
         </button>

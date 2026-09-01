@@ -11,8 +11,8 @@ export default async function EventsPage() {
     <>
       <PageHero
         eyebrow="Events"
-        title="Build recurring reasons for alumni to return"
-        description="This section is now structured like a real event program: featured programming, upcoming events, detail pages, and RSVP-ready forms."
+        title="Where the chapter comes together"
+        description="From recruitment nights to formals, service days, and alumni gatherings — this is the calendar for everyone connected to Connecticut Epsilon."
       />
       <SectionShell title="Featured this season" description="Lead with one flagship gathering and support it with the broader annual rhythm of chapter events.">
         <div className="grid gap-6 lg:grid-cols-[1.25fr_1fr_1fr]">
@@ -23,12 +23,12 @@ export default async function EventsPage() {
           ))}
         </div>
       </SectionShell>
-      <SectionShell eyebrow="Programming Strategy" title="A strong alumni calendar balances tradition, utility, and energy" description="Banquets and reunions build legacy, while career nights, games, and casual summer events keep the relationship active throughout the year.">
+      <SectionShell eyebrow="A Full Chapter Calendar" title="Events for every part of the Connecticut Epsilon community" description="Recruitment nights, brotherhood traditions, service days, and alumni gatherings all live on the same calendar.">
         <div className="grid gap-6 md:grid-cols-3">
           {[
-            ['Signature Traditions', 'Founders Day, alumni weekend, and chapter anniversaries create emotional gravity and should be treated as premium annual anchor events.'],
-            ['Professional Engagement', 'Career nights and mentorship programs convert alumni goodwill into direct student value and long-term chapter relevance.'],
-            ['Social Return Points', 'Golf outings, game nights, and tailgates keep the network warm between formal updates and make re-entry easier for alumni.']
+            ['Recruitment & Brotherhood', 'Rush events, socials, and the traditions that turn future members into brothers for life.'],
+            ['Service & Campus Life', 'Community service days and campus partnerships that put the chapter’s values into action.'],
+            ['Alumni & Legacy', 'Founders Day, reunions, and gatherings that keep alumni connected to the chapter they helped build.']
           ].map(([title, copy]) => (
             <div key={title} className="surface p-6">
               <h3 className="text-2xl">{title}</h3>
@@ -38,9 +38,9 @@ export default async function EventsPage() {
         </div>
       </SectionShell>
       <CTASection
-        eyebrow="Need a new gathering idea?"
-        title="Invite alumni to help shape the event calendar"
-        description="This is a good place to later add an event suggestion form, sponsor interest workflow, or alumni-hosted regional gathering intake."
+        eyebrow="Have an idea?"
+        title="Help shape what's on the calendar"
+        description="Active brothers, alumni, and campus partners are all welcome to suggest an event or gathering for the chapter."
         actions={<Button href="/contact" variant="secondary">Suggest an event</Button>}
       />
     </>

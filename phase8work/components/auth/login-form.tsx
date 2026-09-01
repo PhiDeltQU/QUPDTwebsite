@@ -65,7 +65,7 @@ export function LoginForm({
   return (
     <div className="surface mx-auto max-w-xl p-8 md:p-10">
       <div className="mb-6">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
           Secure access
         </p>
         <h1 className="mt-3 text-4xl">{title}</h1>

@@ -44,7 +44,7 @@ export function ActiveClaimRequestForm() {
   return (
     <div className="surface mx-auto max-w-2xl p-8 md:p-10">
       <div className="mb-6">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
           Active access
         </p>
         <h1 className="mt-3 text-4xl">Request your account setup link</h1>
@@ -72,7 +72,7 @@ export function ActiveClaimRequestForm() {
             <p>{message}</p>
             {previewUrl ? (
               <p className="text-fraternity-charcoal">
-                Dev preview link: <a href={previewUrl} className="text-fraternity-burgundy underline underline-offset-4">{previewUrl}</a>
+                Dev preview link: <a href={previewUrl} className="text-fraternity-azure underline underline-offset-4">{previewUrl}</a>
               </p>
             ) : null}
           </div>

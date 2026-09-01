@@ -42,7 +42,7 @@ export default async function MentorshipPage() {
                 className="surface flex h-full flex-col p-6"
               >
                 <div className="flex flex-wrap items-center gap-3">
-                  <span className="rounded-full bg-fraternity-cream px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-burgundy">
+                  <span className="rounded-full bg-fraternity-cream px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-azure">
                     {formatOpportunityType(opportunity.opportunity_type)}
                   </span>
                   {opportunity.location_type ? (
@@ -86,7 +86,7 @@ export default async function MentorshipPage() {
                 <div className="mt-6 flex flex-wrap gap-3">
                   <Link
                     href={`/mentorship/${opportunity.slug || opportunity.id}`}
-                    className="inline-flex items-center justify-center rounded-full bg-fraternity-burgundy px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+                    className="inline-flex items-center justify-center rounded-full bg-fraternity-azure px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
                   >
                     View details
                   </Link>

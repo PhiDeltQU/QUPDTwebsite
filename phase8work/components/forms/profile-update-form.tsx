@@ -43,7 +43,7 @@ export function ProfileUpdateForm() {
   return (
     <form onSubmit={handleSubmit} className="surface space-y-5 p-8">
       <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">Member request</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">Member request</p>
         <h2 className="mt-3 text-3xl">Request a profile update</h2>
         <p className="mt-3 max-w-2xl text-sm text-fraternity-slate">Use this before self-service profile editing is live. Officers can review and apply your changes from the admin queue.</p>
       </div>
@@ -55,7 +55,7 @@ export function ProfileUpdateForm() {
       </div>
       <Field label="What should be updated?"><Textarea name="requestedChanges" rows={6} placeholder="Company, title, location, mentorship interest, bio, contact preferences..." required /></Field>
       <div className="flex items-center gap-3">
-        <button type="submit" disabled={status === 'submitting'} className="rounded-full bg-fraternity-burgundy px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-60">
+        <button type="submit" disabled={status === 'submitting'} className="rounded-full bg-fraternity-azure px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-60">
           {status === 'submitting' ? 'Submitting…' : 'Submit request'}
         </button>
         {message ? <p className={`text-sm ${status === 'success' ? 'text-green-700' : 'text-red-700'}`}>{message}</p> : null}

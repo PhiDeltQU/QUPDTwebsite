@@ -99,15 +99,15 @@ export default async function HomePage() {
       <section className="border-b border-black/5 bg-fraternity-charcoal py-5 text-white">
         <Container className="grid gap-5 sm:grid-cols-3 sm:divide-x sm:divide-white/15">
           <div className="px-3 text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-gold">Established</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-argent">Established</p>
             <p className="mt-1 font-serif text-xl text-white">2025</p>
           </div>
           <div className="px-3 text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-gold">Home</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-argent">Home</p>
             <p className="mt-1 font-serif text-xl text-white">Quinnipiac University</p>
           </div>
           <div className="px-3 text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-gold">Chapter</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-argent">Chapter</p>
             <p className="mt-1 font-serif text-xl text-white">Connecticut Epsilon</p>
           </div>
         </Container>
@@ -138,7 +138,7 @@ export default async function HomePage() {
               <Button href="/brotherhood" variant="secondary">Chapter Life</Button>
             </div>
             <div className="mt-8 flex items-center gap-3 rounded-2xl border border-black/5 bg-white p-4 shadow-sm">
-              <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-fraternity-burgundy/10 text-fraternity-burgundy">
+              <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-fraternity-azure/10 text-fraternity-azure">
                 <MapPin className="h-5 w-5" aria-hidden="true" />
               </span>
               <p className="text-sm"><span className="font-semibold text-fraternity-charcoal">North Haven, Connecticut</span><br />Part of the Quinnipiac University community</p>
@@ -191,7 +191,7 @@ export default async function HomePage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" aria-hidden="true" />
               <div className="absolute inset-x-0 bottom-0 p-6 text-white">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-gold">{story.label}</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-argent">{story.label}</p>
                 <h3 className="mt-2 text-2xl text-white">{story.title}</h3>
               </div>
             </article>

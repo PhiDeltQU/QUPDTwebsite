@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 import { Container } from '@/components/layout/container';
 import { siteConfig } from '@/lib/constants/site';
@@ -10,14 +11,14 @@ export function SiteFooter() {
         <div>
           <div className="flex items-center gap-3">
             <span
-              className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-fraternity-burgundy font-serif text-sm font-semibold tracking-[0.08em] text-white"
+              className="relative inline-flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-white"
               aria-hidden="true"
             >
-              ΦΔΘ
+              <Image src="/brand/phi-delt-crest.jpg" alt="" fill sizes="44px" className="object-cover" />
             </span>
             <h3 className="text-xl font-semibold text-white">{siteConfig.name}</h3>
           </div>
-          <p className="mt-4 text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-gold">
+          <p className="mt-4 text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-argent">
             {siteConfig.chapter}
           </p>
           <p className="mt-3 max-w-sm text-sm text-white/65">
@@ -26,7 +27,7 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold uppercase tracking-[0.2em] text-fraternity-gold">Discover</h4>
+          <h4 className="text-sm font-semibold uppercase tracking-[0.2em] text-fraternity-argent">Discover</h4>
           <div className="mt-4 space-y-3 text-sm text-white/70">
             <Link href="/about" className="block transition hover:text-white">Our Chapter</Link>
             <Link href="/brotherhood" className="block transition hover:text-white">Brotherhood</Link>
@@ -36,7 +37,7 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold uppercase tracking-[0.2em] text-fraternity-gold">Stay Connected</h4>
+          <h4 className="text-sm font-semibold uppercase tracking-[0.2em] text-fraternity-argent">Stay Connected</h4>
           <div className="mt-4 space-y-3 text-sm text-white/70">
             <Link href="/events" className="block transition hover:text-white">Events</Link>
             <Link href="/newsletter" className="block transition hover:text-white">Chapter News</Link>
@@ -46,7 +47,7 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold uppercase tracking-[0.2em] text-fraternity-gold">Take Part</h4>
+          <h4 className="text-sm font-semibold uppercase tracking-[0.2em] text-fraternity-argent">Take Part</h4>
           <div className="mt-4 space-y-3 text-sm text-white/70">
             <Link href="/get-involved" className="block transition hover:text-white">Get Involved</Link>
             <Link href="/contact" className="block transition hover:text-white">Contact the Chapter</Link>

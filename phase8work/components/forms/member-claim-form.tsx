@@ -75,7 +75,7 @@ export function MemberClaimForm({
   return (
     <div className="surface mx-auto max-w-2xl p-8 md:p-10">
       <div className="mb-6">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
           {audience === 'active' ? 'Active access' : 'Phase 7'}
         </p>
         <h1 className="mt-3 text-4xl">{title}</h1>

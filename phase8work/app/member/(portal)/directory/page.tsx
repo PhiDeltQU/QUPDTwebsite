@@ -7,7 +7,7 @@ export default async function MemberDirectoryPage() {
   return (
     <div className="space-y-6">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
           Private directory
         </p>
         <h2 className="mt-3 text-4xl">Expanded alumni contact access</h2>
@@ -29,7 +29,7 @@ export default async function MemberDirectoryPage() {
               </div>
 
               {profile.mentor ? (
-                <span className="rounded-full bg-fraternity-burgundy px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-white">
+                <span className="rounded-full bg-fraternity-azure px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-white">
                   Mentor
                 </span>
               ) : null}
@@ -76,7 +76,7 @@ export default async function MemberDirectoryPage() {
                       href={profile.linkedin}
                       target="_blank"
                       rel="noreferrer"
-                      className="font-medium text-fraternity-burgundy underline underline-offset-4"
+                      className="font-medium text-fraternity-azure underline underline-offset-4"
                     >
                       View LinkedIn profile
                     </Link>

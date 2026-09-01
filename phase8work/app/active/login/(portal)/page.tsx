@@ -4,7 +4,7 @@ export default function ActivePortalHomePage() {
   return (
     <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
           Active portal
         </p>
         <h2 className="mt-3 text-4xl">Track your mentorship applications</h2>
@@ -17,7 +17,7 @@ export default function ActivePortalHomePage() {
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
             href="/mentorship"
-            className="rounded-full bg-fraternity-burgundy px-5 py-3 text-sm font-medium text-white"
+            className="rounded-full bg-fraternity-azure px-5 py-3 text-sm font-medium text-white"
           >
             Browse opportunities
           </Link>

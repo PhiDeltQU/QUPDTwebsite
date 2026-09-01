@@ -36,7 +36,7 @@ export default async function AdminLayout({
         <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-6 md:flex-row md:px-6">
           <aside className="surface w-full shrink-0 p-6 md:sticky md:top-6 md:w-72 md:self-start">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
                 Admin portal
               </p>
               <h1 className="mt-3 text-4xl">Admin Workspace</h1>

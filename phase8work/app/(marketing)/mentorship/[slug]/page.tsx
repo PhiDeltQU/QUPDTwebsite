@@ -48,7 +48,7 @@ export default async function MentorshipOpportunityDetailPage({
         <div className="grid gap-8 lg:grid-cols-[1.3fr_0.7fr]">
           <div className="surface p-8">
             <div className="flex flex-wrap gap-3">
-              <span className="rounded-full bg-fraternity-cream px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-burgundy">
+              <span className="rounded-full bg-fraternity-cream px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-azure">
                 {formatLabel(opportunity.opportunity_type)}
               </span>
 
@@ -168,7 +168,7 @@ export default async function MentorshipOpportunityDetailPage({
             <div className="mt-6 flex flex-col gap-3">
               <Link
                 href={`/mentorship/${opportunity.slug || opportunity.id}/apply`}
-                className="inline-flex items-center justify-center rounded-full bg-fraternity-burgundy px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+                className="inline-flex items-center justify-center rounded-full bg-fraternity-azure px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
               >
                 Apply now
               </Link>

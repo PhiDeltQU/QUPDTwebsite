@@ -228,11 +228,11 @@ export const newsletters: NewsletterIssue[] = [
 ];
 
 export const alumniSpotlight: Spotlight = {
-  name: 'Ben Berube',
-  role: 'OG Pres',
-  quote: 'https://www.pinterest.com/pin/original-image--813251645231601330/',
+  name: 'Alumni Spotlight Coming Soon',
+  role: 'Connecticut Epsilon Alumnus',
+  quote: 'A real spotlight quote from an alumnus will go here.',
   story:
-    'We will miss you Ben'
+    'Once the chapter has its first graduating class of alumni, this section will feature their story and how Connecticut Epsilon shaped their path after Quinnipiac.'
 };
 
 export const timeline: TimelineEntry[] = [
@@ -256,31 +256,17 @@ export const timeline: TimelineEntry[] = [
 export const legacyVaultItems: LegacyVaultItem[] = [
   {
     id: '1',
-    title: 'Composite Board',
-    era: '300BC',
+    title: 'Founding Composite Board',
+    era: '2025',
     type: 'Composite',
-    description: ''
+    description: 'The first chapter composite will be added here once photographed.'
   },
   {
     id: '2',
-    title: 'Letter from President',
+    title: 'Charter Letter',
     era: '2025',
     type: 'Document',
-    description: 'https://www.pinterest.com/pin/original-image--813251645231601330/'
-  },
-  {
-    id: '3',
-    title: 'Reunion Weekend Photo Collection',
-    era: '2010s',
-    type: 'Photo',
-    description: 'Images from a major return weekend showing intergenerational alumni connection.'
-  },
-  {
-    id: '4',
-    title: 'Brotherhood Memory Submission',
-    era: '2000s',
-    type: 'Story',
-    description: 'A contributed memory that adds emotional depth and context to the chapter archive.'
+    description: 'A record of Connecticut Epsilon’s founding at Quinnipiac University.'
   }
 ];
 

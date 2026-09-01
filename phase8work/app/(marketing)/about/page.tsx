@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { PageHero } from '@/components/sections/page-hero';
 import { SectionShell } from '@/components/sections/section-shell';
 import { CTASection } from '@/components/sections/cta-section';
@@ -40,7 +41,14 @@ export default async function AboutPage() {
             <p className="mt-5">{content.overviewBodySecondary}</p>
           </div>
           <div className="rounded-3xl bg-fraternity-charcoal p-8 text-white md:p-10">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-fraternity-gold">At a Glance</p>
+            <Image
+              src="/brand/phi-delt-wordmark.png"
+              alt="Phi Delta Theta"
+              width={1800}
+              height={600}
+              className="h-8 w-auto"
+            />
+            <p className="mt-6 text-xs font-semibold uppercase tracking-[0.22em] text-fraternity-argent">At a Glance</p>
             <dl className="mt-6 grid gap-6 sm:grid-cols-3 lg:grid-cols-1">
               <div>
                 <dt className="text-sm text-white/55">Campus</dt>

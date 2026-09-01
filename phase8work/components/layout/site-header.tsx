@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { LockKeyhole, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { navItems, siteConfig } from '@/lib/constants/site';
@@ -38,16 +39,16 @@ export function SiteHeader({ role }: { role: SessionRole | null }) {
           aria-label="Phi Delta Theta Connecticut Epsilon home"
         >
           <span
-            className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-fraternity-burgundy font-serif text-sm font-semibold tracking-[0.08em] text-white shadow-sm transition-transform group-hover:-translate-y-0.5"
+            className="relative inline-flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5 transition-transform group-hover:-translate-y-0.5"
             aria-hidden="true"
           >
-            ΦΔΘ
+            <Image src="/brand/phi-delt-crest.jpg" alt="" fill sizes="44px" className="object-cover" />
           </span>
           <span className="flex flex-col">
             <span className="font-serif text-lg font-semibold leading-tight text-fraternity-charcoal">
               {siteConfig.name}
             </span>
-            <span className="mt-0.5 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-fraternity-burgundy">
+            <span className="mt-0.5 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-fraternity-azure">
               {siteConfig.chapter}
             </span>
           </span>
@@ -58,7 +59,7 @@ export function SiteHeader({ role }: { role: SessionRole | null }) {
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm font-semibold text-fraternity-charcoal/80 transition hover:text-fraternity-burgundy"
+              className="text-sm font-semibold text-fraternity-charcoal/80 transition hover:text-fraternity-azure"
             >
               {item.label}
             </Link>
@@ -68,7 +69,7 @@ export function SiteHeader({ role }: { role: SessionRole | null }) {
         <div className="hidden items-center gap-2 xl:flex">
           <Link
             href={portalLink.href}
-            className="inline-flex items-center gap-2 rounded-full px-4 py-3 text-sm font-semibold text-fraternity-charcoal transition hover:bg-white hover:text-fraternity-burgundy"
+            className="inline-flex items-center gap-2 rounded-full px-4 py-3 text-sm font-semibold text-fraternity-charcoal transition hover:bg-white hover:text-fraternity-azure"
           >
             <LockKeyhole className="h-4 w-4" aria-hidden="true" />
             {portalLink.label}
@@ -99,7 +100,7 @@ export function SiteHeader({ role }: { role: SessionRole | null }) {
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="rounded-2xl px-4 py-3 text-sm font-medium text-fraternity-charcoal transition hover:bg-white hover:text-fraternity-burgundy"
+              className="rounded-2xl px-4 py-3 text-sm font-medium text-fraternity-charcoal transition hover:bg-white hover:text-fraternity-azure"
             >
               {item.label}
             </Link>

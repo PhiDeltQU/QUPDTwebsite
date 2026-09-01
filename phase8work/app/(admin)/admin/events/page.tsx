@@ -13,7 +13,7 @@ export default async function EventsAdminPage() {
   return (
     <div className="space-y-8 py-2">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">Admin module</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">Admin module</p>
         <h1 className="mt-3 text-4xl">events management</h1>
         <p className="mt-4 max-w-3xl text-fraternity-slate">This phase adds local event persistence, delete controls, and CSV export so officers can test the site before the database is ready.</p>
       </div>

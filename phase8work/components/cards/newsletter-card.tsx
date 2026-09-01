@@ -9,7 +9,7 @@ export function NewsletterCard({ issue }: { issue: NewsletterIssue }) {
       <h3 className="mt-5 text-2xl">{issue.title}</h3>
       <p className="mt-2 text-sm font-medium text-fraternity-charcoal">{issue.date}</p>
       <p className="mt-4">{issue.excerpt}</p>
-      <Link href={`/newsletter/${issue.slug}`} className="mt-6 inline-block text-sm font-semibold text-fraternity-burgundy hover:underline">
+      <Link href={`/newsletter/${issue.slug}`} className="mt-6 inline-block text-sm font-semibold text-fraternity-azure hover:underline">
         Read issue
       </Link>
     </div>

@@ -10,7 +10,7 @@ export default async function ContentAdminPage() {
   return (
     <div className="space-y-8 py-2">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">Admin module</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">Admin module</p>
         <h1 className="mt-3 text-4xl">Site content management</h1>
         <p className="mt-4 max-w-3xl text-fraternity-slate">Phase 8 lets officers update core Home and About page copy without opening code files. Content saves either to Supabase or the local demo store depending on your environment.</p>
       </div>

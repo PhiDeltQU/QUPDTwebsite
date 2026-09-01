@@ -10,9 +10,9 @@ type ButtonProps = {
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const variants = {
-  primary: 'bg-fraternity-burgundy text-white hover:bg-fraternity-burgundyDeep',
+  primary: 'bg-fraternity-azure text-white hover:bg-fraternity-azureDeep',
   secondary: 'bg-white text-fraternity-charcoal ring-1 ring-black/10 hover:bg-fraternity-parchment',
-  ghost: 'text-fraternity-burgundy hover:bg-fraternity-parchment'
+  ghost: 'text-fraternity-azure hover:bg-fraternity-parchment'
 };
 
 export function Button({ children, href, variant = 'primary', className, type = 'submit', ...props }: ButtonProps) {

@@ -81,7 +81,7 @@ export function MentorshipOpportunityForm() {
 
   return (
     <form onSubmit={handleSubmit} className="surface p-8">
-      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">
+      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
         Alumni posting
       </p>
       <h2 className="mt-3 text-2xl">Post a mentorship or internship opportunity</h2>
@@ -111,7 +111,7 @@ export function MentorshipOpportunityForm() {
             required
             minLength={3}
             maxLength={120}
-            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-burgundy"
+            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-azure"
             placeholder="Summer finance mentorship opportunity"
           />
         </div>
@@ -127,7 +127,7 @@ export function MentorshipOpportunityForm() {
             id="opportunityType"
             name="opportunityType"
             required
-            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-burgundy"
+            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-azure"
             defaultValue="mentorship"
           >
             <option value="mentorship">Mentorship</option>
@@ -147,7 +147,7 @@ export function MentorshipOpportunityForm() {
             id="industry"
             name="industry"
             maxLength={120}
-            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-burgundy"
+            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-azure"
             placeholder="Finance, Technology, Healthcare..."
           />
         </div>
@@ -160,7 +160,7 @@ export function MentorshipOpportunityForm() {
             id="company"
             name="company"
             maxLength={120}
-            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-burgundy"
+            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-azure"
           />
         </div>
 
@@ -172,7 +172,7 @@ export function MentorshipOpportunityForm() {
             id="location"
             name="location"
             maxLength={120}
-            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-burgundy"
+            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-azure"
             placeholder="New York, NY"
           />
         </div>
@@ -187,7 +187,7 @@ export function MentorshipOpportunityForm() {
           <select
             id="locationType"
             name="locationType"
-            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-burgundy"
+            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-azure"
             defaultValue=""
           >
             <option value="">Select one</option>
@@ -208,7 +208,7 @@ export function MentorshipOpportunityForm() {
             id="preferredMajor"
             name="preferredMajor"
             maxLength={120}
-            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-burgundy"
+            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-azure"
           />
         </div>
 
@@ -223,7 +223,7 @@ export function MentorshipOpportunityForm() {
             id="preferredYears"
             name="preferredYears"
             maxLength={120}
-            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-burgundy"
+            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-azure"
             placeholder="Sophomore, Junior, Senior"
           />
         </div>
@@ -242,7 +242,7 @@ export function MentorshipOpportunityForm() {
             minLength={20}
             maxLength={5000}
             rows={5}
-            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-burgundy"
+            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-azure"
             placeholder="Describe the opportunity, what the student would gain, and what kind of brother would be a strong fit."
           />
           <p className="mt-2 text-xs text-fraternity-slate">
@@ -262,7 +262,7 @@ export function MentorshipOpportunityForm() {
             name="responsibilities"
             maxLength={5000}
             rows={4}
-            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-burgundy"
+            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-azure"
           />
         </div>
 
@@ -278,7 +278,7 @@ export function MentorshipOpportunityForm() {
             name="requirements"
             maxLength={5000}
             rows={4}
-            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-burgundy"
+            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-azure"
           />
         </div>
 
@@ -294,7 +294,7 @@ export function MentorshipOpportunityForm() {
             name="preferredSkills"
             maxLength={1000}
             rows={3}
-            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-burgundy"
+            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-azure"
           />
         </div>
 
@@ -310,7 +310,7 @@ export function MentorshipOpportunityForm() {
             name="applicationInstructions"
             maxLength={2000}
             rows={3}
-            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-burgundy"
+            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-azure"
             placeholder="Submit a resume and short note explaining interest."
           />
         </div>
@@ -326,7 +326,7 @@ export function MentorshipOpportunityForm() {
             id="contactMethod"
             name="contactMethod"
             maxLength={80}
-            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-burgundy"
+            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-azure"
             placeholder="Platform, email, phone, LinkedIn..."
           />
         </div>
@@ -339,7 +339,7 @@ export function MentorshipOpportunityForm() {
             id="expiresAt"
             name="expiresAt"
             type="date"
-            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-burgundy"
+            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-azure"
           />
         </div>
 
@@ -351,7 +351,7 @@ export function MentorshipOpportunityForm() {
             id="compensation"
             name="compensation"
             maxLength={120}
-            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-burgundy"
+            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-fraternity-azure"
             placeholder="Optional stipend / paid internship details"
           />
         </div>
@@ -398,7 +398,7 @@ export function MentorshipOpportunityForm() {
         <button
           type="submit"
           disabled={state === "submitting"}
-          className="inline-flex items-center justify-center rounded-full bg-fraternity-burgundy px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex items-center justify-center rounded-full bg-fraternity-azure px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {state === "submitting" ? "Creating..." : "Create opportunity"}
         </button>

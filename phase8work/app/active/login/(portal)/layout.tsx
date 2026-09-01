@@ -17,7 +17,7 @@ export default async function ActivePortalLayout({
       <div className="mx-auto max-w-7xl px-6 py-8">
         <div className="surface mb-8 flex flex-col gap-6 p-6 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
               Active member portal
             </p>
             <h1 className="mt-3 text-3xl">Current brother access</h1>

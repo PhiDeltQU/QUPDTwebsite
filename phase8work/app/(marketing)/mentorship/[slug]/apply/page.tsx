@@ -98,7 +98,7 @@ function SummaryCard({
 }) {
   return (
     <div className="surface p-8">
-      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">
+      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
         Opportunity summary
       </p>
       <h2 className="mt-3 text-2xl">{opportunity.title}</h2>
@@ -133,7 +133,7 @@ function SummaryCard({
       <div className="mt-6">
         <Link
           href={`/mentorship/${opportunity.slug || opportunity.id}`}
-          className="text-sm font-semibold text-fraternity-burgundy hover:opacity-80"
+          className="text-sm font-semibold text-fraternity-azure hover:opacity-80"
         >
           View full opportunity details
         </Link>

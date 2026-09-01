@@ -43,7 +43,7 @@ export default async function ReviewQueuePage() {
   return (
     <div className="space-y-8 py-2">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">Admin module</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">Admin module</p>
         <h1 className="mt-3 text-4xl">Review queue</h1>
         <p className="mt-4 max-w-3xl text-fraternity-slate">This page centralizes the operational side of the chapter website: inbound requests, active subscriber counts, and the forms that officers need to process on a recurring basis.</p>
       </div>
@@ -51,7 +51,7 @@ export default async function ReviewQueuePage() {
       <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         {queue.items.map((item) => (
           <div key={item.label} className="surface p-6">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-fraternity-burgundy/80">{item.label}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-fraternity-azure/80">{item.label}</p>
             <p className="mt-4 text-4xl font-semibold text-fraternity-charcoal">{item.value}</p>
             <p className="mt-3 text-sm text-fraternity-slate">{item.detail}</p>
           </div>

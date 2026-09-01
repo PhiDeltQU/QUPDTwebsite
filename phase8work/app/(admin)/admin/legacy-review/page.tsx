@@ -64,7 +64,7 @@ export default async function AdminLegacyReviewPage() {
     <main className="px-6 py-10">
       <div className="mx-auto max-w-6xl">
         <div className="surface mb-8 p-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
             Admin Module
           </p>
           <h1 className="mt-4 text-4xl">Legacy review queue</h1>
@@ -98,7 +98,7 @@ export default async function AdminLegacyReviewPage() {
                         href={item.previewUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex text-sm font-medium text-fraternity-burgundy underline"
+                        className="inline-flex text-sm font-medium text-fraternity-azure underline"
                       >
                         Open attachment
                       </a>

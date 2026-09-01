@@ -143,7 +143,7 @@ export function LegacySubmissionForm() {
       <div className="flex items-center gap-4">
         <button
           type="submit"
-          className="rounded-full bg-fraternity-burgundy px-6 py-3 font-medium text-white"
+          className="rounded-full bg-fraternity-azure px-6 py-3 font-medium text-white"
           disabled={state === "submitting"}
         >
           {state === "submitting" ? "Submitting..." : "Submit memory"}

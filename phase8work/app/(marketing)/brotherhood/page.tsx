@@ -121,7 +121,7 @@ export default function BrotherhoodPage() {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {experienceAreas.map(({ icon: Icon, title, description }) => (
             <article key={title} className="surface p-7">
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-fraternity-burgundy/10 text-fraternity-burgundy">
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-fraternity-azure/10 text-fraternity-azure">
                 <Icon className="h-5 w-5" aria-hidden="true" />
               </span>
               <h3 className="mt-5 text-2xl">{title}</h3>

@@ -11,13 +11,13 @@ const config: Config = {
     extend: {
       colors: {
         fraternity: {
-          burgundy: '#0067B1',
-          burgundyDeep: '#004F87',
+          azure: '#0067B1',
+          azureDeep: '#004F87',
           cream: '#F7F1E8',
           parchment: '#EFE6D8',
           charcoal: '#1F1F1F',
           slate: '#4B5563',
-          gold: '#9EB8D1'
+          argent: '#C7CCD3'
         }
       },
       fontFamily: {
@@ -28,7 +28,7 @@ const config: Config = {
         soft: '0 10px 30px rgba(31, 31, 31, 0.08)'
       },
       backgroundImage: {
-        'hero-glow': 'radial-gradient(circle at top, rgba(125,185,232,0.22), transparent 40%)'
+        'hero-glow': 'radial-gradient(circle at top, rgba(0,103,177,0.16), transparent 40%)'
       }
     }
   },

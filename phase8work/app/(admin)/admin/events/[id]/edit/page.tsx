@@ -15,7 +15,7 @@ export default async function EditEventPage({ params }: { params: Promise<{ id: 
   return (
     <div className="space-y-8 py-2">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">Admin module</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">Admin module</p>
         <h1 className="mt-3 text-4xl">Edit event</h1>
       </div>
       <ApiForm title="Update event" description="Adjust event details, publishing state, and featured status." endpoint={`/api/admin/events?id=${id}`} method="PUT" successMessage="Event updated successfully." submitLabel="Save changes">

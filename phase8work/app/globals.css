@@ -15,7 +15,7 @@ body {
 }
 
 ::selection {
-  @apply bg-fraternity-burgundy text-white;
+  @apply bg-fraternity-azure text-white;
 }
 
 @layer base {
@@ -28,7 +28,7 @@ body {
   }
 
   :focus-visible {
-    @apply outline-none ring-2 ring-fraternity-burgundy ring-offset-2 ring-offset-fraternity-cream;
+    @apply outline-none ring-2 ring-fraternity-azure ring-offset-2 ring-offset-fraternity-cream;
   }
 }
 
@@ -42,7 +42,7 @@ body {
   }
 
   .eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.22em] text-fraternity-burgundy;
+    @apply text-xs font-semibold uppercase tracking-[0.22em] text-fraternity-azure;
   }
 
   .image-frame {

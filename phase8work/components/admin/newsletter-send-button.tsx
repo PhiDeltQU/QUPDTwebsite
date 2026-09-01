@@ -36,7 +36,7 @@ export function NewsletterSendButton({ newsletterId }: { newsletterId: string })
         type="button"
         onClick={handleSend}
         disabled={loading}
-        className="rounded-full bg-fraternity-burgundy px-4 py-2 text-xs font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+        className="rounded-full bg-fraternity-azure px-4 py-2 text-xs font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {loading ? 'Sending…' : 'Send issue'}
       </button>

@@ -24,7 +24,7 @@ export default async function AdminMentorshipPage() {
   return (
     <div className="space-y-8 py-2">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
           Admin module
         </p>
         <h1 className="mt-3 text-4xl">Mentorship management</h1>

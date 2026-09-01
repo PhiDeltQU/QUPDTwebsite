@@ -4,7 +4,7 @@ export default function MemberHomePage() {
   return (
     <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
           Phase 8
         </p>
         <h2 className="mt-3 text-4xl">
@@ -19,7 +19,7 @@ export default function MemberHomePage() {
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
             href="/member/profile"
-            className="rounded-full bg-fraternity-burgundy px-5 py-3 text-sm font-medium text-white"
+            className="rounded-full bg-fraternity-azure px-5 py-3 text-sm font-medium text-white"
           >
             Edit my profile
           </Link>

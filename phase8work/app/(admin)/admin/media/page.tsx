@@ -14,7 +14,7 @@ export default async function MediaAdminPage() {
   return (
     <div className="space-y-8 py-2">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">Admin module</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">Admin module</p>
         <h1 className="mt-3 text-4xl">media architecture</h1>
         <p className="mt-4 max-w-3xl text-fraternity-slate">
           Phase 5 adds Supabase Storage upload support plus edit flows for media records. In local demo mode, metadata still persists locally.

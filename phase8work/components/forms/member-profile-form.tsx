@@ -57,7 +57,7 @@ export function MemberProfileForm({ profile }: { profile: MemberProfileRecord })
     <div className="grid gap-6 lg:grid-cols-[1.45fr_0.9fr]">
       <form className="surface space-y-5 p-8" onSubmit={handleSubmit}>
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">Phase 7</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">Phase 7</p>
           <h2 className="mt-3 text-4xl">Manage your alumni profile</h2>
           <p className="mt-4 text-fraternity-slate">This is the first self-service member profile flow. Update your professional details, opt into mentorship, and control what appears publicly versus inside the member network.</p>
         </div>

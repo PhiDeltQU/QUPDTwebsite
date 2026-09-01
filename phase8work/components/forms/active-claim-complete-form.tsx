@@ -49,7 +49,7 @@ export function ActiveClaimCompleteForm({ token, email }: { token: string; email
   return (
     <div className="surface mx-auto max-w-2xl p-8 md:p-10">
       <div className="mb-6">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-burgundy/80">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
           Active access
         </p>
         <h1 className="mt-3 text-4xl">Finish setting your password</h1>
@@ -80,7 +80,7 @@ export function ActiveClaimCompleteForm({ token, email }: { token: string; email
           <div className="space-y-3 text-sm font-medium text-emerald-700">
             <p>{message}</p>
             <p>
-              <a href="/active/login" className="text-fraternity-burgundy underline underline-offset-4">
+              <a href="/active/login" className="text-fraternity-azure underline underline-offset-4">
                 Continue to active login
               </a>
             </p>

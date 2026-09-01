@@ -15,7 +15,7 @@ export function AdminTable({ title, rows, deleteEndpoint, exportHref, editBaseHr
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h2 className="text-2xl">{title}</h2>
         {exportHref ? (
-          <a href={exportHref} className="rounded-full border border-fraternity-burgundy/20 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-fraternity-burgundy transition hover:bg-fraternity-parchment">
+          <a href={exportHref} className="rounded-full border border-fraternity-azure/20 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-fraternity-azure transition hover:bg-fraternity-parchment">
             Export CSV
           </a>
         ) : null}
@@ -29,7 +29,7 @@ export function AdminTable({ title, rows, deleteEndpoint, exportHref, editBaseHr
               {row.tertiary ? <p className="text-xs text-fraternity-slate/80">{row.tertiary}</p> : null}
             </div>
             <div className="flex items-center gap-3">
-              {row.badge ? <span className="w-fit rounded-full bg-fraternity-parchment px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-burgundy">{row.badge}</span> : null}
+              {row.badge ? <span className="w-fit rounded-full bg-fraternity-parchment px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-azure">{row.badge}</span> : null}
               {editBaseHref ? <AdminEditLink href={`${editBaseHref}/${row.id}/edit`} /> : null}
               {deleteEndpoint ? <AdminDeleteButton endpoint={deleteEndpoint} id={row.id} /> : null}
             </div>
