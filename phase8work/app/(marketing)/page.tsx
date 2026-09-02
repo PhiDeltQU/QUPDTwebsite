@@ -8,10 +8,11 @@ import { ValueCard } from '@/components/cards/value-card';
 import { EventCard } from '@/components/cards/event-card';
 import { NewsletterCard } from '@/components/cards/newsletter-card';
 import { PathwayCard } from '@/components/cards/pathway-card';
+import { SpotlightCard } from '@/components/cards/spotlight-card';
 import { Container } from '@/components/layout/container';
 import { CTASection } from '@/components/sections/cta-section';
 import { getHomePageContent } from '@/lib/queries/content';
-import { getEvents, getNewsletters } from '@/lib/queries/public';
+import { getEvents, getFeaturedSpotlight, getNewsletters } from '@/lib/queries/public';
 
 const chapterPathways = [
   {
@@ -69,10 +70,11 @@ const photoStories = [
 ] as const;
 
 export default async function HomePage() {
-  const [content, allEvents, allNewsletters] = await Promise.all([
+  const [content, allEvents, allNewsletters, spotlight] = await Promise.all([
     getHomePageContent(),
     getEvents(),
     getNewsletters(),
+    getFeaturedSpotlight(),
   ]);
 
   const featuredEvents = allEvents.slice(0, 3);
@@ -241,6 +243,12 @@ export default async function HomePage() {
           <Button href="/newsletter" variant="secondary">Read Chapter News</Button>
         </div>
       </SectionShell>
+
+      <section className="section-padding bg-white">
+        <Container className="max-w-3xl">
+          <SpotlightCard spotlight={spotlight} />
+        </Container>
+      </section>
 
       <section className="section-padding pt-0">
         <Container>

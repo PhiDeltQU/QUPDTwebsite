@@ -14,7 +14,10 @@ async function verifyTurnstile(token: string, ip: string | null): Promise<boolea
     method: 'POST',
     body,
   });
-  const data = (await res.json()) as { success: boolean };
+  const data = (await res.json()) as { success: boolean; 'error-codes'?: string[] };
+  if (!data.success) {
+    console.error('[contact] Turnstile verification failed:', data['error-codes']?.join(', ') || 'no error codes returned');
+  }
   return data.success === true;
 }
 
@@ -24,11 +27,17 @@ export async function POST(request: Request) {
   // Verify Turnstile token if the secret key is configured
   const token = typeof json['cf-turnstile-response'] === 'string' ? json['cf-turnstile-response'] : '';
   if (process.env.TURNSTILE_SECRET_KEY) {
+    if (!token) {
+      console.error('[contact] Submission arrived with no Turnstile token — the widget likely never rendered or completed (check the site key and its allowed domains in the Cloudflare Turnstile dashboard).');
+      return NextResponse.json({ error: 'Verification did not load. Please refresh the page and try again.' }, { status: 400 });
+    }
     const ip = request.headers.get('CF-Connecting-IP') ?? request.headers.get('x-forwarded-for');
     const valid = await verifyTurnstile(token, ip);
     if (!valid) {
       return NextResponse.json({ error: 'Bot verification failed. Please try again.' }, { status: 400 });
     }
+  } else {
+    console.warn('[contact] TURNSTILE_SECRET_KEY is not set — bot verification is disabled for this submission.');
   }
 
   const result = contactSchema.safeParse(json);
@@ -44,9 +53,17 @@ export async function POST(request: Request) {
   }
 
   // Send notification to chapter inbox + confirmation to submitter (non-blocking)
-  sendContactNotificationEmails(result.data).catch((err) => {
-    console.error('[contact] Email send failed:', err);
-  });
+  sendContactNotificationEmails(result.data)
+    .then((results) => {
+      results.forEach((emailResult) => {
+        if (!emailResult.sent) {
+          console.error('[contact] Notification email not sent:', emailResult.error);
+        }
+      });
+    })
+    .catch((err) => {
+      console.error('[contact] Email send failed:', err);
+    });
 
   return NextResponse.json({
     ok: true,

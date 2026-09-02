@@ -1,7 +1,7 @@
 import { createServerSupabaseClient } from '@/lib/supabase/server';
-import { AlumniProfile, EventItem, LegacyVaultItem, NewsletterIssue } from '@/types';
+import { AlumniProfile, EventItem, LegacyVaultItem, NewsletterIssue, Spotlight } from '@/types';
 import { readDemoStore } from '@/lib/demo-store';
-import { legacyVaultItems as fallbackLegacy } from '@/lib/constants/site';
+import { legacyVaultItems as fallbackLegacy, alumniSpotlight as fallbackSpotlight } from '@/lib/constants/site';
 
 type DbAlumniRow = {
   full_name: string;
@@ -49,6 +49,12 @@ type DbLegacyRow = {
   year_label: string | null;
   item_type: LegacyVaultItem['type'] | null;
   description: string | null;
+};
+
+type DbSpotlightRow = {
+  title: string;
+  excerpt: string | null;
+  body_content: string | null;
 };
 
 function formatDate(date: string | null) {
@@ -120,6 +126,15 @@ function mapLegacyRow(row: DbLegacyRow): LegacyVaultItem {
     era: row.year_label ?? 'Undated',
     type: row.item_type ?? 'Story',
     description: row.description ?? 'Archive details coming soon.'
+  };
+}
+
+function mapSpotlightRow(row: DbSpotlightRow): Spotlight {
+  return {
+    name: row.title,
+    role: fallbackSpotlight.role,
+    quote: row.excerpt ?? fallbackSpotlight.quote,
+    story: row.body_content ?? fallbackSpotlight.story
   };
 }
 
@@ -247,4 +262,20 @@ export async function getLegacyVaultItems(): Promise<LegacyVaultItem[]> {
 
   if (error || !data?.length) return fallbackLegacy;
   return (data as DbLegacyRow[]).map(mapLegacyRow);
+}
+
+export async function getFeaturedSpotlight(): Promise<Spotlight> {
+  const supabase = createServerSupabaseClient();
+  if (!supabase) return fallbackSpotlight;
+
+  const { data, error } = await supabase
+    .from('spotlight_posts')
+    .select('title, excerpt, body_content')
+    .eq('is_featured', true)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error || !data) return fallbackSpotlight;
+  return mapSpotlightRow(data as DbSpotlightRow);
 }

@@ -44,6 +44,7 @@ export function SiteFooter() {
             <Link href="/newsletter" className="block transition hover:text-white">Chapter News</Link>
             <Link href="/alumni" className="block transition hover:text-white">Alumni Network</Link>
             <Link href="/mentorship" className="block transition hover:text-white">Mentorship</Link>
+            <Link href="/legacy-vault" className="block transition hover:text-white">Legacy Vault</Link>
           </div>
         </div>
 

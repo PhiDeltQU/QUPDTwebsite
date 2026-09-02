@@ -10,10 +10,10 @@ export function NewsletterSignupForm() {
   return (
     <ApiForm
       title="Join the Alumni Newsletter"
-      description="Capture subscribers through a form that is already wired to a real API route with validation. Once you add Supabase or Resend, the backend can persist and send immediately."
+      description="Sign up to receive chapter updates, event recaps, and alumni news."
       endpoint="/api/newsletter/subscribe"
       submitLabel="Join the list"
-      successMessage="Thanks — your information was accepted and is ready to be connected to your mailing workflow."
+      successMessage="Thanks for subscribing — you'll get the next chapter update."
     >
       <div className="grid gap-5 md:grid-cols-2">
         <Field label="First name">

@@ -9,10 +9,10 @@ export function MenteeRequestForm() {
   return (
     <ApiForm
       title="Request a Mentor"
-      description="Collect structured requests now and let officers match manually until you are ready for protected dashboards or matching logic."
+      description="Tell us what you're hoping to get out of a mentorship match, and an officer will follow up."
       endpoint="/api/mentorship/mentee"
       submitLabel="Request mentorship"
-      successMessage="Your request was submitted successfully and is ready for a manual match workflow."
+      successMessage="Your request was submitted. An officer will follow up about a mentor match."
     >
       <div className="grid gap-5 md:grid-cols-2">
         <Field label="Name"><Input name="name" required /></Field>

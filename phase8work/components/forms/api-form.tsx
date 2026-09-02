@@ -18,6 +18,7 @@ export function ApiForm({ title, description, endpoint, successMessage, submitLa
   const router = useRouter();
   const [state, setState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [error, setError] = useState<string>('');
+  const [resultMessage, setResultMessage] = useState<string>(successMessage);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -58,6 +59,7 @@ export function ApiForm({ title, description, endpoint, successMessage, submitLa
       }
 
       setState('success');
+      setResultMessage(data.message || successMessage);
       if (method === 'POST') {
         form.reset();
       }
@@ -80,7 +82,7 @@ export function ApiForm({ title, description, endpoint, successMessage, submitLa
           <Button className="min-w-36" variant="primary">
             {state === 'submitting' ? 'Submitting…' : submitLabel}
           </Button>
-          {state === 'success' ? <p className="text-sm font-medium text-emerald-700">{successMessage}</p> : null}
+          {state === 'success' ? <p className="text-sm font-medium text-emerald-700">{resultMessage}</p> : null}
           {state === 'error' ? <p className="text-sm font-medium text-red-700">{error}</p> : null}
         </div>
       </form>

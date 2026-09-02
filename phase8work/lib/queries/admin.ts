@@ -33,7 +33,7 @@ export async function getAdminOverview() {
     supabase.from('alumni_profiles').select('*', { count: 'exact', head: true }).eq('willing_to_mentor', true),
     supabase.from('events').select('*', { count: 'exact', head: true }).eq('status', 'published'),
     supabase.from('newsletters').select('*', { count: 'exact', head: true }),
-    supabase.from('legacy_vault_items').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
+    supabase.from('legacy_submissions').select('*', { count: 'exact', head: true }).eq('status', 'submitted'),
     supabase.from('contact_submissions').select('*', { count: 'exact', head: true })
   ]);
 

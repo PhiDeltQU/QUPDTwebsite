@@ -9,10 +9,10 @@ export function MentorSignupForm() {
   return (
     <ApiForm
       title="Volunteer as a Mentor"
-      description="This form is fully wired to a validation-backed API route so you can later persist submissions with minimal changes."
+      description="Share your background and availability, and officers will reach out with mentee matches."
       endpoint="/api/mentorship/mentor"
       submitLabel="Submit mentor interest"
-      successMessage="Thank you for volunteering. Your mentor interest form is ready for officer review."
+      successMessage="Thank you for volunteering — your mentor interest is now in front of officers for review."
     >
       <div className="grid gap-5 md:grid-cols-2">
         <Field label="Name"><Input name="name" required /></Field>

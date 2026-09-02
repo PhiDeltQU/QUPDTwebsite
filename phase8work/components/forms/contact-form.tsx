@@ -15,9 +15,9 @@ export function ContactForm() {
       <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="lazyOnload" />
       <ApiForm
         title="General Contact"
-        description="Use this for alumni outreach, story submissions, support interest, and chapter questions. The backend route already validates the request payload."
+        description="Use this for alumni outreach, story submissions, support interest, and chapter questions."
         endpoint="/api/contact"
-        successMessage="Your message was received. This is ready to connect to Supabase storage or email notifications next."
+        successMessage="Your message was received. We'll be in touch soon."
       >
         <div className="grid gap-5 md:grid-cols-2">
           <Field label="Name">

@@ -9,10 +9,10 @@ export function RSVPForm({ eventSlug, eventTitle }: { eventSlug: string; eventTi
   return (
     <ApiForm
       title={`RSVP for ${eventTitle}`}
-      description="This RSVP form posts to a real route with validation and can later be connected to Supabase with minimal changes."
+      description="Let us know you're coming, including any guests joining you."
       endpoint="/api/events/rsvp"
       submitLabel="Submit RSVP"
-      successMessage="Your RSVP was accepted. Next step is persisting this into your database or sending confirmation email."
+      successMessage="Your RSVP was received — we'll see you there."
     >
       <input type="hidden" name="eventSlug" value={eventSlug} />
       <div className="grid gap-5 md:grid-cols-2">
