@@ -37,7 +37,12 @@ export function EventsCalendar({ events }: { events: EventItem[] }) {
   }, [calendarEvents]);
 
   const [visibleMonth, setVisibleMonth] = useState(initialMonth);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const today = new Date();
+
+  const selectedDayEvents = selectedDate
+    ? calendarEvents.filter((event) => sameDay(event.dateObj, selectedDate))
+    : [];
 
   const weeks = useMemo(() => {
     const year = visibleMonth.getFullYear();
@@ -67,14 +72,20 @@ export function EventsCalendar({ events }: { events: EventItem[] }) {
             <button
               type="button"
               aria-label="Previous month"
-              onClick={() => setVisibleMonth(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1))}
+              onClick={() => {
+                setVisibleMonth(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1));
+                setSelectedDate(null);
+              }}
               className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-fraternity-charcoal transition hover:bg-fraternity-cream"
             >
               <ChevronLeft className="h-4 w-4" aria-hidden="true" />
             </button>
             <button
               type="button"
-              onClick={() => setVisibleMonth(new Date(today.getFullYear(), today.getMonth(), 1))}
+              onClick={() => {
+                setVisibleMonth(new Date(today.getFullYear(), today.getMonth(), 1));
+                setSelectedDate(null);
+              }}
               className="rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-fraternity-azure transition hover:bg-fraternity-cream"
             >
               Today
@@ -82,7 +93,10 @@ export function EventsCalendar({ events }: { events: EventItem[] }) {
             <button
               type="button"
               aria-label="Next month"
-              onClick={() => setVisibleMonth(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1))}
+              onClick={() => {
+                setVisibleMonth(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1));
+                setSelectedDate(null);
+              }}
               className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-fraternity-charcoal transition hover:bg-fraternity-cream"
             >
               <ChevronRight className="h-4 w-4" aria-hidden="true" />
@@ -105,42 +119,86 @@ export function EventsCalendar({ events }: { events: EventItem[] }) {
                 ? calendarEvents.filter((event) => sameDay(event.dateObj, date))
                 : [];
               const isToday = date ? sameDay(date, today) : false;
+              const isSelected = date && selectedDate ? sameDay(date, selectedDate) : false;
+              const hasEvents = dayEvents.length > 0;
+
+              const cellClassName = `min-h-[4.5rem] rounded-xl border p-1.5 text-left sm:min-h-[6rem] sm:p-2 ${
+                date ? 'border-black/5 bg-white' : 'border-transparent bg-transparent'
+              } ${isSelected ? 'ring-2 ring-fraternity-azure' : ''}`;
+
+              const cellContent = date ? (
+                <>
+                  <span
+                    className={`inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold ${
+                      isToday ? 'bg-fraternity-azure text-white' : 'text-fraternity-charcoal'
+                    }`}
+                  >
+                    {date.getDate()}
+                  </span>
+
+                  {/* Mobile: dots only, tap the day to see names below. Desktop cells are wide enough for titles. */}
+                  <div className="mt-1 flex flex-wrap gap-1 sm:hidden">
+                    {dayEvents.map((event) => (
+                      <span key={event.slug} className="h-1.5 w-1.5 rounded-full bg-fraternity-azure" />
+                    ))}
+                  </div>
+
+                  <div className="mt-1 hidden space-y-1 sm:block">
+                    {dayEvents.map((event) => (
+                      <Link
+                        key={event.slug}
+                        href={`/events/${event.slug}`}
+                        className="block truncate rounded-md bg-fraternity-azure/10 px-1.5 py-1 text-xs font-semibold leading-tight text-fraternity-azureDeep transition hover:bg-fraternity-azure/20"
+                        title={event.title}
+                      >
+                        {event.title}
+                      </Link>
+                    ))}
+                  </div>
+                </>
+              ) : null;
+
+              if (hasEvents) {
+                return (
+                  <button
+                    key={`${weekIndex}-${dayIndex}`}
+                    type="button"
+                    onClick={() => setSelectedDate(isSelected ? null : (date as Date))}
+                    className={cellClassName}
+                  >
+                    {cellContent}
+                  </button>
+                );
+              }
 
               return (
-                <div
-                  key={`${weekIndex}-${dayIndex}`}
-                  className={`min-h-[4.5rem] rounded-xl border p-1.5 text-left sm:min-h-[6rem] sm:p-2 ${
-                    date ? 'border-black/5 bg-white' : 'border-transparent bg-transparent'
-                  }`}
-                >
-                  {date ? (
-                    <>
-                      <span
-                        className={`inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold ${
-                          isToday ? 'bg-fraternity-azure text-white' : 'text-fraternity-charcoal'
-                        }`}
-                      >
-                        {date.getDate()}
-                      </span>
-                      <div className="mt-1 space-y-1">
-                        {dayEvents.map((event) => (
-                          <Link
-                            key={event.slug}
-                            href={`/events/${event.slug}`}
-                            className="block truncate rounded-md bg-fraternity-azure/10 px-1.5 py-1 text-[0.65rem] font-semibold leading-tight text-fraternity-azureDeep transition hover:bg-fraternity-azure/20 sm:text-xs"
-                            title={event.title}
-                          >
-                            {event.title}
-                          </Link>
-                        ))}
-                      </div>
-                    </>
-                  ) : null}
+                <div key={`${weekIndex}-${dayIndex}`} className={cellClassName}>
+                  {cellContent}
                 </div>
               );
             })
           )}
         </div>
+
+        {selectedDayEvents.length > 0 ? (
+          <div className="mt-4 rounded-xl border border-fraternity-azure/20 bg-fraternity-azure/5 p-4 sm:hidden">
+            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-fraternity-azure">
+              {new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric' }).format(selectedDate as Date)}
+            </p>
+            <ul className="mt-2 space-y-2">
+              {selectedDayEvents.map((event) => (
+                <li key={event.slug}>
+                  <Link
+                    href={`/events/${event.slug}`}
+                    className="text-sm font-semibold text-fraternity-azureDeep underline underline-offset-2"
+                  >
+                    {event.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
 
         {calendarEvents.length === 0 ? (
           <p className="mt-6 text-sm text-fraternity-slate">

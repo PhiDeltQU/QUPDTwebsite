@@ -1,31 +1,36 @@
-import { redirect } from "next/navigation";
-import { requireSession } from "@/lib/auth/session";
-import { LegacySubmissionForm } from "@/components/legacy/legacy-submission-form";
+import { PageHero } from '@/components/sections/page-hero';
+import { SectionShell } from '@/components/sections/section-shell';
+import { getLegacyVaultItems } from '@/lib/queries/public';
+import { CTASection } from '@/components/sections/cta-section';
+import { Button } from '@/components/ui/button';
 
-export default async function LegacyVaultSubmitPage() {
-  const session = await requireSession();
-
-  if (!session) {
-    redirect("/active/login");
-  }
-
+export default async function LegacyVaultPage() {
+  const items = await getLegacyVaultItems();
   return (
-    <main className="min-h-screen bg-fraternity-cream px-6 py-16">
-      <div className="mx-auto max-w-3xl">
-        <div className="surface p-8 md:p-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
-            Legacy Vault Submission
-          </p>
-          <h1 className="mt-4 text-4xl">Share a memory for the chapter archive</h1>
-          <p className="mt-4 max-w-2xl text-fraternity-slate">
-            Submissions are limited to authenticated members and alumni. Approved memories are reviewed by the chapter and then released on the date you choose, with the memory sent to your email on file.
-          </p>
-
-          <div className="mt-10">
-            <LegacySubmissionForm />
-          </div>
+    <>
+      <PageHero
+        eyebrow="Legacy Vault"
+        title="Preserve the chapter memory with dignity and depth"
+        description="A growing archive of photos, documents, and stories that capture Connecticut Epsilon's history, contributed by the brothers who lived it."
+      />
+      <SectionShell title="Featured archive categories" description="Every entry has a title, type, era, and description contributed by a member or alumnus.">
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {items.map((item) => (
+            <div key={item.id} className="surface p-6">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-fraternity-azure">{item.type}</p>
+              <h3 className="mt-3 text-2xl">{item.title}</h3>
+              <p className="mt-2 text-sm font-medium text-fraternity-charcoal">{item.era}</p>
+              <p className="mt-4">{item.description}</p>
+            </div>
+          ))}
         </div>
-      </div>
-    </main>
+      </SectionShell>
+      <CTASection
+        eyebrow="Contribute to the archive"
+        title="Share a memory for the chapter archive"
+        description="Active members and alumni can submit photos, stories, and artifacts for the chapter to review and preserve."
+        actions={<Button href="/legacy-vault/submit" variant="secondary">Submit a memory or artifact</Button>}
+      />
+    </>
   );
 }
