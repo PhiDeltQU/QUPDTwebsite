@@ -111,7 +111,7 @@ export default async function ActiveApplicationsPage() {
   return (
     <div className="space-y-8 py-2">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">
           Applications
         </p>
         <h1 className="mt-3 text-4xl">My applications</h1>

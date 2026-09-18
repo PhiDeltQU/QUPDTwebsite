@@ -28,24 +28,25 @@ export function AlumniDirectory({ profiles }: { profiles: AlumniProfile[] }) {
       <div className="surface p-6 md:p-8">
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-6">
           <Input
+            aria-label="Search alumni"
             placeholder="Search name, company, industry…"
             value={filters.search}
             onChange={(event) => setFilters((current) => ({ ...current, search: event.target.value }))}
             className="xl:col-span-2"
           />
-          <Select value={filters.gradYear} onChange={(event) => setFilters((current) => ({ ...current, gradYear: event.target.value }))}>
+          <Select aria-label="Filter by class year" value={filters.gradYear} onChange={(event) => setFilters((current) => ({ ...current, gradYear: event.target.value }))}>
             <option value="">All class years</option>
             {options.gradYears.map((year) => <option key={year} value={year}>{year}</option>)}
           </Select>
-          <Select value={filters.industry} onChange={(event) => setFilters((current) => ({ ...current, industry: event.target.value }))}>
+          <Select aria-label="Filter by industry" value={filters.industry} onChange={(event) => setFilters((current) => ({ ...current, industry: event.target.value }))}>
             <option value="">All industries</option>
             {options.industries.map((industry) => <option key={industry} value={industry}>{industry}</option>)}
           </Select>
-          <Select value={filters.location} onChange={(event) => setFilters((current) => ({ ...current, location: event.target.value }))}>
+          <Select aria-label="Filter by location" value={filters.location} onChange={(event) => setFilters((current) => ({ ...current, location: event.target.value }))}>
             <option value="">All locations</option>
             {options.locations.map((location) => <option key={location} value={location}>{location}</option>)}
           </Select>
-          <Select value={filters.major} onChange={(event) => setFilters((current) => ({ ...current, major: event.target.value }))}>
+          <Select aria-label="Filter by major" value={filters.major} onChange={(event) => setFilters((current) => ({ ...current, major: event.target.value }))}>
             <option value="">All majors</option>
             {options.majors.map((major) => <option key={major} value={major}>{major}</option>)}
           </Select>

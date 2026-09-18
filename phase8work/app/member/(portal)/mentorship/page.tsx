@@ -81,7 +81,7 @@ export default async function MemberMentorshipPortalPage() {
   return (
     <div className="space-y-8 py-2">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">
           Member portal
         </p>
         <h1 className="mt-3 text-4xl">Mentorship opportunities</h1>
@@ -103,7 +103,7 @@ export default async function MemberMentorshipPortalPage() {
       <div className="surface p-8">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">
               Your posts
             </p>
             <h2 className="mt-3 text-2xl">Existing opportunities</h2>

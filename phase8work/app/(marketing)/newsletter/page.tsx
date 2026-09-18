@@ -4,6 +4,8 @@ import { getNewsletters } from '@/lib/queries/public';
 import { NewsletterCard } from '@/components/cards/newsletter-card';
 import { NewsletterSignupForm } from '@/components/forms/newsletter-signup-form';
 
+export const revalidate = 300;
+
 export default async function NewsletterPage() {
   const issues = await getNewsletters();
   return (

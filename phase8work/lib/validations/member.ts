@@ -2,11 +2,10 @@ import { z } from 'zod';
 
 const nonEmpty = (message: string) => z.string().trim().min(1, message);
 
-export const memberClaimSchema = z.object({
+export const memberClaimRequestSchema = z.object({
   fullName: nonEmpty('Full name is required'),
   graduationYear: z.coerce.number().int().min(1900).max(2100),
-  email: z.email('Enter a valid email'),
-  password: z.string().min(8, 'Password must be at least 8 characters')
+  email: z.email('Enter a valid email')
 });
 
 export const activeClaimRequestSchema = z.object({
@@ -40,7 +39,7 @@ export const memberProfileSchema = z.object({
   linkedinVisibility: z.enum(['private', 'members', 'public']).default('public')
 });
 
-export type MemberClaimInput = z.infer<typeof memberClaimSchema>;
+export type MemberClaimRequestInput = z.infer<typeof memberClaimRequestSchema>;
 export type ActiveClaimRequestInput = z.infer<typeof activeClaimRequestSchema>;
 export type ActiveClaimCompleteInput = z.infer<typeof activeClaimCompleteSchema>;
 export type MemberProfileInput = z.infer<typeof memberProfileSchema>;

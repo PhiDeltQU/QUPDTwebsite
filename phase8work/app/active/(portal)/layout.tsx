@@ -22,10 +22,10 @@ export default async function ActivePortalLayout({
         <div className="mx-auto max-w-7xl px-6 py-8">
           <div className="surface mb-8 flex flex-col gap-6 p-6 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">
                 Active member portal
               </p>
-              <h1 className="mt-3 text-3xl">Current brother access</h1>
+              <p className="mt-3 text-3xl font-serif tracking-tight text-fraternity-charcoal">Current brother access</p>
               <p className="mt-2 text-sm text-fraternity-slate">
                 Signed in as {session.email}. Use this portal to track mentorship
                 applications and access protected member resources.

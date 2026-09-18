@@ -17,6 +17,11 @@ create index if not exists idx_alumni_profiles_member_status on alumni_profiles(
 create index if not exists idx_alumni_profiles_alumni_access on alumni_profiles(alumni_access_enabled);
 create index if not exists idx_site_content_page_slug on site_content(page_slug);
 
+-- Server-side app code (getHomePageContent/getAboutPageContent) always uses
+-- the Supabase service role key, which bypasses RLS, so this table needs no
+-- anon/authenticated policy.
+alter table if exists site_content enable row level security;
+
 insert into site_content (page_slug, content_key, content_value)
 values
   ('home', 'heroEyebrow', 'Phi Delta Theta Alumni Network'),

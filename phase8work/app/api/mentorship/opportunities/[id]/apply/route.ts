@@ -156,7 +156,7 @@ export async function POST(
       );
     }
 
-    const formData = (await request.formData()) as any;
+    const formData = await request.formData();
 
     const resume = formData.get("resume") as File | null;
     const coverLetter = formData.get("coverLetter") as File | null;

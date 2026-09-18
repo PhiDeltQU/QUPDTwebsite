@@ -6,7 +6,11 @@ import { SESSION_COOKIE_NAME } from '@/lib/auth/constants';
 const DEFAULT_DURATION_MS = 1000 * 60 * 60 * 24 * 7;
 
 function getSessionSecret() {
-  return process.env.SESSION_SECRET || 'change-me-in-env';
+  const secret = process.env.SESSION_SECRET;
+  if (!secret) {
+    throw new Error('SESSION_SECRET environment variable is not set. Refusing to sign or verify sessions with an insecure default.');
+  }
+  return secret;
 }
 
 function encode(payload: SessionUser) {

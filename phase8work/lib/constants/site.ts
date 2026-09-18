@@ -1,4 +1,4 @@
-import { AboutPageContent, AlumniProfile, EventItem, HomePageContent, LegacyVaultItem, NavItem, NewsletterIssue, Spotlight, Stat, TimelineEntry } from '@/types';
+import { AboutPageContent, AlumniProfile, EventItem, HomePageContent, LegacyVaultItem, NavItem, NewsletterIssue, Spotlight, TimelineEntry } from '@/types';
 
 export const siteConfig = {
   name: 'Phi Delta Theta',
@@ -14,13 +14,6 @@ export const navItems: NavItem[] = [
   { label: 'Recruitment', href: '/recruitment' },
   { label: 'Events', href: '/events' },
   { label: 'Alumni', href: '/alumni' }
-];
-
-export const chapterStats: Stat[] = [
-  { value: '2025', label: 'Chapter Founded', description: 'The beginning of Connecticut Epsilon at Quinnipiac University.' },
-  { value: '4', label: 'Ways to Belong', description: 'Active brothers, alumni, future members, and chapter supporters.' },
-  { value: 'Year-round', label: 'Chapter Connection', description: 'Events, updates, service, mentorship, and brotherhood in one place.' },
-  { value: '1', label: 'Shared Digital Home', description: 'A platform designed to serve the chapter across generations.' }
 ];
 
 export const values = [

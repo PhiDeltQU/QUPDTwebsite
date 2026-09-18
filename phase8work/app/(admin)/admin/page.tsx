@@ -8,7 +8,7 @@ export default async function AdminPage() {
   return (
     <div className="space-y-8 py-2">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">Admin overview</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Admin overview</p>
         <h1 className="mt-3 text-4xl">Chapter operations dashboard foundation</h1>
         <p className="mt-4 max-w-3xl text-fraternity-slate">
           This is no longer a placeholder page. It already reads structured records and shows whether the project is currently operating in <strong>{dataSource}</strong> mode.

@@ -70,7 +70,7 @@ export async function POST(
 
     const { supabase, alumniProfileId } = resolved;
 
-    const formData = (await request.formData()) as any;
+    const formData = await request.formData();
     const status = String(formData.get("status") || "");
     const alumniNotes = normalizeOptional(formData.get("alumniNotes"));
 

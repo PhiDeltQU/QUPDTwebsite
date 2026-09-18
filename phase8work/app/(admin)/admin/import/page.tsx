@@ -4,7 +4,7 @@ export default function ImportPage() {
   return (
     <div className="space-y-8 py-2">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">Admin module</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Admin module</p>
         <h1 className="mt-3 text-4xl">CSV import</h1>
         <p className="mt-4 max-w-3xl text-fraternity-slate">
           Use a single member CSV to seed or update directory records. The importer now derives <strong>active</strong> versus <strong>alumni</strong> status from <strong>graduation_year</strong> and <strong>graduation_term</strong>, so future uploads stay aligned with the chapter roster without relying on manual status labels.

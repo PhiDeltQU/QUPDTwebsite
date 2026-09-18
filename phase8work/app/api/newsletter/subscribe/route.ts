@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { checkRateLimit } from "@/lib/auth/rate-limit";
 
 const subscribeSchema = z.object({
   firstName: z.string().trim().min(1).max(100),
@@ -46,7 +47,7 @@ async function parseRequestBody(request: Request) {
     };
   }
 
-  const formData = (await request.formData()) as any;
+  const formData = await request.formData();
 
   return {
     firstName: formData.get("firstName"),
@@ -59,6 +60,11 @@ async function parseRequestBody(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const ip = request.headers.get("CF-Connecting-IP") ?? request.headers.get("x-forwarded-for") ?? "unknown";
+  if (!checkRateLimit(`newsletter-subscribe:${ip}`, 10, 10 * 60 * 1000)) {
+    return NextResponse.json({ error: "Too many requests. Please wait a while and try again." }, { status: 429 });
+  }
+
   try {
     const supabase = createServerSupabaseClient();
 

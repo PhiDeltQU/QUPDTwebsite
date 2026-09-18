@@ -98,7 +98,7 @@ function SummaryCard({
 }) {
   return (
     <div className="surface p-8">
-      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
+      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">
         Opportunity summary
       </p>
       <h2 className="mt-3 text-2xl">{opportunity.title}</h2>
@@ -152,13 +152,14 @@ export default async function MentorshipOpportunityApplyPage({
   }
 
   const { slug } = await params;
-  const opportunity = await getMentorshipOpportunityBySlug(slug);
+  const [opportunity, applicantDefaults] = await Promise.all([
+    getMentorshipOpportunityBySlug(slug),
+    getApplicantDefaults(session.email),
+  ]);
 
   if (!opportunity) {
     notFound();
   }
-
-  const applicantDefaults = await getApplicantDefaults(session.email);
 
   return (
     <>

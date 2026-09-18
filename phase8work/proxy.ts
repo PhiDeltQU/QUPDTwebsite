@@ -11,7 +11,7 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  const publicMemberRoutes = new Set(["/member/login", "/member/claim"]);
+  const publicMemberRoutes = new Set(["/member/login", "/member/claim", "/member/claim/complete"]);
   if (pathname.startsWith("/member") && !publicMemberRoutes.has(pathname) && !session) {
     const loginUrl = new URL("/member/login", request.url);
     return NextResponse.redirect(loginUrl);

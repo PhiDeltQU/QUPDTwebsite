@@ -6,6 +6,8 @@ import { EventsCalendar } from '@/components/sections/events-calendar';
 import { CTASection } from '@/components/sections/cta-section';
 import { Button } from '@/components/ui/button';
 
+export const revalidate = 300;
+
 export default async function EventsPage() {
   const allEvents = await getEvents();
   return (

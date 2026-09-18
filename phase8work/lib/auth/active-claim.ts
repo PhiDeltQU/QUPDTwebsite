@@ -1,10 +1,13 @@
 import crypto from 'crypto';
 import { getSupabaseAdmin } from '@/lib/supabase/admin';
 
-const ACTIVE_CLAIM_TTL_MINUTES = 30;
+const CLAIM_TTL_MINUTES = 30;
 
-type ActiveClaimTokenRow = {
+export type ClaimType = 'active' | 'alumni';
+
+type ClaimTokenRow = {
   id: string;
+  claim_type: ClaimType;
   auth_email: string;
   alumni_profile_id: string;
   expires_at: string;
@@ -24,21 +27,26 @@ export function buildActiveClaimUrl(token: string) {
   return `${baseUrl.replace(/\/$/, '')}/active/claim/complete?token=${encodeURIComponent(token)}`;
 }
 
-export async function issueActiveClaimToken(input: { email: string; alumniProfileId: string }) {
+export function buildAlumniClaimUrl(token: string) {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  return `${baseUrl.replace(/\/$/, '')}/member/claim/complete?token=${encodeURIComponent(token)}`;
+}
+
+export async function issueClaimToken(input: { claimType: ClaimType; email: string; alumniProfileId: string }) {
   const supabase = getSupabaseAdmin();
   const token = createActiveClaimToken();
   const tokenHash = hashToken(token);
-  const expiresAt = new Date(Date.now() + ACTIVE_CLAIM_TTL_MINUTES * 60 * 1000).toISOString();
+  const expiresAt = new Date(Date.now() + CLAIM_TTL_MINUTES * 60 * 1000).toISOString();
 
   await supabase
     .from('member_claim_tokens')
     .update({ used_at: new Date().toISOString() })
-    .eq('claim_type', 'active')
+    .eq('claim_type', input.claimType)
     .eq('auth_email', input.email)
     .is('used_at', null);
 
   const { error } = await supabase.from('member_claim_tokens').insert({
-    claim_type: 'active',
+    claim_type: input.claimType,
     auth_email: input.email,
     alumni_profile_id: input.alumniProfileId,
     token_hash: tokenHash,
@@ -52,24 +60,36 @@ export async function issueActiveClaimToken(input: { email: string; alumniProfil
   return {
     token,
     expiresAt,
-    url: buildActiveClaimUrl(token)
+    url: input.claimType === 'alumni' ? buildAlumniClaimUrl(token) : buildActiveClaimUrl(token)
   };
 }
 
-export async function getActiveClaimTokenRecord(token: string): Promise<ActiveClaimTokenRow | null> {
+export async function issueActiveClaimToken(input: { email: string; alumniProfileId: string }) {
+  return issueClaimToken({ claimType: 'active', ...input });
+}
+
+export async function getClaimTokenRecord(claimType: ClaimType, token: string): Promise<ClaimTokenRow | null> {
   const supabase = getSupabaseAdmin();
   const { data, error } = await supabase
     .from('member_claim_tokens')
-    .select('id, auth_email, alumni_profile_id, expires_at, used_at')
-    .eq('claim_type', 'active')
+    .select('id, claim_type, auth_email, alumni_profile_id, expires_at, used_at')
+    .eq('claim_type', claimType)
     .eq('token_hash', hashToken(token))
     .maybeSingle();
 
   if (error || !data) return null;
-  return data as ActiveClaimTokenRow;
+  return data as ClaimTokenRow;
 }
 
-export function isActiveClaimTokenUsable(record: Pick<ActiveClaimTokenRow, 'expires_at' | 'used_at'> | null) {
+export async function getActiveClaimTokenRecord(token: string) {
+  return getClaimTokenRecord('active', token);
+}
+
+export async function getAlumniClaimTokenRecord(token: string) {
+  return getClaimTokenRecord('alumni', token);
+}
+
+export function isActiveClaimTokenUsable(record: Pick<ClaimTokenRow, 'expires_at' | 'used_at'> | null) {
   if (!record) return false;
   if (record.used_at) return false;
   return new Date(record.expires_at).getTime() > Date.now();

@@ -22,10 +22,10 @@ export default async function MemberLayout({
         <div className="mx-auto max-w-7xl px-6 py-8">
           <div className="surface mb-8 flex flex-col gap-6 p-6 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">
                 Alumni portal
               </p>
-              <h1 className="mt-3 text-3xl">Private alumni access</h1>
+              <p className="mt-3 text-3xl font-serif tracking-tight text-fraternity-charcoal">Private alumni access</p>
               <p className="mt-2 text-sm text-fraternity-slate">
                 Signed in as {session.email}. This portal supports linked alumni
                 accounts, self-service profile editing, mentorship opportunity

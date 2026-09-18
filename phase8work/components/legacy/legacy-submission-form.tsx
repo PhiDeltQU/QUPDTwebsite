@@ -42,8 +42,9 @@ export function LegacySubmissionForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid gap-5 md:grid-cols-2">
         <div>
-          <label className="mb-2 block text-sm font-medium">First name</label>
+          <label htmlFor="legacy-first-name" className="mb-2 block text-sm font-medium">First name</label>
           <input
+            id="legacy-first-name"
             name="firstName"
             required
             className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none"
@@ -51,8 +52,9 @@ export function LegacySubmissionForm() {
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium">Last name</label>
+          <label htmlFor="legacy-last-name" className="mb-2 block text-sm font-medium">Last name</label>
           <input
+            id="legacy-last-name"
             name="lastName"
             required
             className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none"
@@ -60,8 +62,9 @@ export function LegacySubmissionForm() {
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium">Graduation year</label>
+          <label htmlFor="legacy-graduation-year" className="mb-2 block text-sm font-medium">Graduation year</label>
           <input
+            id="legacy-graduation-year"
             type="number"
             name="graduationYear"
             required
@@ -73,8 +76,9 @@ export function LegacySubmissionForm() {
 
 
         <div className="md:col-span-2">
-          <label className="mb-2 block text-sm font-medium">Title</label>
+          <label htmlFor="legacy-title" className="mb-2 block text-sm font-medium">Title</label>
           <input
+            id="legacy-title"
             name="title"
             required
             className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none"
@@ -83,8 +87,9 @@ export function LegacySubmissionForm() {
         </div>
 
         <div className="md:col-span-2">
-          <label className="mb-2 block text-sm font-medium">Memory or description</label>
+          <label htmlFor="legacy-memory-body" className="mb-2 block text-sm font-medium">Memory or description</label>
           <textarea
+            id="legacy-memory-body"
             name="memoryBody"
             required
             rows={7}
@@ -94,8 +99,9 @@ export function LegacySubmissionForm() {
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium">Release date</label>
+          <label htmlFor="legacy-release-date" className="mb-2 block text-sm font-medium">Release date</label>
           <input
+            id="legacy-release-date"
             type="date"
             name="releaseDate"
             required
@@ -108,8 +114,9 @@ export function LegacySubmissionForm() {
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium">Submission type</label>
+          <label htmlFor="legacy-media-type" className="mb-2 block text-sm font-medium">Submission type</label>
           <select
+            id="legacy-media-type"
             name="mediaType"
             className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none"
             defaultValue="memory"
@@ -123,8 +130,9 @@ export function LegacySubmissionForm() {
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium">Optional file upload</label>
+          <label htmlFor="legacy-file" className="mb-2 block text-sm font-medium">Optional file upload</label>
           <input
+            id="legacy-file"
             type="file"
             name="file"
             className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none"
@@ -150,7 +158,11 @@ export function LegacySubmissionForm() {
         </button>
 
         {message ? (
-          <p className={`text-sm ${state === "error" ? "text-red-700" : "text-emerald-700"}`}>
+          <p
+            role={state === "error" ? "alert" : "status"}
+            aria-live={state === "error" ? "assertive" : "polite"}
+            className={`text-sm ${state === "error" ? "text-red-700" : "text-emerald-700"}`}
+          >
             {message}
           </p>
         ) : null}

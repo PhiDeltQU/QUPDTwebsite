@@ -7,6 +7,7 @@ import { EventItem } from '@/types';
 import { Container } from '@/components/layout/container';
 
 const WEEKDAY_LABELS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+const WEEKDAY_FULL_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 type CalendarEvent = EventItem & { dateObj: Date };
 
@@ -107,7 +108,7 @@ export function EventsCalendar({ events }: { events: EventItem[] }) {
         <div className="mt-6 grid grid-cols-7 gap-1 text-center text-xs font-semibold uppercase tracking-[0.1em] text-fraternity-slate sm:gap-2">
           {WEEKDAY_LABELS.map((label, index) => (
             <div key={`${label}-${index}`} className="py-2">
-              {label}
+              <abbr title={WEEKDAY_FULL_NAMES[index]} className="no-underline">{label}</abbr>
             </div>
           ))}
         </div>
@@ -126,22 +127,38 @@ export function EventsCalendar({ events }: { events: EventItem[] }) {
                 date ? 'border-black/5 bg-white' : 'border-transparent bg-transparent'
               } ${isSelected ? 'ring-2 ring-fraternity-azure' : ''}`;
 
+              const dayNumberClassName = `inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold ${
+                isToday ? 'bg-fraternity-azure text-white' : 'text-fraternity-charcoal'
+              }`;
+
+              // The day number is a button (not the whole cell) so it can toggle the
+              // mobile "selected day" panel below without nesting the desktop event
+              // <Link>s inside a <button> — nesting interactive elements is invalid
+              // HTML and breaks keyboard/focus behavior.
               const cellContent = date ? (
                 <>
-                  <span
-                    className={`inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold ${
-                      isToday ? 'bg-fraternity-azure text-white' : 'text-fraternity-charcoal'
-                    }`}
-                  >
-                    {date.getDate()}
-                  </span>
+                  {hasEvents ? (
+                    <button
+                      type="button"
+                      onClick={() => setSelectedDate(isSelected ? null : (date as Date))}
+                      aria-pressed={isSelected}
+                      aria-label={`${date.getDate()}, ${dayEvents.length} ${dayEvents.length === 1 ? 'event' : 'events'}`}
+                      className={dayNumberClassName}
+                    >
+                      {date.getDate()}
+                    </button>
+                  ) : (
+                    <span className={dayNumberClassName}>{date.getDate()}</span>
+                  )}
 
-                  {/* Mobile: dots only, tap the day to see names below. Desktop cells are wide enough for titles. */}
-                  <div className="mt-1 flex flex-wrap gap-1 sm:hidden">
-                    {dayEvents.map((event) => (
-                      <span key={event.slug} className="h-1.5 w-1.5 rounded-full bg-fraternity-azure" />
-                    ))}
-                  </div>
+                  {/* Mobile: dots only, tap the day number to see names below. Desktop cells are wide enough for titles. */}
+                  {hasEvents ? (
+                    <div className="mt-1 flex flex-wrap gap-1 sm:hidden" aria-hidden="true">
+                      {dayEvents.map((event) => (
+                        <span key={event.slug} className="h-1.5 w-1.5 rounded-full bg-fraternity-azure" />
+                      ))}
+                    </div>
+                  ) : null}
 
                   <div className="mt-1 hidden space-y-1 sm:block">
                     {dayEvents.map((event) => (
@@ -158,19 +175,6 @@ export function EventsCalendar({ events }: { events: EventItem[] }) {
                 </>
               ) : null;
 
-              if (hasEvents) {
-                return (
-                  <button
-                    key={`${weekIndex}-${dayIndex}`}
-                    type="button"
-                    onClick={() => setSelectedDate(isSelected ? null : (date as Date))}
-                    className={cellClassName}
-                  >
-                    {cellContent}
-                  </button>
-                );
-              }
-
               return (
                 <div key={`${weekIndex}-${dayIndex}`} className={cellClassName}>
                   {cellContent}
@@ -181,7 +185,10 @@ export function EventsCalendar({ events }: { events: EventItem[] }) {
         </div>
 
         {selectedDayEvents.length > 0 ? (
-          <div className="mt-4 rounded-xl border border-fraternity-azure/20 bg-fraternity-azure/5 p-4 sm:hidden">
+          <div
+            role="status"
+            aria-live="polite"
+            className="mt-4 rounded-xl border border-fraternity-azure/20 bg-fraternity-azure/5 p-4 sm:hidden">
             <p className="text-xs font-semibold uppercase tracking-[0.1em] text-fraternity-azure">
               {new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric' }).format(selectedDate as Date)}
             </p>

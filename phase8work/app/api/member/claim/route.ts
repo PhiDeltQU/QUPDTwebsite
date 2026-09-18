@@ -1,74 +1,83 @@
 import { NextResponse } from 'next/server';
-import { memberClaimSchema } from '@/lib/validations/member';
-import { createServerSupabaseClient } from '@/lib/supabase/server';
+import { memberClaimRequestSchema } from '@/lib/validations/member';
+import { getSupabaseAdmin } from '@/lib/supabase/admin';
+import { issueClaimToken } from '@/lib/auth/active-claim';
+import { sendAlumniClaimEmail } from '@/lib/email/send-alumni-claim-email';
+import { checkRateLimit } from '@/lib/auth/rate-limit';
+
+const GENERIC_MESSAGE = 'If that name, graduation year, and email match an alumni record, we sent a secure setup link to that email.';
 
 export async function POST(request: Request) {
-  const supabase = createServerSupabaseClient();
-  if (!supabase) {
-    return NextResponse.json({ error: 'Supabase connection is required for profile claiming in Phase 7.' }, { status: 500 });
+  const ip = request.headers.get('CF-Connecting-IP') ?? request.headers.get('x-forwarded-for') ?? 'unknown';
+  if (!checkRateLimit(`member-claim-request:${ip}`, 5, 10 * 60 * 1000)) {
+    return NextResponse.json({ error: 'Too many setup requests. Please wait 10 minutes.' }, { status: 429 });
   }
 
   const json = await request.json().catch(() => null);
-  const parsed = memberClaimSchema.safeParse(json);
+  const parsed = memberClaimRequestSchema.safeParse(json);
   if (!parsed.success) {
-    return NextResponse.json({ error: 'Invalid claim submission.' }, { status: 400 });
+    return NextResponse.json({ error: 'Enter your full name, graduation year, and email.' }, { status: 400 });
   }
 
-  const { fullName, graduationYear, email, password } = parsed.data;
+  const { fullName, graduationYear, email } = parsed.data;
   const normalizedEmail = email.toLowerCase().trim();
 
-  const lookup = await supabase
-    .from('alumni_private_details')
-    .select('alumni_profile_id, email, alumni_profiles(full_name, graduation_year, member_status, alumni_access_enabled)')
-    .eq('email', normalizedEmail)
-    .maybeSingle();
-
-  if (!lookup.data?.alumni_profile_id) {
-    return NextResponse.json({ error: 'No alumni record was found for that email. Ask an officer to add or correct your alumni contact email first.' }, { status: 404 });
+  if (!checkRateLimit(`member-claim-request-email:${normalizedEmail}`, 3, 10 * 60 * 1000)) {
+    return NextResponse.json({ error: 'Too many setup requests for this email. Please wait 10 minutes.' }, { status: 429 });
   }
 
-  const profile = Array.isArray((lookup.data as any).alumni_profiles)
-    ? (lookup.data as any).alumni_profiles[0]
-    : (lookup.data as any).alumni_profiles;
+  try {
+    const supabase = getSupabaseAdmin();
+    const lookup = await supabase
+      .from('alumni_private_details')
+      .select('alumni_profile_id, email, alumni_profiles(full_name, graduation_year, member_status, alumni_access_enabled)')
+      .eq('email', normalizedEmail)
+      .maybeSingle();
 
-  if (!profile || profile.full_name !== fullName || Number(profile.graduation_year) !== graduationYear) {
-    return NextResponse.json({ error: 'Your name or graduation year did not match the alumni record linked to that email.' }, { status: 403 });
+    const profile = Array.isArray((lookup.data as any)?.alumni_profiles)
+      ? (lookup.data as any)?.alumni_profiles?.[0]
+      : (lookup.data as any)?.alumni_profiles;
+
+    const isEligible =
+      Boolean(lookup.data?.alumni_profile_id) &&
+      Boolean(profile) &&
+      profile.full_name === fullName &&
+      Number(profile.graduation_year) === graduationYear &&
+      profile.alumni_access_enabled !== false &&
+      profile.member_status !== 'active';
+
+    if (!isEligible) {
+      return NextResponse.json({ ok: true, message: GENERIC_MESSAGE });
+    }
+
+    const issued = await issueClaimToken({
+      claimType: 'alumni',
+      email: normalizedEmail,
+      alumniProfileId: lookup.data!.alumni_profile_id
+    });
+
+    const delivery = await sendAlumniClaimEmail({
+      to: normalizedEmail,
+      claimUrl: issued.url,
+      expiresAt: issued.expiresAt
+    });
+
+    if (!delivery.sent) {
+      if (delivery.mode === 'preview' && process.env.NODE_ENV !== 'production') {
+        return NextResponse.json({
+          ok: true,
+          message: 'Resend is not configured, so no email was sent. Use the preview link below for local testing.',
+          previewUrl: issued.url
+        });
+      }
+
+      return NextResponse.json({ error: delivery.error || 'Unable to send the setup email.' }, { status: 500 });
+    }
+
+    return NextResponse.json({ ok: true, message: GENERIC_MESSAGE });
+  } catch (error) {
+    return NextResponse.json({
+      error: error instanceof Error ? error.message : 'Unable to start account setup.'
+    }, { status: 500 });
   }
-
-  if (profile.alumni_access_enabled === false || profile.member_status === 'active') {
-    return NextResponse.json({ error: 'This record is not alumni-enabled yet. Update graduation status or alumni access in the admin workspace first.' }, { status: 403 });
-  }
-
-  const existing = await supabase.from('member_accounts').select('id').eq('auth_email', normalizedEmail).maybeSingle();
-  if (existing.data?.id) {
-    return NextResponse.json({ message: 'This alumni record is already claimed. You can sign in now.' });
-  }
-
-  const { data: createdUser, error: createError } = await supabase.auth.admin.createUser({
-    email: normalizedEmail,
-    password,
-    email_confirm: true,
-    user_metadata: { full_name: fullName, graduation_year: graduationYear }
-  });
-
-  if (createError && !/already/i.test(createError.message)) {
-    return NextResponse.json({ error: createError.message }, { status: 400 });
-  }
-
-  const authUserId = createdUser.user?.id ?? null;
-
-  const { error: upsertError } = await supabase
-    .from('member_accounts')
-    .upsert({
-      alumni_profile_id: lookup.data.alumni_profile_id,
-      auth_user_id: authUserId,
-      auth_email: normalizedEmail,
-      claim_status: 'linked'
-    }, { onConflict: 'auth_email' });
-
-  if (upsertError) {
-    return NextResponse.json({ error: upsertError.message }, { status: 400 });
-  }
-
-  return NextResponse.json({ message: 'Profile claimed successfully. You can sign in with your email and password now.' });
 }

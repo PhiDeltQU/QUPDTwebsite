@@ -82,6 +82,7 @@ export function SiteHeader({ role }: { role: SessionRole | null }) {
           type="button"
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
+          aria-controls="mobile-nav-menu"
           className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/10 bg-white text-fraternity-charcoal xl:hidden"
           onClick={() => setOpen((value) => !value)}
         >
@@ -90,6 +91,7 @@ export function SiteHeader({ role }: { role: SessionRole | null }) {
       </Container>
 
       <div
+        id="mobile-nav-menu"
         className={cn(
           'border-t border-black/5 bg-fraternity-cream xl:hidden',
           open ? 'block' : 'hidden'

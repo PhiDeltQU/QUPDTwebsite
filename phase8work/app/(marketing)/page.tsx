@@ -14,6 +14,8 @@ import { CTASection } from '@/components/sections/cta-section';
 import { getHomePageContent } from '@/lib/queries/content';
 import { getEvents, getFeaturedSpotlight, getNewsletters } from '@/lib/queries/public';
 
+export const revalidate = 300;
+
 const chapterPathways = [
   {
     eyebrow: 'Future Members',

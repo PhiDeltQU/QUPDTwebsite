@@ -18,7 +18,7 @@ export default async function ActiveClaimCompletePage({
         <ActiveClaimCompleteForm token={token} email={record.auth_email} />
       ) : (
         <div className="surface mx-auto max-w-2xl p-8 md:p-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">
             Active access
           </p>
           <h1 className="mt-3 text-4xl">This setup link is no longer valid</h1>

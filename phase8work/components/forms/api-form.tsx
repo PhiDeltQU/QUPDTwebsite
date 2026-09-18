@@ -82,8 +82,12 @@ export function ApiForm({ title, description, endpoint, successMessage, submitLa
           <Button className="min-w-36" variant="primary">
             {state === 'submitting' ? 'Submitting…' : submitLabel}
           </Button>
-          {state === 'success' ? <p className="text-sm font-medium text-emerald-700">{resultMessage}</p> : null}
-          {state === 'error' ? <p className="text-sm font-medium text-red-700">{error}</p> : null}
+          {state === 'success' ? (
+            <p role="status" aria-live="polite" className="text-sm font-medium text-emerald-700">{resultMessage}</p>
+          ) : null}
+          {state === 'error' ? (
+            <p role="alert" aria-live="assertive" className="text-sm font-medium text-red-700">{error}</p>
+          ) : null}
         </div>
       </form>
     </div>

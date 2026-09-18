@@ -67,7 +67,7 @@ export function SiteFooter() {
       </Container>
 
       <Container className="mt-12 border-t border-white/10 pt-6">
-        <p className="text-xs text-white/45">
+        <p className="text-xs text-white/60">
           © {new Date().getFullYear()} Phi Delta Theta Connecticut Epsilon. Chapter website.
         </p>
       </Container>

@@ -234,10 +234,24 @@ alter table events enable row level security;
 alter table newsletters enable row level security;
 alter table legacy_vault_items enable row level security;
 alter table if exists legacy_submissions enable row level security;
+alter table if exists event_rsvps enable row level security;
+alter table if exists newsletter_subscribers enable row level security;
+alter table if exists mentors enable row level security;
+alter table if exists mentee_requests enable row level security;
+alter table if exists spotlight_posts enable row level security;
+alter table if exists media_items enable row level security;
+alter table if exists contact_submissions enable row level security;
+alter table if exists donation_interest_submissions enable row level security;
+alter table if exists admin_users enable row level security;
+alter table if exists user_roles enable row level security;
 
-drop policy if exists "Public can read public alumni profiles" on alumni_profiles;
-create policy "Public can read public alumni profiles" on alumni_profiles
-for select using (is_public = true);
+-- Note: alumni_profiles has no public/authenticated select policy on
+-- purpose. The alumni directory is gated behind the app's own session
+-- check (see app/(marketing)/alumni/page.tsx) and the app's server-side
+-- queries always use the Supabase service role key, which bypasses RLS.
+-- A permissive "is_public = true" policy here would let anyone holding
+-- the public anon key read the whole directory directly, bypassing that
+-- gate entirely.
 
 drop policy if exists "Public can read published events" on events;
 create policy "Public can read published events" on events
@@ -294,10 +308,13 @@ create index if not exists idx_member_claim_tokens_email on member_claim_tokens(
 create index if not exists idx_member_claim_tokens_profile on member_claim_tokens(alumni_profile_id);
 create index if not exists idx_member_claim_tokens_claim_type on member_claim_tokens(claim_type);
 
+-- member_accounts has no public/authenticated policy on purpose: it maps
+-- auth accounts to alumni profiles and is only ever touched by server-side
+-- app code using the service role key, which bypasses RLS. A permissive
+-- "using (true) with check (true)" policy here would let anyone with the
+-- public anon key read or rewrite that mapping directly (account takeover).
 alter table if exists member_accounts enable row level security;
 drop policy if exists "Admins can manage member links" on member_accounts;
-create policy "Admins can manage member links" on member_accounts
-for all using (true) with check (true);
 
 alter table if exists member_claim_tokens enable row level security;
 drop policy if exists "Admins can manage claim tokens" on member_claim_tokens;

@@ -136,7 +136,11 @@ export function FileUploadForm() {
           </Button>
 
           {message ? (
-            <p className={`text-sm font-medium ${state === 'error' ? 'text-red-700' : 'text-emerald-700'}`}>
+            <p
+              role={state === 'error' ? 'alert' : 'status'}
+              aria-live={state === 'error' ? 'assertive' : 'polite'}
+              className={`text-sm font-medium ${state === 'error' ? 'text-red-700' : 'text-emerald-700'}`}
+            >
               {message}
             </p>
           ) : null}

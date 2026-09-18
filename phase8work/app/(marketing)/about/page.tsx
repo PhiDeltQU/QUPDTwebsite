@@ -46,6 +46,7 @@ export default async function AboutPage() {
               alt="Phi Delta Theta"
               width={1800}
               height={600}
+              sizes="96px"
               className="h-8 w-auto"
             />
             <p className="mt-6 text-xs font-semibold uppercase tracking-[0.22em] text-fraternity-argent">At a Glance</p>

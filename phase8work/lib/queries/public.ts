@@ -1,7 +1,12 @@
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { AlumniProfile, EventItem, LegacyVaultItem, NewsletterIssue, Spotlight } from '@/types';
-import { readDemoStore } from '@/lib/demo-store';
-import { legacyVaultItems as fallbackLegacy, alumniSpotlight as fallbackSpotlight } from '@/lib/constants/site';
+import {
+  legacyVaultItems as fallbackLegacy,
+  alumniSpotlight as fallbackSpotlight,
+  alumniProfiles as fallbackAlumniProfiles,
+  events as fallbackEvents,
+  newsletters as fallbackNewsletters
+} from '@/lib/constants/site';
 
 type DbAlumniRow = {
   full_name: string;
@@ -138,48 +143,9 @@ function mapSpotlightRow(row: DbSpotlightRow): Spotlight {
   };
 }
 
-async function getDemoPublicData() {
-  const store = await readDemoStore();
-  return {
-    alumni: store.alumni.filter((row) => row.isPublic && row.memberStatus === 'alumni' && row.alumniAccessEnabled).map((row) => ({
-      name: row.fullName,
-      gradYear: String(row.graduationYear),
-      company: row.company,
-      title: row.jobTitle,
-      industry: row.industry,
-      location: row.location,
-      bio: row.shortBio,
-      linkedin: row.linkedinUrl,
-      mentor: row.willingToMentor,
-      major: row.major,
-      featured: row.isFeatured
-    } satisfies AlumniProfile)),
-    events: store.events.filter((row) => row.status === 'published').map((row) => ({
-      slug: row.slug,
-      title: row.title,
-      date: formatDate(row.eventDate),
-      time: row.eventTime,
-      location: row.location,
-      description: row.description,
-      featured: row.isFeatured,
-      audience: row.audience,
-      body: paragraphize(row.bodyContent),
-      tags: row.tags
-    } satisfies EventItem)),
-    newsletters: store.newsletters.filter((row) => row.status !== 'draft').map((row) => ({
-      slug: row.slug,
-      title: row.title,
-      excerpt: row.summary,
-      date: formatMonthYear(row.issueDate),
-      category: row.category,
-      body: paragraphize(row.bodyContent)
-    } satisfies NewsletterIssue))
-  };
-}
-
 export async function getAlumniProfiles(): Promise<AlumniProfile[]> {
   const supabase = createServerSupabaseClient();
-  if (!supabase) return (await getDemoPublicData()).alumni;
+  if (!supabase) return fallbackAlumniProfiles;
 
   const { data, error } = await supabase
     .from('alumni_profiles')
@@ -188,29 +154,39 @@ export async function getAlumniProfiles(): Promise<AlumniProfile[]> {
     .eq('member_status', 'alumni')
     .eq('alumni_access_enabled', true)
     .order('graduation_year', { ascending: false })
-    .order('full_name', { ascending: true });
+    .order('full_name', { ascending: true })
+    .limit(1000);
 
-  if (error || !data?.length) return (await getDemoPublicData()).alumni;
+  if (error) {
+    console.error('[getAlumniProfiles]', error);
+    return fallbackAlumniProfiles;
+  }
+  if (!data?.length) return fallbackAlumniProfiles;
   return (data as DbAlumniRow[]).map(mapAlumniRow);
 }
 
 export async function getEvents(): Promise<EventItem[]> {
   const supabase = createServerSupabaseClient();
-  if (!supabase) return (await getDemoPublicData()).events;
+  if (!supabase) return fallbackEvents;
 
   const { data, error } = await supabase
     .from('events')
     .select('slug, title, event_date, event_time, location, description, is_featured, audience, image_hint, body_content, tags')
     .eq('status', 'published')
-    .order('event_date', { ascending: true });
+    .order('event_date', { ascending: true })
+    .limit(1000);
 
-  if (error || !data?.length) return (await getDemoPublicData()).events;
+  if (error) {
+    console.error('[getEvents]', error);
+    return fallbackEvents;
+  }
+  if (!data?.length) return fallbackEvents;
   return (data as DbEventRow[]).map(mapEventRow);
 }
 
 export async function getEventBySlug(slug: string): Promise<EventItem | null> {
   const supabase = createServerSupabaseClient();
-  if (!supabase) return (await getDemoPublicData()).events.find((event) => event.slug === slug) ?? null;
+  if (!supabase) return fallbackEvents.find((event) => event.slug === slug) ?? null;
 
   const { data } = await supabase
     .from('events')
@@ -218,27 +194,32 @@ export async function getEventBySlug(slug: string): Promise<EventItem | null> {
     .eq('slug', slug)
     .maybeSingle();
 
-  if (!data) return (await getDemoPublicData()).events.find((event) => event.slug === slug) ?? null;
+  if (!data) return null;
   return mapEventRow(data as DbEventRow);
 }
 
 export async function getNewsletters(): Promise<NewsletterIssue[]> {
   const supabase = createServerSupabaseClient();
-  if (!supabase) return (await getDemoPublicData()).newsletters;
+  if (!supabase) return fallbackNewsletters;
 
   const { data, error } = await supabase
     .from('newsletters')
     .select('slug, title, summary, issue_date, status, body_content, category')
     .in('status', ['published', 'sent'])
-    .order('issue_date', { ascending: false });
+    .order('issue_date', { ascending: false })
+    .limit(1000);
 
-  if (error || !data?.length) return (await getDemoPublicData()).newsletters;
+  if (error) {
+    console.error('[getNewsletters]', error);
+    return fallbackNewsletters;
+  }
+  if (!data?.length) return fallbackNewsletters;
   return (data as DbNewsletterRow[]).map(mapNewsletterRow);
 }
 
 export async function getNewsletterBySlug(slug: string): Promise<NewsletterIssue | null> {
   const supabase = createServerSupabaseClient();
-  if (!supabase) return (await getDemoPublicData()).newsletters.find((issue) => issue.slug === slug) ?? null;
+  if (!supabase) return fallbackNewsletters.find((issue) => issue.slug === slug) ?? null;
 
   const { data } = await supabase
     .from('newsletters')
@@ -246,7 +227,7 @@ export async function getNewsletterBySlug(slug: string): Promise<NewsletterIssue
     .eq('slug', slug)
     .maybeSingle();
 
-  if (!data) return (await getDemoPublicData()).newsletters.find((issue) => issue.slug === slug) ?? null;
+  if (!data) return null;
   return mapNewsletterRow(data as DbNewsletterRow);
 }
 
@@ -258,7 +239,8 @@ export async function getLegacyVaultItems(): Promise<LegacyVaultItem[]> {
     .from('legacy_vault_items')
     .select('id, title, year_label, item_type, description')
     .eq('status', 'approved')
-    .order('year_label', { ascending: false });
+    .order('year_label', { ascending: false })
+    .limit(1000);
 
   if (error || !data?.length) return fallbackLegacy;
   return (data as DbLegacyRow[]).map(mapLegacyRow);

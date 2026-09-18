@@ -1,5 +1,3 @@
-'use client';
-
 import Script from 'next/script';
 import { ApiForm } from '@/components/forms/api-form';
 import { Field } from '@/components/ui/field';

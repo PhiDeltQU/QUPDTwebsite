@@ -4,6 +4,8 @@ import { getLegacyVaultItems } from '@/lib/queries/public';
 import { CTASection } from '@/components/sections/cta-section';
 import { Button } from '@/components/ui/button';
 
+export const revalidate = 300;
+
 export default async function LegacyVaultPage() {
   const items = await getLegacyVaultItems();
   return (

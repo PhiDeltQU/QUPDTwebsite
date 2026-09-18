@@ -200,7 +200,7 @@ export default async function OpportunityApplicantsPage({ params }: PageProps) {
   return (
     <div className="space-y-8 py-2">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">
           Applicant review
         </p>
         <h1 className="mt-3 text-4xl">

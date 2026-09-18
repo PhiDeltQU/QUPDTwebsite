@@ -64,7 +64,7 @@ export default async function AdminLegacyReviewPage() {
     <main className="px-6 py-10">
       <div className="mx-auto max-w-6xl">
         <div className="surface mb-8 p-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">
             Admin Module
           </p>
           <h1 className="mt-4 text-4xl">Legacy review queue</h1>

@@ -44,7 +44,7 @@ export function ActiveClaimRequestForm() {
   return (
     <div className="surface mx-auto max-w-2xl p-8 md:p-10">
       <div className="mb-6">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">
           Active access
         </p>
         <h1 className="mt-3 text-4xl">Request your account setup link</h1>
@@ -68,7 +68,7 @@ export function ActiveClaimRequestForm() {
         </div>
 
         {state === 'success' ? (
-          <div className="space-y-3 text-sm font-medium text-emerald-700">
+          <div role="status" aria-live="polite" className="space-y-3 text-sm font-medium text-emerald-700">
             <p>{message}</p>
             {previewUrl ? (
               <p className="text-fraternity-charcoal">
@@ -79,7 +79,7 @@ export function ActiveClaimRequestForm() {
         ) : null}
 
         {state === 'error' ? (
-          <p className="text-sm font-medium text-red-700">{message}</p>
+          <p role="alert" aria-live="assertive" className="text-sm font-medium text-red-700">{message}</p>
         ) : null}
       </form>
     </div>

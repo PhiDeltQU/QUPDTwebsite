@@ -14,7 +14,7 @@ export default async function NewslettersAdminPage() {
   return (
     <div className="space-y-8 py-2">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">Admin module</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Admin module</p>
         <h1 className="mt-3 text-4xl">newsletter management</h1>
         <p className="mt-4 max-w-3xl text-fraternity-slate">This phase makes newsletter records function locally even before email sending is connected.</p>
       </div>
@@ -24,7 +24,7 @@ export default async function NewslettersAdminPage() {
       <div className="surface p-8">
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">Send workflow</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Send workflow</p>
             <h2 className="mt-2 text-2xl">Issue delivery controls</h2>
             <p className="mt-2 max-w-2xl text-sm text-fraternity-slate">Use preview mode until Resend is configured. Once RESEND_API_KEY and RESEND_FROM_EMAIL are present, this button will send to active subscribers and mark the issue as sent.</p>
           </div>

@@ -32,17 +32,17 @@ export function CsvImportForm() {
       <p className="mt-3 max-w-2xl text-sm text-fraternity-slate">Upload one CSV containing alumni/member data. This importer upserts on email first, then falls back to full name + graduation year.</p>
       <form className="mt-6 space-y-5" onSubmit={handleSubmit}>
         <div>
-          <label className="block text-sm font-medium text-fraternity-charcoal">CSV file</label>
-          <input className="mt-2 block w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm" name="file" type="file" accept=".csv,text/csv" required />
+          <label htmlFor="csv-import-file" className="block text-sm font-medium text-fraternity-charcoal">CSV file</label>
+          <input id="csv-import-file" className="mt-2 block w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm" name="file" type="file" accept=".csv,text/csv" required />
         </div>
         <div>
-          <label className="block text-sm font-medium text-fraternity-charcoal">Or paste CSV text</label>
-          <textarea className="mt-2 block min-h-56 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm" name="csvText" placeholder="full_name,email,graduation_year,..."></textarea>
+          <label htmlFor="csv-import-text" className="block text-sm font-medium text-fraternity-charcoal">Or paste CSV text</label>
+          <textarea id="csv-import-text" className="mt-2 block min-h-56 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm" name="csvText" placeholder="full_name,email,graduation_year,..."></textarea>
         </div>
         <div className="flex flex-wrap items-center gap-4">
           <Button>{state === 'submitting' ? 'Importing…' : 'Run import'}</Button>
-          {state === 'success' ? <p className="text-sm font-medium text-emerald-700">{message}</p> : null}
-          {state === 'error' ? <p className="text-sm font-medium text-red-700">{message}</p> : null}
+          {state === 'success' ? <p role="status" aria-live="polite" className="text-sm font-medium text-emerald-700">{message}</p> : null}
+          {state === 'error' ? <p role="alert" aria-live="assertive" className="text-sm font-medium text-red-700">{message}</p> : null}
         </div>
       </form>
     </div>

@@ -124,7 +124,7 @@ export async function sendContactNotificationEmails(input: ContactInput) {
   }
 
   // ── 2. Confirmation to submitter ───────────────────────────────────────────
-  const confirmSubject = `We received your message — Phi Delta Theta CT Epsilon`;
+  const confirmSubject = `We received your message — Phi Delta Theta Connecticut Epsilon`;
 
   const confirmHtml = `
     <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1f2937; max-width: 600px;">
@@ -149,7 +149,7 @@ export async function sendContactNotificationEmails(input: ContactInput) {
 
       <p style="margin-top: 24px;">
         Thank you,<br/>
-        <strong>Phi Delta Theta CT Epsilon Alumni Network</strong>
+        <strong>Phi Delta Theta Connecticut Epsilon</strong>
       </p>
     </div>
   `;
@@ -165,7 +165,7 @@ export async function sendContactNotificationEmails(input: ContactInput) {
     input.message,
     '',
     'Thank you,',
-    'Phi Delta Theta CT Epsilon Alumni Network',
+    'Phi Delta Theta Connecticut Epsilon',
   ].join('\n');
 
   const confirmResult = await sendEmail({

@@ -36,17 +36,17 @@ export default async function AdminLayout({
         <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-6 md:flex-row md:px-6">
           <aside className="surface w-full shrink-0 p-6 md:sticky md:top-6 md:w-72 md:self-start">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">
                 Admin portal
               </p>
-              <h1 className="mt-3 text-4xl">Admin Workspace</h1>
+              <p className="mt-3 text-4xl font-serif tracking-tight text-fraternity-charcoal">Admin Workspace</p>
               <p className="mt-4 text-fraternity-slate">
                 Signed in as {session.email}. This officer workspace includes
                 protected routes, operational tools, and review workflows.
               </p>
             </div>
 
-            <nav className="mt-8 flex flex-col gap-2">
+            <nav aria-label="Admin sections" className="mt-8 flex flex-col gap-2">
               {adminLinks.map((link) => (
                 <Link
                   key={link.href}

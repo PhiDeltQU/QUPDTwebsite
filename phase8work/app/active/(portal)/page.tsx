@@ -4,10 +4,10 @@ export default function ActivePortalHomePage() {
   return (
     <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">
           Active portal
         </p>
-        <h2 className="mt-3 text-4xl">Track your mentorship applications</h2>
+        <h1 className="mt-3 text-4xl">Track your mentorship applications</h1>
         <p className="mt-4 max-w-3xl text-fraternity-slate">
           Apply to alumni-posted opportunities, review the status of your
           submissions, and read any follow-up notes from the alumnus who posted
@@ -32,7 +32,7 @@ export default function ActivePortalHomePage() {
       </div>
 
       <div className="surface p-8">
-        <h3 className="text-2xl">What you can do here</h3>
+        <h2 className="text-2xl">What you can do here</h2>
         <ul className="mt-4 space-y-3 text-sm text-fraternity-slate">
           <li>• apply to alumni mentorship and internship opportunities</li>
           <li>• track application status in one place</li>

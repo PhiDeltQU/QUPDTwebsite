@@ -105,11 +105,11 @@ async function getActiveSubscribers(
 
 export async function POST(_request: Request, context: RouteContext) {
   try {
-    const session = await requireSession();
+    const session = await requireSession("admin");
 
     if (!session) {
       return NextResponse.json(
-        { error: "You must be logged in to send newsletters." },
+        { error: "You must be logged in as an admin to send newsletters." },
         { status: 401 }
       );
     }
@@ -158,11 +158,6 @@ export async function POST(_request: Request, context: RouteContext) {
 
     const siteUrl = getSiteUrl();
     const issueUrl = `${siteUrl}/newsletter/${newsletter.slug}`;
-
-    console.log("[newsletter send] siteUrl =", siteUrl);
-    console.log("[newsletter send] issueUrl =", issueUrl);
-    console.log("[newsletter send] slug =", newsletter.slug);
-    console.log("[newsletter send] newsletterId =", newsletter.id);
 
     const { subscribers, mode } = await getActiveSubscribers(supabase);
 

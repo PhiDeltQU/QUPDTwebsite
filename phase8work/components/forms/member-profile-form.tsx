@@ -57,8 +57,8 @@ export function MemberProfileForm({ profile }: { profile: MemberProfileRecord })
     <div className="grid gap-6 lg:grid-cols-[1.45fr_0.9fr]">
       <form className="surface space-y-5 p-8" onSubmit={handleSubmit}>
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">Phase 7</p>
-          <h2 className="mt-3 text-4xl">Manage your alumni profile</h2>
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Phase 7</p>
+          <h1 className="mt-3 text-4xl">Manage your alumni profile</h1>
           <p className="mt-4 text-fraternity-slate">This is the first self-service member profile flow. Update your professional details, opt into mentorship, and control what appears publicly versus inside the member network.</p>
         </div>
         <div className="grid gap-5 md:grid-cols-2">
@@ -90,7 +90,7 @@ export function MemberProfileForm({ profile }: { profile: MemberProfileRecord })
         {state === 'error' ? <p className="text-sm font-medium text-red-700">{message}</p> : null}
       </form>
       <aside className="surface p-8">
-        <h3 className="text-2xl">Current member account</h3>
+        <h2 className="text-2xl">Current member account</h2>
         <dl className="mt-5 space-y-4 text-sm text-fraternity-slate">
           <div><dt className="font-semibold text-fraternity-charcoal">Linked email</dt><dd>{profile.email}</dd></div>
           <div><dt className="font-semibold text-fraternity-charcoal">Public profile</dt><dd>{profile.isPublic ? 'Visible publicly' : 'Hidden from public directory'}</dd></div>

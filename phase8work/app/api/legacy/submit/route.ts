@@ -2,6 +2,8 @@ import { Buffer } from "buffer";
 import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { getGraduationDate, parseReleaseDateInput, type GraduationTerm } from "@/lib/legacy";
+import { requireSession } from "@/lib/auth/session";
+import { checkRateLimit } from "@/lib/auth/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -14,10 +16,39 @@ const ALLOWED_MIME_TYPES = [
 
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024;
 
+async function hasValidFileSignature(file: File): Promise<boolean> {
+  const bytes = new Uint8Array(await file.slice(0, 12).arrayBuffer());
+  // JPEG: FF D8 FF
+  if (bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff) return true;
+  // PNG: 89 50 4E 47
+  if (bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4e && bytes[3] === 0x47) return true;
+  // WEBP: "RIFF"....."WEBP"
+  if (
+    bytes[0] === 0x52 && bytes[1] === 0x49 && bytes[2] === 0x46 && bytes[3] === 0x46 &&
+    bytes[8] === 0x57 && bytes[9] === 0x45 && bytes[10] === 0x42 && bytes[11] === 0x50
+  ) return true;
+  // PDF: %PDF
+  if (bytes[0] === 0x25 && bytes[1] === 0x50 && bytes[2] === 0x44 && bytes[3] === 0x46) return true;
+  return false;
+}
+
 export async function POST(request: Request) {
+  const session = await requireSession("active");
+  if (!session) {
+    return NextResponse.json({ error: "You must be signed in as an active member to submit a memory." }, { status: 401 });
+  }
+
+  const ip = request.headers.get("CF-Connecting-IP") ?? request.headers.get("x-forwarded-for") ?? "unknown";
+  if (!checkRateLimit(`legacy-submit:${ip}`, 10, 10 * 60 * 1000)) {
+    return NextResponse.json({ error: "Too many submissions. Please wait a while and try again." }, { status: 429 });
+  }
+  if (!checkRateLimit(`legacy-submit-email:${session.email.toLowerCase()}`, 5, 10 * 60 * 1000)) {
+    return NextResponse.json({ error: "Too many submissions for this account. Please wait a while and try again." }, { status: 429 });
+  }
+
   try {
     const supabase = getSupabaseAdmin();
-    const formData = (await request.formData()) as any;
+    const formData = await request.formData();
 
     const getString = (key: string) => {
       const value = formData.get(key);
@@ -81,29 +112,15 @@ export async function POST(request: Request) {
     }
 
     const fullName = `${firstName} ${lastName}`.replace(/\s+/g, " ").trim();
+    const normalizedSessionEmail = session.email.toLowerCase().trim();
 
-    const { data: profile, error: profileError } = await supabase
-      .from("alumni_profiles")
-      .select("id, full_name, graduation_year, graduation_term, member_status, alumni_access_enabled")
-      .ilike("full_name", fullName)
-      .eq("graduation_year", graduationYear)
-      .maybeSingle();
-
-    if (profileError) {
-      return NextResponse.json({ error: profileError.message }, { status: 500 });
-    }
-
-    if (!profile) {
-      return NextResponse.json(
-        { error: "We could not find a matching member/alumni record." },
-        { status: 403 }
-      );
-    }
-
+    // Identity is anchored to the authenticated session's email, not to the
+    // client-submitted name/year, so a signed-in member can only submit under
+    // their own linked alumni record.
     const { data: privateDetails, error: privateError } = await supabase
       .from("alumni_private_details")
-      .select("alumni_profile_id, email")
-      .eq("alumni_profile_id", profile.id)
+      .select("alumni_profile_id, email, alumni_profiles(id, full_name, graduation_year, graduation_term, member_status, alumni_access_enabled)")
+      .eq("email", normalizedSessionEmail)
       .maybeSingle();
 
     if (privateError) {
@@ -121,6 +138,24 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: "We could not find an email on file for this record. Please ask an officer to update your member email first." },
         { status: 400 }
+      );
+    }
+
+    const profile = Array.isArray((privateDetails as any).alumni_profiles)
+      ? (privateDetails as any).alumni_profiles[0]
+      : (privateDetails as any).alumni_profiles;
+
+    if (!profile) {
+      return NextResponse.json(
+        { error: "We could not find a matching member/alumni record." },
+        { status: 403 }
+      );
+    }
+
+    if (profile.full_name !== fullName || Number(profile.graduation_year) !== graduationYear) {
+      return NextResponse.json(
+        { error: "Your name or graduation year did not match the record linked to your account." },
+        { status: 403 }
       );
     }
 
@@ -170,6 +205,13 @@ export async function POST(request: Request) {
       if (file.size > MAX_FILE_SIZE_BYTES) {
         return NextResponse.json(
           { error: "File is too large. Maximum size is 10 MB." },
+          { status: 400 }
+        );
+      }
+
+      if (!(await hasValidFileSignature(file))) {
+        return NextResponse.json(
+          { error: "This file does not appear to be a valid JPG, PNG, WEBP, or PDF file." },
           { status: 400 }
         );
       }

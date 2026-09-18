@@ -81,7 +81,7 @@ export function MentorshipOpportunityForm() {
 
   return (
     <form onSubmit={handleSubmit} className="surface p-8">
-      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure/80">
+      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">
         Alumni posting
       </p>
       <h2 className="mt-3 text-2xl">Post a mentorship or internship opportunity</h2>

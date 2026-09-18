@@ -151,7 +151,7 @@ async function verifyScopedCredentials(
     };
   }
 
-  if (password !== expectedPassword) {
+  if (!timingSafePasswordMatch(password, expectedPassword)) {
     return { ok: false as const, error: "Incorrect password." };
   }
 
