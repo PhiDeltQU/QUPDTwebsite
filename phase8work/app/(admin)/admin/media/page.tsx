@@ -14,10 +14,10 @@ export default async function MediaAdminPage() {
   return (
     <div className="space-y-8 py-2">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Admin module</p>
-        <h1 className="mt-3 text-4xl">media architecture</h1>
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Admin</p>
+        <h1 className="mt-3 text-4xl">Photos and files</h1>
         <p className="mt-4 max-w-3xl text-fraternity-slate">
-          Phase 5 adds Supabase Storage upload support plus edit flows for media records. In local demo mode, metadata still persists locally.
+          Upload photos, documents, and videos for the Legacy Vault archive, or photos for the website. Uploading a file here adds it to the Legacy Vault page.
         </p>
       </div>
 
@@ -26,7 +26,7 @@ export default async function MediaAdminPage() {
           <FileUploadForm />
           <ApiForm
             title="Register media item"
-            description="Save a media record with a direct URL or a bucket/path combination. In local mode these records persist to the demo store."
+            description="Only use this if the file is already online somewhere. Otherwise use the upload form above, which does this for you."
             endpoint="/api/admin/media"
             successMessage="Media metadata submitted successfully."
             submitLabel="Save media record"

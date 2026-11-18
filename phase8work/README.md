@@ -1,72 +1,50 @@
-# Phi Delta Theta Site - Phase 7
+# Phi Delta Theta Connecticut Epsilon website
 
-Phase 7 focuses on the member account system.
+Live at https://ctepsilonphidelts.org. Next.js (App Router) on Vercel, Supabase for data, auth and storage, Resend for email, Cloudflare Turnstile on the contact form.
 
-## New in this phase
-- Supabase-backed alumni email/password sign-in for member access
-- claim-your-profile flow that links an auth account to an alumni record
-- self-service member profile editing
-- privacy settings for public vs member-only visibility
+**Officers do not need this file.** Everything on the public site is edited from the admin area (`/admin`, then "How to use this"). This README is for whoever maintains the code.
 
-## Required environment for full Phase 7 behavior
-Create `.env.local` in the app root:
+## How editable content works
+
+Every public page's text, photos and buttons are defined in `lib/content/pages/<page>.ts`. Each field has a key, a label the officer sees, a type (`text`, `textarea`, `image`, `link`, `toggle`) and a default value.
+
+* Pages read content with `getPageContent('<slug>')` from `lib/content/get-content.ts`. Saved values come from the `site_content` table (`page_slug`, `content_key`, `content_value`), and the defaults fill in anything not saved.
+* Repeating cards use numbered keys (`card1Title`, `card2Title`...) built with `repeatFields()` and read back with `items()`. A slot whose first field is blank is hidden.
+* The admin editor at `/admin/content/<slug>` is generated from the same definitions. Adding a field means adding it to the page definition and using it in the page. No database change is needed.
+* Never rename a `slug` or field `key` after launch. Saved text is stored under those names.
+* `lib/content/stale-seed-values.ts` lists the old starter text that `supabase/phase8.sql` put into production. Saved values that exactly match it are ignored.
+* Photos uploaded in the editor go to the public `site-images` Supabase bucket. It is created automatically on first upload.
+
+## Environment variables (Vercel project settings)
+
+| Variable | Purpose |
+| --- | --- |
+| `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` | Supabase. The server uses the service role key. |
+| `ADMIN_LOGIN_PASSWORD` | Shared admin password. Admin emails are managed on `/admin/admins` (`admin_users` table). |
+| `SESSION_SECRET` | Signs login cookies and unsubscribe links. Changing it signs everyone out. |
+| `RESEND_API_KEY`, `RESEND_FROM_EMAIL` | Email sending. The sender domain must be verified in Resend. |
+| `CONTACT_NOTIFY_EMAIL` | Where contact form messages are emailed. |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` | Contact form spam protection. |
+| `FORM_IMPORT_SECRET` | Shared secret for the Google Form alumni webhook. |
+| `CRON_SECRET` | Required for the daily Legacy Vault release job (`vercel.json`). The job refuses to run without it. |
+| `NEXT_PUBLIC_SITE_URL` | `https://ctepsilonphidelts.org` |
+| `ALUMNI_LOGIN_PASSWORD`, `ACTIVE_MEMBER_LOGIN_PASSWORD` | Legacy fallbacks, only used when Supabase Auth is not configured. |
+
+## Database
+
+For a fresh Supabase project, run in order: `supabase/schema.sql`, then `phase6.sql` through `phase12.sql`. Skip `seed.sql` (demo data). Then add your email to `admin_users`.
+
+Storage buckets used: `legacy-submissions` (private), `mentorship-applications` (private), `legacy-vault` (public, admin uploads), `site-images` (public, created automatically).
+
+## Google Form alumni import
+
+`POST /api/integrations/alumni-import` with header `Authorization: Bearer $FORM_IMPORT_SECRET`. The body is `{ "row": {...} }` or `{ "records": [{...}] }`, with columns such as `full_name`, `email`, `phone`, `major`, `graduation_year` and `graduation_term`. Works with Google Apps Script, Zapier or Make.
+
+## Local development
 
 ```bash
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
-ADMIN_LOGIN_PASSWORD=
-SESSION_SECRET=
+npm install
+npm run dev
 ```
 
-`ALUMNI_LOGIN_PASSWORD` is now only a legacy fallback if Supabase Auth is not configured.
-
-## Supabase setup
-1. Run `supabase/schema.sql` if starting fresh.
-2. If you already have an existing Phase 6 database, run `supabase/phase7.sql`, then the later `phaseN.sql` files in order (8, 9, 10, 11, 12).
-3. Run `supabase/seed.sql` if you want the demo alumni/event/newsletter data.
-4. Make sure `admin@example.org` exists in `admin_users` or replace it with your own email.
-5. Use the contact email in `alumni_private_details` when claiming a member profile.
-6. **Required after a security audit:** run `supabase/phase12.sql` against any existing database — it locks down a permissive `member_accounts` policy and enables RLS on several tables that previously had none (see the comments in that file for why). It's a no-op for fresh installs since `schema.sql` already reflects the fixed state.
-
-## Phase 7 member flow
-1. Officers seed or import alumni profiles.
-2. Alumni private details include the alumnus email.
-3. Alumni goes to `/member/claim` and enters their name, graduation year, and email on file. If it matches, a one-time secure link is emailed to that address (no password is collected on this page — this prevents someone who just knows an alumnus's name/year/email from creating an account as them).
-4. The alumnus opens the emailed link at `/member/claim/complete` and sets a password there. The link expires after 30 minutes or on first use.
-5. The alumnus signs in at `/member/login`.
-6. The alumnus manages the profile at `/member/profile`.
-
-## Notes
-- Admin login still uses the local env password for now.
-- Member login uses Supabase Auth when your project keys are present.
-- Member route protection still uses the app's signed cookie session after successful authentication.
-
-## Google Form / spreadsheet automation
-If you want new form responses to go directly into Supabase without a manual CSV upload, use the webhook at:
-
-`POST /api/integrations/alumni-import`
-
-Authenticate with either:
-
-- `Authorization: Bearer $FORM_IMPORT_SECRET`
-- or `x-import-secret: $FORM_IMPORT_SECRET`
-
-The route accepts either a single row object, `{ row: {...} }`, or `{ records: [{...}] }`.
-
-Example payload:
-
-```json
-{
-  "row": {
-    "full_name": "Samuel Joor",
-    "email": "samuel.joor@quinnipiac.edu",
-    "phone": "9789124177",
-    "major": "Data Science",
-    "graduation_year": "2026",
-    "graduation_term": "Spring"
-  }
-}
-```
-
-This is designed to work well with Google Apps Script, Zapier, Make, or Power Automate after a Google Form / spreadsheet submission.
+Without Supabase keys the site runs in demo mode. Data is saved to `data/demo-store.json`, which is gitignored.

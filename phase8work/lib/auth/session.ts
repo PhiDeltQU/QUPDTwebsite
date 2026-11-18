@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import { cookies } from 'next/headers';
 import { SessionRole, SessionUser } from '@/types';
 import { SESSION_COOKIE_NAME } from '@/lib/auth/constants';
+import { isAdminEmail } from '@/lib/auth/admin-users';
 
 const DEFAULT_DURATION_MS = 1000 * 60 * 60 * 24 * 7;
 
@@ -27,7 +28,9 @@ function decode(token: string): SessionUser | null {
   if (!body || !signature) return null;
 
   const expected = crypto.createHmac('sha256', getSessionSecret()).update(body).digest('base64url');
-  if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) {
+  const given = Buffer.from(signature);
+  const wanted = Buffer.from(expected);
+  if (given.length !== wanted.length || !crypto.timingSafeEqual(given, wanted)) {
     return null;
   }
 
@@ -61,5 +64,8 @@ export async function requireSession(role?: SessionRole) {
   const session = await getSessionUser();
   if (!session) return null;
   if (role && session.role !== role) return null;
+  // Admin sessions are re-checked against admin_users on every request, so
+  // removing someone on the Admins page signs them out right away.
+  if (session.role === 'admin' && !(await isAdminEmail(session.email))) return null;
   return session;
 }

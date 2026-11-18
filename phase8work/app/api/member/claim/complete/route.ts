@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { activeClaimCompleteSchema } from '@/lib/validations/member';
-import { getSupabaseAdmin } from '@/lib/supabase/admin';
+import { findAuthUserIdByEmail, getSupabaseAdmin } from '@/lib/supabase/admin';
 import { consumeActiveClaimToken, getAlumniClaimTokenRecord, isActiveClaimTokenUsable } from '@/lib/auth/active-claim';
-import { checkRateLimit } from '@/lib/auth/rate-limit';
+import { checkRateLimit, getClientIp } from '@/lib/auth/rate-limit';
 
 type MemberAccountRow = {
   id: string;
@@ -10,17 +10,8 @@ type MemberAccountRow = {
   auth_email: string;
 };
 
-async function findAuthUserIdByEmail(email: string) {
-  const supabase = getSupabaseAdmin();
-  const admin = supabase.auth.admin as any;
-  const { data, error } = await admin.listUsers?.();
-  if (error) throw new Error(error.message);
-  const users = (data?.users ?? []) as Array<{ id: string; email?: string | null }>;
-  return users.find((user) => (user.email || '').toLowerCase() === email.toLowerCase())?.id ?? null;
-}
-
 export async function POST(request: Request) {
-  const ip = request.headers.get('CF-Connecting-IP') ?? request.headers.get('x-forwarded-for') ?? 'unknown';
+  const ip = getClientIp(request);
   if (!checkRateLimit(`member-claim-complete:${ip}`, 10, 10 * 60 * 1000)) {
     return NextResponse.json({ error: 'Too many setup attempts. Please wait 10 minutes.' }, { status: 429 });
   }

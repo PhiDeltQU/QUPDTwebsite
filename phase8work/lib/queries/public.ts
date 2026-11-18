@@ -102,6 +102,7 @@ function mapEventRow(row: DbEventRow): EventItem {
     slug: row.slug,
     title: row.title,
     date: formatDate(row.event_date),
+    isoDate: row.event_date ?? undefined,
     time: row.event_time ?? 'TBD',
     location: row.location ?? 'Location TBA',
     description: row.description ?? 'Event details coming soon.',
@@ -260,4 +261,26 @@ export async function getFeaturedSpotlight(): Promise<Spotlight> {
 
   if (error || !data) return fallbackSpotlight;
   return mapSpotlightRow(data as DbSpotlightRow);
+}
+
+/** Today's date as YYYY-MM-DD in the chapter's time zone (Connecticut). */
+function todayInChapterTimeZone() {
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+}
+
+function isUpcoming(event: EventItem, today: string) {
+  // Events without a raw date (demo data) are treated as upcoming.
+  return !event.isoDate || event.isoDate >= today;
+}
+
+/** Published events happening today or later, soonest first. */
+export async function getUpcomingEvents(): Promise<EventItem[]> {
+  const today = todayInChapterTimeZone();
+  return (await getEvents()).filter((event) => isUpcoming(event, today));
+}
+
+/** Published events that already happened, most recent first. */
+export async function getPastEvents(): Promise<EventItem[]> {
+  const today = todayInChapterTimeZone();
+  return (await getEvents()).filter((event) => !isUpcoming(event, today)).reverse();
 }

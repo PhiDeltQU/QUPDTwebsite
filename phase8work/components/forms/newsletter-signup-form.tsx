@@ -4,14 +4,21 @@ import { Input } from '@/components/ui/input';
 import { Select } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 
-export function NewsletterSignupForm() {
+type NewsletterSignupFormProps = { title?: string; description?: string; submitLabel?: string; successMessage?: string };
+
+export function NewsletterSignupForm({
+  title = 'Join the Alumni Newsletter',
+  description = 'Sign up to receive chapter updates, event recaps, and alumni news.',
+  submitLabel = 'Join the list',
+  successMessage,
+}: NewsletterSignupFormProps = {}) {
   return (
     <ApiForm
-      title="Join the Alumni Newsletter"
-      description="Sign up to receive chapter updates, event recaps, and alumni news."
+      title={title}
+      description={description}
       endpoint="/api/newsletter/subscribe"
-      submitLabel="Join the list"
-      successMessage="Thanks for subscribing — you'll get the next chapter update."
+      submitLabel={submitLabel}
+      successMessage={successMessage ?? "Thanks for subscribing — you'll get the next chapter update."}
     >
       <div className="grid gap-5 md:grid-cols-2">
         <Field label="First name">
@@ -36,7 +43,7 @@ export function NewsletterSignupForm() {
       </div>
       <label className="flex items-start gap-3 rounded-2xl bg-fraternity-cream px-4 py-4 text-sm text-fraternity-slate">
         <Checkbox name="consent" />
-        <span>I consent to receive chapter and alumni communications and understand that unsubscribe support should be enabled in production.</span>
+        <span>I agree to receive chapter and alumni emails. Every email has an unsubscribe link, so I can opt out anytime.</span>
       </label>
     </ApiForm>
   );

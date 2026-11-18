@@ -8,7 +8,7 @@ export default function MemberLoginPage() {
         <LoginForm
           scope="alumni"
           title="Alumni member access"
-          description="Phase 7 upgrades alumni login from the old shared-password bridge to real Supabase email/password auth whenever your project keys are connected."
+          description="Sign in with the email and password you set when you claimed your alumni profile."
           redirectTo="/member"
         />
         <div className="surface p-6 text-sm text-fraternity-slate">

@@ -8,7 +8,8 @@ import {
   createSupabaseAnonServerClient,
   hasSupabaseAuthEnv,
 } from "@/lib/supabase/auth";
-import { checkRateLimit, clearRateLimit } from "@/lib/auth/rate-limit";
+import { checkRateLimit, clearRateLimit, getClientIp } from "@/lib/auth/rate-limit";
+import { demoAdminAllowed, isAdminEmail } from "@/lib/auth/admin-users";
 
 function timingSafePasswordMatch(input: string, expected: string): boolean {
   const a = crypto.createHash('sha256').update(input).digest();
@@ -31,23 +32,13 @@ function isAlumniMemberStatus(status?: string | null) {
 }
 
 async function emailAllowedForRole(scope: LoginScope, email: string) {
-  const supabase = createServerSupabaseClient();
-  if (!supabase) return true;
-
   if (scope === "admin") {
-    const { data, error } = await supabase
-      .from("admin_users")
-      .select("email")
-      .eq("email", email)
-      .maybeSingle();
-
-    if (error) {
-      console.error("[emailAllowedForRole][admin]", error);
-      return false;
-    }
-
-    return Boolean(data?.email);
+    return isAdminEmail(email);
   }
+
+  const supabase = createServerSupabaseClient();
+  // No database at all: only allowed for local demo mode, never on Vercel.
+  if (!supabase) return demoAdminAllowed();
 
   const accountRes = await supabase
     .from("member_accounts")
@@ -159,7 +150,7 @@ async function verifyScopedCredentials(
 }
 
 export async function POST(request: Request) {
-  const ip = request.headers.get('CF-Connecting-IP') ?? request.headers.get('x-forwarded-for') ?? 'unknown';
+  const ip = getClientIp(request);
   if (!checkRateLimit(`login:${ip}`, 5, 10 * 60 * 1000)) {
     return NextResponse.json({ error: 'Too many login attempts. Please wait 10 minutes.' }, { status: 429 });
   }
@@ -207,9 +198,11 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         error:
-          scope === "active"
-            ? "This email is not linked to an eligible active-member record."
-            : "This email is not linked to an eligible alumni record.",
+          scope === "admin"
+            ? "This email is not on the admin list. Ask a current admin to add you on the Admins page."
+            : scope === "active"
+              ? "This email is not linked to an eligible active-member record."
+              : "This email is not linked to an eligible alumni record.",
       },
       { status: 403 }
     );

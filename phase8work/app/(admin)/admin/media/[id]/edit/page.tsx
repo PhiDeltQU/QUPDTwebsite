@@ -14,7 +14,7 @@ export default async function EditMediaPage({ params }: { params: Promise<{ id: 
   return (
     <div className="space-y-8 py-2">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Admin module</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Admin</p>
         <h1 className="mt-3 text-4xl">Edit media record</h1>
       </div>
       <ApiForm title="Update media" description="Update metadata or swap a Storage path after uploading a new asset." endpoint={`/api/admin/media?id=${id}`} method="PUT" successMessage="Media record updated successfully." submitLabel="Save changes">

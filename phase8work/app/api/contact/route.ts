@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { contactSchema } from '@/lib/validations/forms';
 import { persistContactSubmission } from '@/lib/actions/persist';
 import { sendContactNotificationEmails } from '@/lib/email/send-contact-notification';
-import { checkRateLimit } from '@/lib/auth/rate-limit';
+import { checkRateLimit, getClientIp } from '@/lib/auth/rate-limit';
 
 async function verifyTurnstile(token: string, ip: string | null): Promise<boolean> {
   const secret = process.env.TURNSTILE_SECRET_KEY;
@@ -23,7 +23,7 @@ async function verifyTurnstile(token: string, ip: string | null): Promise<boolea
 }
 
 export async function POST(request: Request) {
-  const ip = request.headers.get('CF-Connecting-IP') ?? request.headers.get('x-forwarded-for') ?? 'unknown';
+  const ip = getClientIp(request);
   if (!checkRateLimit(`contact:${ip}`, 10, 10 * 60 * 1000)) {
     return NextResponse.json({ error: 'Too many submissions. Please wait a while and try again.' }, { status: 429 });
   }
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
       console.error('[contact] Submission arrived with no Turnstile token — the widget likely never rendered or completed (check the site key and its allowed domains in the Cloudflare Turnstile dashboard).');
       return NextResponse.json({ error: 'Verification did not load. Please refresh the page and try again.' }, { status: 400 });
     }
-    const ip = request.headers.get('CF-Connecting-IP') ?? request.headers.get('x-forwarded-for');
+    const ip = getClientIp(request);
     const valid = await verifyTurnstile(token, ip);
     if (!valid) {
       return NextResponse.json({ error: 'Bot verification failed. Please try again.' }, { status: 400 });

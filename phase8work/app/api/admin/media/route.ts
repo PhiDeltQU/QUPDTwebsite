@@ -51,7 +51,7 @@ export async function DELETE(request: Request) {
   const supabase = createServerSupabaseClient();
   if (!supabase) {
     await deleteDemoRecord('media', id);
-    return NextResponse.json({ message: 'Deleted from local demo store.' });
+    return NextResponse.json({ message: 'Deleted (demo mode).' });
   }
 
   const { error } = await supabase.from('media_items').delete().eq('id', id);

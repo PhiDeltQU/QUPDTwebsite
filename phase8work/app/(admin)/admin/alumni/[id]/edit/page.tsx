@@ -15,9 +15,9 @@ export default async function EditAlumniPage({ params }: { params: Promise<{ id:
   return (
     <div className="space-y-8 py-2">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Admin module</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Admin</p>
         <h1 className="mt-3 text-4xl">Edit alumni profile</h1>
-        <p className="mt-4 max-w-3xl text-fraternity-slate">Phase 8 extends the edit flow with graduation metadata and alumni-access controls.</p>
+        <p className="mt-4 max-w-3xl text-fraternity-slate">Change this person’s details and save. Changes show up on the site right away.</p>
       </div>
       <ApiForm title="Update alumni profile" description="Save changes to this alumni record." endpoint={`/api/admin/alumni?id=${id}`} method="PUT" successMessage="Alumni record updated successfully." submitLabel="Save changes">
         <div className="grid gap-5 md:grid-cols-2">

@@ -57,9 +57,9 @@ export function MemberProfileForm({ profile }: { profile: MemberProfileRecord })
     <div className="grid gap-6 lg:grid-cols-[1.45fr_0.9fr]">
       <form className="surface space-y-5 p-8" onSubmit={handleSubmit}>
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Phase 7</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Your profile</p>
           <h1 className="mt-3 text-4xl">Manage your alumni profile</h1>
-          <p className="mt-4 text-fraternity-slate">This is the first self-service member profile flow. Update your professional details, opt into mentorship, and control what appears publicly versus inside the member network.</p>
+          <p className="mt-4 text-fraternity-slate">Keep your details current, opt into mentoring, and choose what other brothers can see.</p>
         </div>
         <div className="grid gap-5 md:grid-cols-2">
           <Field label="Full name"><Input name="fullName" defaultValue={profile.fullName} required /></Field>

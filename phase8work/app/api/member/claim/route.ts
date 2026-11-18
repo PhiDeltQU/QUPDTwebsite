@@ -3,12 +3,12 @@ import { memberClaimRequestSchema } from '@/lib/validations/member';
 import { getSupabaseAdmin } from '@/lib/supabase/admin';
 import { issueClaimToken } from '@/lib/auth/active-claim';
 import { sendAlumniClaimEmail } from '@/lib/email/send-alumni-claim-email';
-import { checkRateLimit } from '@/lib/auth/rate-limit';
+import { checkRateLimit, getClientIp } from '@/lib/auth/rate-limit';
 
 const GENERIC_MESSAGE = 'If that name, graduation year, and email match an alumni record, we sent a secure setup link to that email.';
 
 export async function POST(request: Request) {
-  const ip = request.headers.get('CF-Connecting-IP') ?? request.headers.get('x-forwarded-for') ?? 'unknown';
+  const ip = getClientIp(request);
   if (!checkRateLimit(`member-claim-request:${ip}`, 5, 10 * 60 * 1000)) {
     return NextResponse.json({ error: 'Too many setup requests. Please wait 10 minutes.' }, { status: 429 });
   }
