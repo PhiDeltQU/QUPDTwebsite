@@ -65,7 +65,7 @@ export default async function AdminLegacyReviewPage() {
       <div className="mx-auto max-w-6xl">
         <div className="surface mb-8 p-8">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">
-            Admin Module
+            Admin
           </p>
           <h1 className="mt-4 text-4xl">Legacy review queue</h1>
           <p className="mt-4 max-w-3xl text-fraternity-slate">

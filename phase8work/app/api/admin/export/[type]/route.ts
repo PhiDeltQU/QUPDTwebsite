@@ -35,6 +35,33 @@ const TABLE_EXPORTS: Record<string, TableExport> = {
       return [event?.title, event?.event_date, r.full_name, r.email, r.graduation_year, r.guest_count, r.notes, r.created_at];
     },
   },
+  alumni: {
+    table: 'alumni_profiles',
+    select: '*, alumni_private_details(email, phone)',
+    order: 'graduation_year',
+    header: ['Name', 'Email', 'Phone', 'Graduation year', 'Graduation term', 'Status', 'Major', 'Company', 'Job title', 'Industry', 'Location', 'LinkedIn', 'Willing to mentor'],
+    row: (r) => {
+      const p = (Array.isArray(r.alumni_private_details) ? r.alumni_private_details[0] : r.alumni_private_details) as { email?: string; phone?: string } | null;
+      return [
+        r.full_name, p?.email, p?.phone, r.graduation_year, r.graduation_term, r.member_status, r.major, r.company, r.job_title,
+        r.industry, r.location, r.linkedin_url, r.willing_to_mentor ? 'yes' : 'no',
+      ];
+    },
+  },
+  events: {
+    table: 'events',
+    select: '*',
+    order: 'event_date',
+    header: ['Title', 'Date', 'Time', 'Location', 'Status', 'Description', 'Web address'],
+    row: (r) => [r.title, r.event_date, r.event_time, r.location, r.status, r.description, r.slug ? `/events/${r.slug}` : ''],
+  },
+  newsletters: {
+    table: 'newsletters',
+    select: '*',
+    order: 'created_at',
+    header: ['Title', 'Issue date', 'Category', 'Status', 'Subject line', 'Summary', 'Web address'],
+    row: (r) => [r.title, r.issue_date, r.category, r.status, r.subject_line, r.summary, r.slug ? `/newsletter/${r.slug}` : ''],
+  },
   contacts: {
     table: 'contact_submissions',
     select: 'full_name, email, inquiry_type, message, created_at',
@@ -79,17 +106,5 @@ export async function GET(_: Request, context: { params: Promise<{ type: string 
     return csvResponse(toCsv(tableExport.header, rows), type);
   }
 
-  let records;
-  if (type === 'alumni') records = await getAdminAlumniRecords();
-  else if (type === 'events') records = await getAdminEventRecords();
-  else if (type === 'newsletters') records = await getAdminNewsletterRecords();
-  else return NextResponse.json({ error: 'Unsupported export type.' }, { status: 400 });
-
-  return csvResponse(
-    toCsv(
-      ['ID', 'Name / title', 'Details', 'More details', 'Status'],
-      records.map((row) => [row.id, row.primary, row.secondary, row.tertiary, row.badge])
-    ),
-    type
-  );
+  return NextResponse.json({ error: 'Unsupported export type.' }, { status: 400 });
 }

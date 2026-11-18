@@ -90,7 +90,7 @@ export function FileUploadForm() {
       <div className="mb-6">
         <h3 className="text-2xl">Upload file and register media item</h3>
         <p className="mt-3 max-w-2xl text-fraternity-slate">
-          Upload a file to Supabase Storage and create the media record in one step.
+          Choose a photo or file and fill in the details. It is saved and added to the Legacy Vault in one step.
         </p>
       </div>
 
