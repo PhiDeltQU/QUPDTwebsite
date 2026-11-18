@@ -7,7 +7,7 @@ function escapeHtml(value: string) {
     .replace(/'/g, '&#039;');
 }
 
-export function newsletterHtmlTemplate(input: { title: string; summary: string; body: string; siteUrl?: string }) {
+export function newsletterHtmlTemplate(input: { title: string; summary: string; body: string; siteUrl?: string; unsubscribeUrl?: string }) {
   const paragraphs = input.body
     .split(/\n\n+/)
     .map((paragraph) => paragraph.trim())
@@ -29,9 +29,18 @@ export function newsletterHtmlTemplate(input: { title: string; summary: string; 
       ${paragraphs}
       ${safeSiteUrl ? `<p style="margin-top:28px;font-family:Arial,sans-serif;"><a href="${safeSiteUrl}" style="display:inline-block;background:#7b1e2b;color:#fff;text-decoration:none;padding:12px 20px;border-radius:999px;font-weight:600;">View on the website</a></p>` : ''}
     </div>
+    ${input.unsubscribeUrl ? `<p style="max-width:680px;margin:16px auto 0;text-align:center;color:#7a7a7a;font-size:12px;font-family:Arial,sans-serif;line-height:1.6;">You are receiving this because you signed up for Phi Delta Theta Connecticut Epsilon updates.<br /><a href="${escapeHtml(input.unsubscribeUrl)}" style="color:#7a7a7a;">Unsubscribe</a></p>` : ''}
   </div>`;
 }
 
-export function newsletterTextTemplate(input: { title: string; summary: string; body: string; siteUrl?: string }) {
-  return [input.title, '', input.summary, '', input.body, input.siteUrl ? `Read more: ${input.siteUrl}` : ''].join('\n');
+export function newsletterTextTemplate(input: { title: string; summary: string; body: string; siteUrl?: string; unsubscribeUrl?: string }) {
+  return [
+    input.title,
+    '',
+    input.summary,
+    '',
+    input.body,
+    input.siteUrl ? `Read more: ${input.siteUrl}` : '',
+    input.unsubscribeUrl ? `\nUnsubscribe: ${input.unsubscribeUrl}` : '',
+  ].join('\n');
 }

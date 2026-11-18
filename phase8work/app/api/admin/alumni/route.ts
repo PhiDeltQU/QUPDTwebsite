@@ -25,7 +25,7 @@ export async function POST(request: Request) {
   const result = await persistAdminAlumni(parsed.data);
   if (result.error) return NextResponse.json({ error: result.error }, { status: 500 });
 
-  return NextResponse.json({ message: result.mode === 'demo' ? 'Saved in demo mode and written to the local demo store.' : 'Alumni profile created successfully.' });
+  return NextResponse.json({ message: result.mode === 'demo' ? 'Saved (demo mode, only on this computer).' : 'Alumni profile created successfully.' });
 }
 
 export async function PUT(request: Request) {
@@ -40,7 +40,7 @@ export async function PUT(request: Request) {
 
   const result = await updateAdminAlumni(id, parsed.data);
   if (result.error) return NextResponse.json({ error: result.error }, { status: 500 });
-  return NextResponse.json({ message: result.mode === 'demo' ? 'Updated in local demo store.' : 'Alumni profile updated successfully.' });
+  return NextResponse.json({ message: result.mode === 'demo' ? 'Updated (demo mode, only on this computer).' : 'Alumni profile updated successfully.' });
 }
 
 export async function DELETE(request: Request) {
@@ -52,7 +52,7 @@ export async function DELETE(request: Request) {
   const supabase = createServerSupabaseClient();
   if (!supabase) {
     await deleteDemoRecord('alumni', id);
-    return NextResponse.json({ message: 'Deleted from local demo store.' });
+    return NextResponse.json({ message: 'Deleted (demo mode).' });
   }
 
   await supabase.from('alumni_private_details').delete().eq('alumni_profile_id', id);

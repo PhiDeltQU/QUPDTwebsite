@@ -13,15 +13,15 @@ export default async function EventsAdminPage() {
   return (
     <div className="space-y-8 py-2">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Admin module</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Admin</p>
         <h1 className="mt-3 text-4xl">events management</h1>
-        <p className="mt-4 max-w-3xl text-fraternity-slate">This phase adds local event persistence, delete controls, and CSV export so officers can test the site before the database is ready.</p>
+        <p className="mt-4 max-w-3xl text-fraternity-slate">Post events to the public Events page and calendar. Past events move to the past events list automatically. RSVPs show up on the Messages page.</p>
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[1.05fr_1fr]">
         <ApiForm
           title="Create event"
-          description="This now saves to Supabase when connected, or to the local demo store when you are still building offline."
+          description="Fill this in to put an event on the website. The slug is the end of the web address, like founders-day-2027 (lowercase, dashes, no spaces)."
           endpoint="/api/admin/events"
           successMessage="Event submitted successfully."
           submitLabel="Create event"

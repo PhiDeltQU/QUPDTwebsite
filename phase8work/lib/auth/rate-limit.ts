@@ -25,3 +25,17 @@ export function checkRateLimit(key: string, maxAttempts = 5, windowMs = 10 * 60 
 export function clearRateLimit(key: string) {
   attempts.delete(key);
 }
+
+/**
+ * Best-effort client IP for rate limiting. On Vercel, x-real-ip and the first
+ * x-forwarded-for hop are set by the platform and can't be spoofed by the
+ * client. CF-Connecting-IP is deliberately ignored: the site is not behind
+ * Cloudflare, so that header is fully attacker controlled.
+ */
+export function getClientIp(request: Request): string {
+  const real = request.headers.get('x-real-ip');
+  if (real) return real.trim();
+  const forwarded = request.headers.get('x-forwarded-for');
+  if (forwarded) return forwarded.split(',')[0].trim();
+  return 'unknown';
+}

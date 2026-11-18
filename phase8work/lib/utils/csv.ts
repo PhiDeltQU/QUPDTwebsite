@@ -56,3 +56,18 @@ export function parseBoolean(value: string | undefined, fallback = false) {
   if (!value) return fallback;
   return ['true', '1', 'yes', 'y'].includes(value.trim().toLowerCase());
 }
+
+/**
+ * Escapes one CSV cell. Cells that start with = + - @ (or tab/CR) are
+ * prefixed with an apostrophe so Excel/Sheets show them as text instead of
+ * running them as formulas (CSV formula injection).
+ */
+export function csvCell(value: unknown): string {
+  let text = value === null || value === undefined ? '' : Array.isArray(value) ? value.join('; ') : String(value);
+  if (/^[=+\-@\t\r]/.test(text)) text = `'${text}`;
+  return `"${text.replace(/"/g, '""')}"`;
+}
+
+export function toCsv(header: string[], rows: unknown[][]): string {
+  return [header.map(csvCell).join(','), ...rows.map((row) => row.map(csvCell).join(','))].join('\r\n');
+}

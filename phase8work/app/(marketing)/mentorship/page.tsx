@@ -6,6 +6,7 @@ import { MentorSignupForm } from "@/components/forms/mentor-signup-form";
 import { MenteeRequestForm } from "@/components/forms/mentee-request-form";
 import { getPublicMentorshipOpportunities } from "@/lib/queries/mentorship-opportunities";
 import { getAlumniProfiles } from "@/lib/queries/public";
+import { getPageContent } from "@/lib/content/get-content";
 
 export const dynamic = "force-dynamic";
 
@@ -18,24 +19,25 @@ function formatOpportunityType(value?: string | null) {
 }
 
 export default async function MentorshipPage() {
-  const [profiles, opportunities] = await Promise.all([
+  const [profiles, opportunities, c] = await Promise.all([
     getAlumniProfiles(),
     getPublicMentorshipOpportunities(),
+    getPageContent("mentorship"),
   ]);
   const mentors = profiles.filter((profile) => profile.mentor);
 
   return (
     <>
       <PageHero
-        eyebrow="Mentorship"
-        title="Connect alumni experience with the next generation of brothers"
-        description="Brothers can connect through one-on-one mentorship, career conversations, and alumni-posted opportunities including internships, office hours, and professional guidance."
+        eyebrow={c.heroEyebrow}
+        title={c.heroTitle}
+        description={c.heroDescription}
       />
 
       <SectionShell
-        eyebrow="Live opportunities"
-        title="Explore alumni-posted mentorship and internship opportunities"
-        description="Verified alumni can post real mentorship and internship opportunities through the alumni portal. Active members can apply with verified profile information and supporting materials."
+        eyebrow={c.opportunitiesEyebrow}
+        title={c.opportunitiesTitle}
+        description={c.opportunitiesDescription}
       >
         {opportunities.length ? (
           <div className="grid gap-6 lg:grid-cols-2">
@@ -63,7 +65,7 @@ export default async function MentorshipPage() {
                     {opportunity.location ? ` · ${opportunity.location}` : ""}
                   </p>
                   <p>
-                    Industry: {opportunity.industry || "—"}
+                    Industry: {opportunity.industry || "Not specified"}
                     {opportunity.preferred_major
                       ? ` · Preferred major: ${opportunity.preferred_major}`
                       : ""}
@@ -91,13 +93,13 @@ export default async function MentorshipPage() {
                     href={`/mentorship/${opportunity.slug || opportunity.id}`}
                     className="inline-flex items-center justify-center rounded-full bg-fraternity-azure px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
                   >
-                    View details
+                    {c.opportunityDetailsLabel}
                   </Link>
                   <Link
                     href={`/mentorship/${opportunity.slug || opportunity.id}/apply`}
                     className="inline-flex items-center justify-center rounded-full border border-fraternity-charcoal/15 bg-white px-5 py-3 text-sm font-semibold text-fraternity-charcoal transition hover:bg-fraternity-cream"
                   >
-                    Apply now
+                    {c.opportunityApplyLabel}
                   </Link>
                 </div>
               </article>
@@ -105,16 +107,14 @@ export default async function MentorshipPage() {
           </div>
         ) : (
           <div className="surface p-8">
-            <p className="text-fraternity-slate">
-              No live opportunities are posted yet. Alumni can create new mentorship or internship opportunities from the alumni portal.
-            </p>
+            <p className="text-fraternity-slate">{c.opportunitiesEmptyMessage}</p>
           </div>
         )}
       </SectionShell>
 
       <SectionShell
-        title="Mentor spotlights"
-        description="Alumni who have volunteered to mentor active brothers and future members."
+        title={c.mentorsTitle}
+        description={c.mentorsDescription}
       >
         {mentors.length ? (
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -124,7 +124,7 @@ export default async function MentorshipPage() {
           </div>
         ) : (
           <div className="surface p-8">
-            <p className="text-fraternity-slate">No mentors are listed yet. Alumni can opt in through the alumni portal.</p>
+            <p className="text-fraternity-slate">{c.mentorsEmptyMessage}</p>
           </div>
         )}
       </SectionShell>

@@ -11,7 +11,7 @@ export async function PUT(request: Request) {
 
   const supabase = createServerSupabaseClient();
   if (!supabase) {
-    return NextResponse.json({ error: 'Supabase connection is required for self-service profile editing in Phase 7.' }, { status: 500 });
+    return NextResponse.json({ error: 'Profile editing is unavailable right now. Please try again later or contact the chapter.' }, { status: 500 });
   }
 
   const json = await request.json().catch(() => null);

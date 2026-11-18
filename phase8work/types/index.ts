@@ -13,6 +13,8 @@ export type EventItem = {
   slug: string;
   title: string;
   date: string;
+  /** Raw YYYY-MM-DD date from the database, when available. */
+  isoDate?: string;
   time: string;
   location: string;
   description: string;
@@ -128,54 +130,4 @@ export type MemberProfileRecord = {
   emailVisibility: "private" | "members" | "public";
   phoneVisibility: "private" | "members" | "public";
   linkedinVisibility: "private" | "members" | "public";
-};
-
-export type HomePageContent = {
-  heroEyebrow: string;
-  heroTitle: string;
-  heroDescription: string;
-  missionEyebrow: string;
-  missionTitle: string;
-  missionDescription: string;
-  valuesEyebrow: string;
-  valuesTitle: string;
-  valuesDescription: string;
-  statsEyebrow: string;
-  statsTitle: string;
-  statsDescription: string;
-  eventsEyebrow: string;
-  eventsTitle: string;
-  eventsDescription: string;
-  newsletterEyebrow: string;
-  newsletterTitle: string;
-  newsletterDescription: string;
-  spotlightEyebrow: string;
-  spotlightTitle: string;
-  spotlightDescription: string;
-  legacyEyebrow: string;
-  legacyTitle: string;
-  legacyDescription: string;
-  finalCtaEyebrow: string;
-  finalCtaTitle: string;
-  finalCtaDescription: string;
-};
-
-export type AboutPageContent = {
-  heroEyebrow: string;
-  heroTitle: string;
-  heroDescription: string;
-  overviewTitle: string;
-  overviewDescription: string;
-  overviewBody: string;
-  overviewBodySecondary: string;
-  themesTitle: string;
-  themeOneTitle: string;
-  themeOneDescription: string;
-  themeTwoTitle: string;
-  themeTwoDescription: string;
-  themeThreeTitle: string;
-  themeThreeDescription: string;
-  timelineEyebrow: string;
-  timelineTitle: string;
-  timelineDescription: string;
 };

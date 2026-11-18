@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { getGraduationDate, parseReleaseDateInput, type GraduationTerm } from "@/lib/legacy";
 import { requireSession } from "@/lib/auth/session";
-import { checkRateLimit } from "@/lib/auth/rate-limit";
+import { checkRateLimit, getClientIp } from "@/lib/auth/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -38,7 +38,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "You must be signed in as an active member to submit a memory." }, { status: 401 });
   }
 
-  const ip = request.headers.get("CF-Connecting-IP") ?? request.headers.get("x-forwarded-for") ?? "unknown";
+  const ip = getClientIp(request);
   if (!checkRateLimit(`legacy-submit:${ip}`, 10, 10 * 60 * 1000)) {
     return NextResponse.json({ error: "Too many submissions. Please wait a while and try again." }, { status: 429 });
   }

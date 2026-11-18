@@ -5,15 +5,13 @@ export default function MemberHomePage() {
     <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
       <div className="surface p-8">
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">
-          Phase 8
+          Alumni portal
         </p>
         <h1 className="mt-3 text-4xl">
-          Your alumni account is now connected to your profile
+          Welcome back
         </h1>
         <p className="mt-4 max-w-3xl text-fraternity-slate">
-          This member area now supports profile claiming, Supabase-backed alumni
-          sign-in, self-service editing, and alumni-posted mentorship and
-          internship opportunities.
+          Update your profile, find brothers in the directory, and post mentorship or internship opportunities for active members.
         </p>
 
         <div className="mt-6 flex flex-wrap gap-3">
@@ -48,13 +46,13 @@ export default function MemberHomePage() {
       </div>
 
       <div className="surface p-8">
-        <h2 className="text-2xl">What improved in this phase</h2>
+        <h2 className="text-2xl">What you can do here</h2>
         <ul className="mt-4 space-y-3 text-sm text-fraternity-slate">
-          <li>• real member account creation linked to alumni records</li>
-          <li>• self-service profile editing instead of request-only updates</li>
-          <li>• privacy controls for email, phone, and LinkedIn visibility</li>
-          <li>• alumni can now post mentorship and internship opportunities</li>
-          <li>• active members can apply through verified fraternity records</li>
+          <li>• Find and reach out to other brothers in the private directory</li>
+          <li>• Update your job, city, and contact details anytime</li>
+          <li>• Choose whether your email, phone, and LinkedIn are visible</li>
+          <li>• Post mentorship and internship opportunities</li>
+          <li>• Review applications from active brothers</li>
         </ul>
 
         <div className="mt-6 rounded-2xl border border-black/10 bg-white/70 p-4">

@@ -63,60 +63,9 @@ export const adminMediaSchema = z.object({
   storagePath: z.string().optional()
 });
 
-export const adminHomePageSchema = z.object({
-  heroEyebrow: z.string().min(2),
-  heroTitle: z.string().min(5),
-  heroDescription: z.string().min(20),
-  missionEyebrow: z.string().min(2),
-  missionTitle: z.string().min(5),
-  missionDescription: z.string().min(20),
-  valuesEyebrow: z.string().min(2),
-  valuesTitle: z.string().min(5),
-  valuesDescription: z.string().min(20),
-  statsEyebrow: z.string().min(2),
-  statsTitle: z.string().min(5),
-  statsDescription: z.string().min(20),
-  eventsEyebrow: z.string().min(2),
-  eventsTitle: z.string().min(5),
-  eventsDescription: z.string().min(20),
-  newsletterEyebrow: z.string().min(2),
-  newsletterTitle: z.string().min(5),
-  newsletterDescription: z.string().min(20),
-  spotlightEyebrow: z.string().min(2),
-  spotlightTitle: z.string().min(5),
-  spotlightDescription: z.string().min(20),
-  legacyEyebrow: z.string().min(2),
-  legacyTitle: z.string().min(5),
-  legacyDescription: z.string().min(20),
-  finalCtaEyebrow: z.string().min(2),
-  finalCtaTitle: z.string().min(5),
-  finalCtaDescription: z.string().min(20),
-});
-
-export const adminAboutPageSchema = z.object({
-  heroEyebrow: z.string().min(2),
-  heroTitle: z.string().min(5),
-  heroDescription: z.string().min(20),
-  overviewTitle: z.string().min(2),
-  overviewDescription: z.string().min(20),
-  overviewBody: z.string().min(20),
-  overviewBodySecondary: z.string().min(20),
-  themesTitle: z.string().min(2),
-  themeOneTitle: z.string().min(2),
-  themeOneDescription: z.string().min(10),
-  themeTwoTitle: z.string().min(2),
-  themeTwoDescription: z.string().min(10),
-  themeThreeTitle: z.string().min(2),
-  themeThreeDescription: z.string().min(10),
-  timelineEyebrow: z.string().min(2),
-  timelineTitle: z.string().min(5),
-  timelineDescription: z.string().min(20),
-});
 
 export type AdminLoginInput = z.infer<typeof adminLoginSchema>;
 export type AdminAlumniInput = z.infer<typeof adminAlumniSchema>;
 export type AdminEventInput = z.infer<typeof adminEventSchema>;
 export type AdminNewsletterInput = z.infer<typeof adminNewsletterSchema>;
 export type AdminMediaInput = z.infer<typeof adminMediaSchema>;
-export type AdminHomePageInput = z.infer<typeof adminHomePageSchema>;
-export type AdminAboutPageInput = z.infer<typeof adminAboutPageSchema>;

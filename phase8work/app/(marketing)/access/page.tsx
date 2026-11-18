@@ -2,51 +2,25 @@ import type { Metadata } from 'next';
 import { PageHero } from '@/components/sections/page-hero';
 import { SectionShell } from '@/components/sections/section-shell';
 import { PathwayCard } from '@/components/cards/pathway-card';
+import { items } from '@/lib/content/fields';
+import { getPageContent } from '@/lib/content/get-content';
 
 export const metadata: Metadata = {
   title: 'Member Sign In',
   description: 'Choose the correct Phi Delta Theta Connecticut Epsilon member or officer portal.',
 };
 
-const accessPaths = [
-  {
-    eyebrow: 'Current Chapter',
-    title: 'Active Member Sign In',
-    description: 'Access active-member resources, applications, opportunities, and chapter tools.',
-    href: '/active/login',
-    linkLabel: 'Continue as an active member',
-  },
-  {
-    eyebrow: 'After Graduation',
-    title: 'Alumni Sign In',
-    description: 'Access the alumni portal, profile tools, directory, mentorship, and chapter network.',
-    href: '/member/login',
-    linkLabel: 'Continue as an alumnus',
-  },
-  {
-    eyebrow: 'Chapter Leadership',
-    title: 'Officer & Admin Sign In',
-    description: 'Manage chapter content, records, newsletters, events, submissions, and operational workflows.',
-    href: '/admin/login',
-    linkLabel: 'Continue as an administrator',
-  },
-] as const;
+export default async function AccessPage() {
+  const c = await getPageContent('access');
+  const portals = items(c, 'portal', 4, ['title', 'eyebrow', 'description', 'linkLabel', 'href'] as const);
 
-export default function AccessPage() {
   return (
     <>
-      <PageHero
-        eyebrow="Member Access"
-        title="Choose the space that belongs to you"
-        description="Connecticut Epsilon uses separate access paths for active members, alumni, and chapter administrators."
-      />
-      <SectionShell
-        title="Select your portal"
-        description="If you have not claimed your account yet, use the setup option available from the appropriate sign-in page."
-      >
+      <PageHero eyebrow={c.heroEyebrow} title={c.heroTitle} description={c.heroDescription} />
+      <SectionShell title={c.portalsTitle} description={c.portalsDescription}>
         <div className="grid gap-6 lg:grid-cols-3">
-          {accessPaths.map((path) => (
-            <PathwayCard key={path.title} {...path} />
+          {portals.map((portal) => (
+            <PathwayCard key={portal.title} {...portal} href={portal.href || '/access'} />
           ))}
         </div>
       </SectionShell>

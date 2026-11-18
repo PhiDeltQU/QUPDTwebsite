@@ -1,9 +1,7 @@
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import {
-  AdminAboutPageInput,
   AdminAlumniInput,
   AdminEventInput,
-  AdminHomePageInput,
   AdminMediaInput,
   AdminNewsletterInput,
 } from '@/lib/validations/admin';
@@ -13,10 +11,9 @@ import {
   createDemoMedia,
   createDemoNewsletter,
   importDemoAlumni,
-  updateDemoAboutContent,
   updateDemoAlumni,
   updateDemoEvent,
-  updateDemoHomeContent,
+  updateDemoPageContent,
   updateDemoMedia,
   updateDemoNewsletter,
 } from '@/lib/demo-store';
@@ -264,35 +261,21 @@ export async function updateAdminMedia(id: string, input: AdminMediaInput): Prom
   return error ? { persisted: false, mode: 'supabase', error: error.message } : { persisted: true, mode: 'supabase' };
 }
 
-export async function updateHomePageContent(input: AdminHomePageInput): Promise<AdminPersistResult> {
+export async function updatePageContent(slug: string, values: Record<string, string>): Promise<AdminPersistResult> {
   const supabase = createServerSupabaseClient();
   if (!supabase) {
-    await updateDemoHomeContent(input);
+    await updateDemoPageContent(slug, values);
     return { persisted: true, mode: 'demo' };
   }
 
-  const rows = Object.entries(input).map(([content_key, content_value]) => ({
-    page_slug: 'home',
+  const now = new Date().toISOString();
+  const rows = Object.entries(values).map(([content_key, content_value]) => ({
+    page_slug: slug,
     content_key,
-    content_value
+    content_value,
+    updated_at: now,
   }));
-
-  const { error } = await supabase.from('site_content').upsert(rows, { onConflict: 'page_slug,content_key' });
-  return error ? { persisted: false, mode: 'supabase', error: error.message } : { persisted: true, mode: 'supabase' };
-}
-
-export async function updateAboutPageContent(input: AdminAboutPageInput): Promise<AdminPersistResult> {
-  const supabase = createServerSupabaseClient();
-  if (!supabase) {
-    await updateDemoAboutContent(input);
-    return { persisted: true, mode: 'demo' };
-  }
-
-  const rows = Object.entries(input).map(([content_key, content_value]) => ({
-    page_slug: 'about',
-    content_key,
-    content_value
-  }));
+  if (!rows.length) return { persisted: true, mode: 'supabase' };
 
   const { error } = await supabase.from('site_content').upsert(rows, { onConflict: 'page_slug,content_key' });
   return error ? { persisted: false, mode: 'supabase', error: error.message } : { persisted: true, mode: 'supabase' };

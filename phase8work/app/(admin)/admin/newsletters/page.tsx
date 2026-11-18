@@ -14,8 +14,8 @@ export default async function NewslettersAdminPage() {
   return (
     <div className="space-y-8 py-2">
       <div className="surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Admin module</p>
-        <h1 className="mt-3 text-4xl">newsletter management</h1>
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Admin</p>
+        <h1 className="mt-3 text-4xl">Newsletters</h1>
         <p className="mt-4 max-w-3xl text-fraternity-slate">This phase makes newsletter records function locally even before email sending is connected.</p>
       </div>
 
@@ -26,18 +26,18 @@ export default async function NewslettersAdminPage() {
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Send workflow</p>
             <h2 className="mt-2 text-2xl">Issue delivery controls</h2>
-            <p className="mt-2 max-w-2xl text-sm text-fraternity-slate">Use preview mode until Resend is configured. Once RESEND_API_KEY and RESEND_FROM_EMAIL are present, this button will send to active subscribers and mark the issue as sent.</p>
+            <p className="mt-2 max-w-2xl text-sm text-fraternity-slate">Send an issue to every active subscriber. Each email includes an unsubscribe link. Issues already sent ask for confirmation before sending again, so nobody gets duplicates by accident.</p>
           </div>
         </div>
         <div className="mt-6 space-y-4">
-          {rows.slice(0, 5).map((row) => (
+          {rows.map((row) => (
             <div key={row.id} className="rounded-2xl border border-black/10 bg-white px-4 py-4 md:flex md:items-center md:justify-between">
               <div>
                 <p className="font-semibold text-fraternity-charcoal">{row.primary}</p>
                 <p className="text-sm text-fraternity-slate">{row.secondary}</p>
               </div>
               <div className="mt-3 md:mt-0">
-                <NewsletterSendButton newsletterId={row.id} />
+                <NewsletterSendButton newsletterId={row.id} alreadySent={row.badge === 'sent'} />
               </div>
             </div>
           ))}
@@ -47,7 +47,7 @@ export default async function NewslettersAdminPage() {
       <div className="grid gap-6 xl:grid-cols-[1.05fr_1fr]">
         <ApiForm
   title="Create newsletter issue"
-  description="Draft or publish newsletter issues now, then wire Resend or Mailchimp later."
+  description="Write a new issue. Save it as a draft first, then use Send issue above when it is ready."
   endpoint="/api/admin/newsletters"
   successMessage="Newsletter issue submitted successfully."
   submitLabel="Save issue"

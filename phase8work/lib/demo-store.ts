@@ -1,9 +1,9 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { randomUUID } from 'crypto';
-import { alumniProfiles, defaultAboutPageContent, defaultHomePageContent, events, legacyVaultItems, newsletters } from '@/lib/constants/site';
-import { AdminAboutPageInput, AdminAlumniInput, AdminEventInput, AdminHomePageInput, AdminMediaInput, AdminNewsletterInput } from '@/lib/validations/admin';
-import { AboutPageContent, GraduationTerm, HomePageContent, MemberStatus } from '@/types';
+import { alumniProfiles, events, legacyVaultItems, newsletters } from '@/lib/constants/site';
+import { AdminAlumniInput, AdminEventInput, AdminMediaInput, AdminNewsletterInput } from '@/lib/validations/admin';
+import { GraduationTerm, MemberStatus } from '@/types';
 
 export type DemoAlumniRecord = {
   id: string;
@@ -74,10 +74,8 @@ export type DemoStore = {
   events: DemoEventRecord[];
   newsletters: DemoNewsletterRecord[];
   media: DemoMediaRecord[];
-  siteContent: {
-    home: HomePageContent;
-    about: AboutPageContent;
-  };
+  /** Editable page text, keyed by page slug then field key. */
+  siteContent: Record<string, Record<string, string>>;
 };
 
 const STORE_PATH = path.join(process.cwd(), 'data', 'demo-store.json');
@@ -163,10 +161,7 @@ function seedStore(): DemoStore {
       storagePath: `${item.era}/${item.id}`,
       createdAt: new Date().toISOString(),
     })),
-    siteContent: {
-      home: defaultHomePageContent,
-      about: defaultAboutPageContent,
-    },
+    siteContent: {},
   };
 }
 
@@ -189,10 +184,7 @@ export async function readDemoStore(): Promise<DemoStore> {
     events: parsed.events ?? fallback.events,
     newsletters: parsed.newsletters ?? fallback.newsletters,
     media: parsed.media ?? fallback.media,
-    siteContent: {
-      home: { ...fallback.siteContent.home, ...(parsed.siteContent?.home ?? {}) },
-      about: { ...fallback.siteContent.about, ...(parsed.siteContent?.about ?? {}) },
-    },
+    siteContent: parsed.siteContent ?? fallback.siteContent,
   };
 }
 
@@ -377,18 +369,11 @@ export async function updateDemoMedia(id: string, input: AdminMediaInput) {
   return store.media[index];
 }
 
-export async function updateDemoHomeContent(input: AdminHomePageInput) {
+export async function updateDemoPageContent(slug: string, values: Record<string, string>) {
   const store = await readDemoStore();
-  store.siteContent.home = { ...store.siteContent.home, ...input };
+  store.siteContent[slug] = { ...(store.siteContent[slug] ?? {}), ...values };
   await writeDemoStore(store);
-  return store.siteContent.home;
-}
-
-export async function updateDemoAboutContent(input: AdminAboutPageInput) {
-  const store = await readDemoStore();
-  store.siteContent.about = { ...store.siteContent.about, ...input };
-  await writeDemoStore(store);
-  return store.siteContent.about;
+  return store.siteContent[slug];
 }
 
 export async function importDemoAlumni(records: AdminAlumniInput[]) {

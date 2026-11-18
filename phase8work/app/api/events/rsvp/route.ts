@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import { rsvpSchema } from '@/lib/validations/forms';
 import { persistEventRsvp } from '@/lib/actions/persist';
-import { checkRateLimit } from '@/lib/auth/rate-limit';
+import { checkRateLimit, getClientIp } from '@/lib/auth/rate-limit';
 
 export async function POST(request: Request) {
-  const ip = request.headers.get('CF-Connecting-IP') ?? request.headers.get('x-forwarded-for') ?? 'unknown';
+  const ip = getClientIp(request);
   if (!checkRateLimit(`rsvp:${ip}`, 10, 10 * 60 * 1000)) {
     return NextResponse.json({ error: 'Too many RSVPs. Please wait a while and try again.' }, { status: 429 });
   }

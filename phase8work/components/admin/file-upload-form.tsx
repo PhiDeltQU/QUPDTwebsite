@@ -113,8 +113,11 @@ export function FileUploadForm() {
             <Input name="yearLabel" placeholder="1990s / 2026" />
           </Field>
 
-          <Field label="Storage bucket">
-            <Input name="bucket" placeholder="legacy-vault" required />
+          <Field label="Where does this file go?">
+            <Select name="bucket" defaultValue="legacy-vault" required>
+              <option value="legacy-vault">Legacy Vault archive (photos, documents, videos)</option>
+              <option value="site-images">Website photo (images only)</option>
+            </Select>
           </Field>
 
           <Field label="Optional folder path">

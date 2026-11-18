@@ -48,4 +48,19 @@ body {
   .image-frame {
     @apply relative overflow-hidden rounded-[2rem] bg-fraternity-parchment shadow-soft;
   }
+
+  .animate-slide-in {
+    animation: slide-in-from-corner 0.3s ease-out;
+  }
+}
+
+@keyframes slide-in-from-corner {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -2,6 +2,7 @@ import crypto from "crypto";
 import { NextResponse } from "next/server";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { mentorshipOpportunityApplicationSchema } from "@/lib/validations/mentorship";
+import { checkRateLimit, getClientIp } from "@/lib/auth/rate-limit";
 
 const BUCKET_NAME = "mentorship-applications";
 const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
@@ -161,12 +162,12 @@ export async function POST(
     const resume = formData.get("resume") as File | null;
     const coverLetter = formData.get("coverLetter") as File | null;
 
-    const resumeError = validateUpload(resume, "Resume", true);
+    const resumeError = await validateUpload(resume, "Resume", true);
     if (resumeError) {
       return NextResponse.json({ error: resumeError }, { status: 400 });
     }
 
-    const coverLetterError = validateUpload(
+    const coverLetterError = await validateUpload(
       coverLetter && coverLetter.size > 0 ? coverLetter : null,
       "Cover letter",
       false

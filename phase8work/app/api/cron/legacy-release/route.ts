@@ -54,11 +54,34 @@ async function sendReleaseEmail(input: {
   });
 }
 
+const TEN_YEARS_SECONDS = 60 * 60 * 24 * 365 * 10;
+
+// Submissions keep their upload in a private storage bucket (storage_bucket +
+// storage_path); file_url is usually empty. Released vault items only have a
+// file_url column, so give them a long lived signed link to the original file.
+async function resolveAttachmentUrl(
+  supabase: ReturnType<typeof getSupabaseAdmin>,
+  item: { file_url?: string | null; storage_bucket?: string | null; storage_path?: string | null }
+) {
+  if (item.file_url) return item.file_url;
+  if (!item.storage_bucket || !item.storage_path) return null;
+  const { data, error } = await supabase.storage
+    .from(item.storage_bucket)
+    .createSignedUrl(item.storage_path, TEN_YEARS_SECONDS);
+  if (error) {
+    console.error("[legacy-release] could not sign attachment", item.storage_path, error.message);
+    return null;
+  }
+  return data?.signedUrl ?? null;
+}
+
 export async function GET(request: Request) {
   const cronSecret = process.env.CRON_SECRET;
   const authHeader = request.headers.get("authorization");
 
-  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+  // Fail closed: without CRON_SECRET set in Vercel, nobody (including the
+  // scheduler) can trigger releases. Vercel Cron sends this header automatically.
+  if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -76,6 +99,7 @@ export async function GET(request: Request) {
 
   for (const item of dueItems || []) {
     const publishedAt = new Date().toISOString();
+    const fileUrl = await resolveAttachmentUrl(supabase, item);
 
     const { error: publishError } = await supabase.from("legacy_vault_items").insert({
       source_submission_id: item.id,
@@ -83,7 +107,7 @@ export async function GET(request: Request) {
       item_type: item.media_type,
       year_label: `${item.graduation_term} ${item.graduation_year}`,
       description: item.memory_body,
-      file_url: item.file_url,
+      file_url: fileUrl,
       contributor_name: item.full_name,
       status: "approved",
       published_at: publishedAt,

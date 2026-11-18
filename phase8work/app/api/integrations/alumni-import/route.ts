@@ -2,7 +2,7 @@ import crypto from "crypto";
 import { NextResponse } from "next/server";
 import { importAdminAlumni } from "@/lib/actions/admin-persist";
 import { normalizeAlumniImportRecord, type RawAlumniRecord } from "@/lib/imports/alumni";
-import { checkRateLimit } from "@/lib/auth/rate-limit";
+import { checkRateLimit, getClientIp } from "@/lib/auth/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -51,7 +51,7 @@ function getRecords(payload: unknown): RawAlumniRecord[] {
 }
 
 export async function POST(request: Request) {
-  const ip = request.headers.get("CF-Connecting-IP") ?? request.headers.get("x-forwarded-for") ?? "unknown";
+  const ip = getClientIp(request);
   if (!checkRateLimit(`alumni-import:${ip}`, 20, 10 * 60 * 1000)) {
     return NextResponse.json({ error: "Too many requests. Please wait a while and try again." }, { status: 429 });
   }

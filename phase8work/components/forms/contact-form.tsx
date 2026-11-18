@@ -7,15 +7,21 @@ import { Textarea } from '@/components/ui/textarea';
 
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
-export function ContactForm() {
+type ContactFormProps = { title?: string; description?: string; successMessage?: string };
+
+export function ContactForm({
+  title = 'General Contact',
+  description = 'Use this for alumni outreach, story submissions, support interest, and chapter questions.',
+  successMessage = "Your message was received. We'll be in touch soon.",
+}: ContactFormProps = {}) {
   return (
     <>
       <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="lazyOnload" />
       <ApiForm
-        title="General Contact"
-        description="Use this for alumni outreach, story submissions, support interest, and chapter questions."
+        title={title}
+        description={description}
         endpoint="/api/contact"
-        successMessage="Your message was received. We'll be in touch soon."
+        successMessage={successMessage}
       >
         <div className="grid gap-5 md:grid-cols-2">
           <Field label="Name">

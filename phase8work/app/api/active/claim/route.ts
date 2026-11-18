@@ -3,10 +3,10 @@ import { activeClaimRequestSchema } from '@/lib/validations/member';
 import { getSupabaseAdmin } from '@/lib/supabase/admin';
 import { issueActiveClaimToken } from '@/lib/auth/active-claim';
 import { sendActiveClaimEmail } from '@/lib/email/send-active-claim-email';
-import { checkRateLimit } from '@/lib/auth/rate-limit';
+import { checkRateLimit, getClientIp } from '@/lib/auth/rate-limit';
 
 export async function POST(request: Request) {
-  const ip = request.headers.get('CF-Connecting-IP') ?? request.headers.get('x-forwarded-for') ?? 'unknown';
+  const ip = getClientIp(request);
   if (!checkRateLimit(`active-claim-request:${ip}`, 5, 10 * 60 * 1000)) {
     return NextResponse.json({ error: 'Too many setup requests. Please wait 10 minutes.' }, { status: 429 });
   }
