@@ -14,7 +14,7 @@ export default async function EventsAdminPage() {
     <div className="space-y-8 py-2">
       <div className="surface p-8">
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Admin</p>
-        <h1 className="mt-3 text-4xl">events management</h1>
+        <h1 className="mt-3 text-4xl">Events</h1>
         <p className="mt-4 max-w-3xl text-fraternity-slate">Post events to the public Events page and calendar. Past events move to the past events list automatically. RSVPs show up on the Messages page.</p>
       </div>
 

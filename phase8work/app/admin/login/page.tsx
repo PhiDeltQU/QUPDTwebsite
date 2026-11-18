@@ -6,7 +6,7 @@ export default function AdminLoginPage() {
       <LoginForm
         scope="admin"
         title="Officer & administrator access"
-        description="Use the shared admin password and an approved email to enter the chapter operations workspace. In production, replace this with Supabase Auth or magic-link sign-in."
+        description="Sign in with your officer email and the admin password. Ask a current admin to add your email if you are new."
         redirectTo="/admin"
       />
     </main>

@@ -16,7 +16,7 @@ export default async function NewslettersAdminPage() {
       <div className="surface p-8">
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Admin</p>
         <h1 className="mt-3 text-4xl">Newsletters</h1>
-        <p className="mt-4 max-w-3xl text-fraternity-slate">This phase makes newsletter records function locally even before email sending is connected.</p>
+        <p className="mt-4 max-w-3xl text-fraternity-slate">Write issues, publish them to the Chapter News page, and email them to subscribers.</p>
       </div>
 
 

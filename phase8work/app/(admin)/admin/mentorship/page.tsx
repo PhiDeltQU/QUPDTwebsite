@@ -27,7 +27,7 @@ export default async function AdminMentorshipPage() {
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">
           Admin
         </p>
-        <h1 className="mt-3 text-4xl">Mentorship management</h1>
+        <h1 className="mt-3 text-4xl">Mentorship</h1>
         <p className="mt-4 max-w-3xl text-fraternity-slate">
           Review the structured mentorship pipeline, alumni-posted opportunities,
           and verified member applications from one place.
