@@ -54,3 +54,10 @@ Matches alumni who marked themselves `willing_to_mentor` during import against m
 ## Who to ask
 
 If something breaks and this guide doesn't cover it, check the main `README.md` for the architecture, or reach the outgoing chairman at: **[fill in contact + how long they're reachable for]**.
+
+## Rotated during this handoff
+
+The chairman handoff runbook sets a few app-level secrets to fresh values. Logged here for reference (actual values live in the shared vault, not this file):
+
+- `SESSION_SECRET` — rotated
+- `FORM_IMPORT_SECRET` — rotated (the Google Form/Apps Script posting to the import endpoint needs its matching value updated too)
