@@ -5,3 +5,4 @@ node_modules/
 .env.*.local
 data/demo-store.json
 .DS_Store
+graphify-out/

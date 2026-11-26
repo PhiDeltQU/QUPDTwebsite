@@ -24,6 +24,51 @@ type AdminPersistResult = {
   error?: string;
 };
 
+type SingleTableResourceConfig<TInput> = {
+  table: string;
+  buildPayload: (input: TInput) => Record<string, unknown>;
+  demoCreate: (input: TInput) => Promise<unknown>;
+  demoUpdate: (id: string, input: TInput) => Promise<unknown>;
+};
+
+/**
+ * Shared insert+demo-fallback shape for the single-table admin resources
+ * (events, newsletters, media). Alumni isn't built on this: it writes to
+ * two tables (alumni_profiles + alumni_private_details) and has its own
+ * import-matching logic, so forcing it through a single-table helper would
+ * just move that complexity around rather than remove it.
+ */
+async function persistSingleTableRecord<TInput>(
+  input: TInput,
+  config: SingleTableResourceConfig<TInput>
+): Promise<AdminPersistResult> {
+  const supabase = createServerSupabaseClient();
+  if (!supabase) {
+    await config.demoCreate(input);
+    return { persisted: true, mode: 'demo' };
+  }
+
+  const { error } = await supabase.from(config.table).insert(config.buildPayload(input));
+  return error ? { persisted: false, mode: 'supabase', error: error.message } : { persisted: true, mode: 'supabase' };
+}
+
+async function updateSingleTableRecord<TInput>(
+  id: string,
+  input: TInput,
+  config: SingleTableResourceConfig<TInput>
+): Promise<AdminPersistResult> {
+  const supabase = createServerSupabaseClient();
+  if (!supabase) {
+    const updated = await config.demoUpdate(id, input);
+    return updated
+      ? { persisted: true, mode: 'demo' }
+      : { persisted: false, mode: 'demo', error: 'Record not found.' };
+  }
+
+  const { error } = await supabase.from(config.table).update(config.buildPayload(input)).eq('id', id);
+  return error ? { persisted: false, mode: 'supabase', error: error.message } : { persisted: true, mode: 'supabase' };
+}
+
 export async function persistAdminAlumni(input: AdminAlumniInput): Promise<AdminPersistResult> {
   const supabase = createServerSupabaseClient();
   if (!supabase) {
@@ -129,14 +174,8 @@ export async function updateAdminAlumni(id: string, input: AdminAlumniInput): Pr
     : { persisted: true, mode: 'supabase' };
 }
 
-export async function persistAdminEvent(input: AdminEventInput): Promise<AdminPersistResult> {
-  const supabase = createServerSupabaseClient();
-  if (!supabase) {
-    await createDemoEvent(input);
-    return { persisted: true, mode: 'demo' };
-  }
-
-  const { error } = await supabase.from('events').insert({
+function buildEventPayload(input: AdminEventInput): Record<string, unknown> {
+  return {
     title: input.title,
     slug: input.slug,
     event_date: input.eventDate,
@@ -147,118 +186,88 @@ export async function persistAdminEvent(input: AdminEventInput): Promise<AdminPe
     body_content: input.bodyContent,
     tags: input.tags ? input.tags.split(',').map((tag: string) => tag.trim()).filter(Boolean) : [],
     is_featured: input.isFeatured,
-    status: input.status
-  });
+    status: input.status,
+  };
+}
 
-  return error ? { persisted: false, mode: 'supabase', error: error.message } : { persisted: true, mode: 'supabase' };
+export async function persistAdminEvent(input: AdminEventInput): Promise<AdminPersistResult> {
+  return persistSingleTableRecord(input, {
+    table: 'events',
+    buildPayload: buildEventPayload,
+    demoCreate: createDemoEvent,
+    demoUpdate: updateDemoEvent,
+  });
 }
 
 export async function updateAdminEvent(id: string, input: AdminEventInput): Promise<AdminPersistResult> {
-  const supabase = createServerSupabaseClient();
-  if (!supabase) {
-    const updated = await updateDemoEvent(id, input);
-    return updated ? { persisted: true, mode: 'demo' } : { persisted: false, mode: 'demo', error: 'Record not found.' };
-  }
+  return updateSingleTableRecord(id, input, {
+    table: 'events',
+    buildPayload: buildEventPayload,
+    demoCreate: createDemoEvent,
+    demoUpdate: updateDemoEvent,
+  });
+}
 
-  const { error } = await supabase.from('events').update({
+function buildNewsletterPayload(input: AdminNewsletterInput): Record<string, unknown> {
+  return {
     title: input.title,
     slug: input.slug,
-    event_date: input.eventDate,
-    event_time: input.eventTime,
-    location: input.location,
-    audience: input.audience,
-    description: input.description,
+    category: input.category,
+    issue_date: input.issueDate,
+    subject_line: input.subjectLine,
+    summary: input.summary,
     body_content: input.bodyContent,
-    tags: input.tags ? input.tags.split(',').map((tag: string) => tag.trim()).filter(Boolean) : [],
+    status: input.status,
     is_featured: input.isFeatured,
-    status: input.status
-  }).eq('id', id);
-
-  return error ? { persisted: false, mode: 'supabase', error: error.message } : { persisted: true, mode: 'supabase' };
+  };
 }
 
 export async function persistAdminNewsletter(input: AdminNewsletterInput): Promise<AdminPersistResult> {
-  const supabase = createServerSupabaseClient();
-  if (!supabase) {
-    await createDemoNewsletter(input);
-    return { persisted: true, mode: 'demo' };
-  }
-
-  const { error } = await supabase.from('newsletters').insert({
-    title: input.title,
-    slug: input.slug,
-    category: input.category,
-    issue_date: input.issueDate,
-    subject_line: input.subjectLine,
-    summary: input.summary,
-    body_content: input.bodyContent,
-    status: input.status,
-    is_featured: input.isFeatured
+  return persistSingleTableRecord(input, {
+    table: 'newsletters',
+    buildPayload: buildNewsletterPayload,
+    demoCreate: createDemoNewsletter,
+    demoUpdate: updateDemoNewsletter,
   });
-
-  return error ? { persisted: false, mode: 'supabase', error: error.message } : { persisted: true, mode: 'supabase' };
 }
 
 export async function updateAdminNewsletter(id: string, input: AdminNewsletterInput): Promise<AdminPersistResult> {
-  const supabase = createServerSupabaseClient();
-  if (!supabase) {
-    const updated = await updateDemoNewsletter(id, input);
-    return updated ? { persisted: true, mode: 'demo' } : { persisted: false, mode: 'demo', error: 'Record not found.' };
-  }
+  return updateSingleTableRecord(id, input, {
+    table: 'newsletters',
+    buildPayload: buildNewsletterPayload,
+    demoCreate: createDemoNewsletter,
+    demoUpdate: updateDemoNewsletter,
+  });
+}
 
-  const { error } = await supabase.from('newsletters').update({
+function buildMediaPayload(input: AdminMediaInput): Record<string, unknown> {
+  return {
     title: input.title,
-    slug: input.slug,
-    category: input.category,
-    issue_date: input.issueDate,
-    subject_line: input.subjectLine,
-    summary: input.summary,
-    body_content: input.bodyContent,
-    status: input.status,
-    is_featured: input.isFeatured
-  }).eq('id', id);
-
-  return error ? { persisted: false, mode: 'supabase', error: error.message } : { persisted: true, mode: 'supabase' };
+    media_type: input.mediaType,
+    file_url: input.fileUrl || null,
+    year_label: input.yearLabel || null,
+    caption: input.caption || null,
+    storage_bucket: input.storageBucket || null,
+    storage_path: input.storagePath || null,
+  };
 }
 
 export async function persistAdminMedia(input: AdminMediaInput): Promise<AdminPersistResult> {
-  const supabase = createServerSupabaseClient();
-  if (!supabase) {
-    await createDemoMedia(input);
-    return { persisted: true, mode: 'demo' };
-  }
-
-  const { error } = await supabase.from('media_items').insert({
-    title: input.title,
-    media_type: input.mediaType,
-    file_url: input.fileUrl || null,
-    year_label: input.yearLabel || null,
-    caption: input.caption || null,
-    storage_bucket: input.storageBucket || null,
-    storage_path: input.storagePath || null
+  return persistSingleTableRecord(input, {
+    table: 'media_items',
+    buildPayload: buildMediaPayload,
+    demoCreate: createDemoMedia,
+    demoUpdate: updateDemoMedia,
   });
-
-  return error ? { persisted: false, mode: 'supabase', error: error.message } : { persisted: true, mode: 'supabase' };
 }
 
 export async function updateAdminMedia(id: string, input: AdminMediaInput): Promise<AdminPersistResult> {
-  const supabase = createServerSupabaseClient();
-  if (!supabase) {
-    const updated = await updateDemoMedia(id, input);
-    return updated ? { persisted: true, mode: 'demo' } : { persisted: false, mode: 'demo', error: 'Record not found.' };
-  }
-
-  const { error } = await supabase.from('media_items').update({
-    title: input.title,
-    media_type: input.mediaType,
-    file_url: input.fileUrl || null,
-    year_label: input.yearLabel || null,
-    caption: input.caption || null,
-    storage_bucket: input.storageBucket || null,
-    storage_path: input.storagePath || null
-  }).eq('id', id);
-
-  return error ? { persisted: false, mode: 'supabase', error: error.message } : { persisted: true, mode: 'supabase' };
+  return updateSingleTableRecord(id, input, {
+    table: 'media_items',
+    buildPayload: buildMediaPayload,
+    demoCreate: createDemoMedia,
+    demoUpdate: updateDemoMedia,
+  });
 }
 
 export async function updatePageContent(slug: string, values: Record<string, string>): Promise<AdminPersistResult> {

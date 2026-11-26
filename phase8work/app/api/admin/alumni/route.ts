@@ -1,62 +1,30 @@
-import { NextResponse } from 'next/server';
-import { requireSession } from '@/lib/auth/session';
 import { adminAlumniSchema } from '@/lib/validations/admin';
 import { persistAdminAlumni, updateAdminAlumni } from '@/lib/actions/admin-persist';
 import { getAdminAlumniRecords } from '@/lib/queries/admin';
-import { createServerSupabaseClient } from '@/lib/supabase/server';
-import { deleteDemoRecord } from '@/lib/demo-store';
+import { createAdminCrudHandlers } from '@/lib/api/admin-crud-route';
 
-export async function GET() {
-  const session = await requireSession('admin');
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  const rows = await getAdminAlumniRecords();
-  return NextResponse.json({ rows });
-}
-
-export async function POST(request: Request) {
-  const session = await requireSession('admin');
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-
-  const json = await request.json().catch(() => null);
-  const parsed = adminAlumniSchema.safeParse(json);
-
-  if (!parsed.success) return NextResponse.json({ error: 'Invalid alumni payload.' }, { status: 400 });
-
-  const result = await persistAdminAlumni(parsed.data);
-  if (result.error) return NextResponse.json({ error: result.error }, { status: 500 });
-
-  return NextResponse.json({ message: result.mode === 'demo' ? 'Saved (demo mode, only on this computer).' : 'Alumni profile created successfully.' });
-}
-
-export async function PUT(request: Request) {
-  const session = await requireSession('admin');
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  const id = new URL(request.url).searchParams.get('id');
-  if (!id) return NextResponse.json({ error: 'Missing id.' }, { status: 400 });
-
-  const json = await request.json().catch(() => null);
-  const parsed = adminAlumniSchema.safeParse(json);
-  if (!parsed.success) return NextResponse.json({ error: 'Invalid alumni payload.' }, { status: 400 });
-
-  const result = await updateAdminAlumni(id, parsed.data);
-  if (result.error) return NextResponse.json({ error: result.error }, { status: 500 });
-  return NextResponse.json({ message: result.mode === 'demo' ? 'Updated (demo mode, only on this computer).' : 'Alumni profile updated successfully.' });
-}
-
-export async function DELETE(request: Request) {
-  const session = await requireSession('admin');
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  const id = new URL(request.url).searchParams.get('id');
-  if (!id) return NextResponse.json({ error: 'Missing id.' }, { status: 400 });
-
-  const supabase = createServerSupabaseClient();
-  if (!supabase) {
-    await deleteDemoRecord('alumni', id);
-    return NextResponse.json({ message: 'Deleted (demo mode).' });
-  }
-
-  await supabase.from('alumni_private_details').delete().eq('alumni_profile_id', id);
-  const { error } = await supabase.from('alumni_profiles').delete().eq('id', id);
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json({ message: 'Alumni profile deleted.' });
-}
+export const { GET, POST, PUT, DELETE } = createAdminCrudHandlers({
+  schema: adminAlumniSchema,
+  invalidPayloadError: 'Invalid alumni payload.',
+  getRecords: getAdminAlumniRecords,
+  create: persistAdminAlumni,
+  update: updateAdminAlumni,
+  createdMessage: {
+    supabase: 'Alumni profile created successfully.',
+    demo: 'Saved (demo mode, only on this computer).',
+  },
+  updatedMessage: {
+    supabase: 'Alumni profile updated successfully.',
+    demo: 'Updated (demo mode, only on this computer).',
+  },
+  // Alumni has a related private-details row to clean up first; every other
+  // resource deletes from a single table, which is why this is the one route
+  // that needs a non-trivial deleteRecord instead of a one-line table delete.
+  deleteRecord: async (supabase, id) => {
+    await supabase.from('alumni_private_details').delete().eq('alumni_profile_id', id);
+    const { error } = await supabase.from('alumni_profiles').delete().eq('id', id);
+    return { error: error?.message ?? null };
+  },
+  demoTable: 'alumni',
+  deletedMessage: 'Alumni profile deleted.',
+});
