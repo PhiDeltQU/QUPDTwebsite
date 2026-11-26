@@ -56,7 +56,7 @@ export function SiteHeaderClient({ role, settings }: { role: SessionRole | null;
           <span className="flex flex-col">
             <span className="font-serif text-lg font-semibold leading-tight text-fraternity-charcoal">
               {settings.brandName}
-            </span>
+            </span>{' '}
             <span className="mt-0.5 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-fraternity-azure">
               {settings.brandChapter}
             </span>
