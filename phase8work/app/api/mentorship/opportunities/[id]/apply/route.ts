@@ -93,6 +93,14 @@ export async function POST(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const ip = getClientIp(request);
+    if (!checkRateLimit(`mentorship-apply:${ip}`, 5, 10 * 60 * 1000)) {
+      return NextResponse.json(
+        { error: "Too many applications submitted. Please wait 10 minutes." },
+        { status: 429 }
+      );
+    }
+
     const { id: opportunityId } = await context.params;
     const supabase = createServerSupabaseClient();
 

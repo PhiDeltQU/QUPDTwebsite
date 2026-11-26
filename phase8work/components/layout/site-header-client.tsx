@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { LockKeyhole, Menu, X } from 'lucide-react';
 import { useState } from 'react';
@@ -45,13 +46,13 @@ export function SiteHeaderClient({ role, settings }: { role: SessionRole | null;
           className="group flex items-center gap-3"
           aria-label={settings.logoAlt}
         >
-          <img
+          <Image
             src="/brand/phi-delt-crest.webp"
             alt=""
             width={30}
             height={44}
             aria-hidden="true"
-            className="shrink-0 transition-transform group-hover:-translate-y-0.5"
+            className="h-[44px] w-[30px] shrink-0 transition-transform group-hover:-translate-y-0.5"
           />
           <span className="flex flex-col">
             <span className="font-serif text-lg font-semibold leading-tight text-fraternity-charcoal">

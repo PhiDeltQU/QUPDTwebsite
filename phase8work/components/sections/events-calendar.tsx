@@ -209,7 +209,7 @@ export function EventsCalendar({ events }: { events: EventItem[] }) {
 
         {calendarEvents.length === 0 ? (
           <p className="mt-6 text-sm text-fraternity-slate">
-            No events are scheduled yet. New dates will appear on the calendar as soon as they're announced.
+            No events are scheduled yet. New dates will appear on the calendar as soon as they’re announced.
           </p>
         ) : null}
         {undated > 0 ? (

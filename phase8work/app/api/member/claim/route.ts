@@ -5,6 +5,15 @@ import { issueClaimToken } from '@/lib/auth/active-claim';
 import { sendAlumniClaimEmail } from '@/lib/email/send-alumni-claim-email';
 import { checkRateLimit, getClientIp } from '@/lib/auth/rate-limit';
 
+type AlumniPrivateDetailsLookup = {
+  alumni_profile_id: string;
+  email: string;
+  alumni_profiles:
+    | { full_name: string; graduation_year: number | null; member_status: string | null; alumni_access_enabled: boolean | null }
+    | { full_name: string; graduation_year: number | null; member_status: string | null; alumni_access_enabled: boolean | null }[]
+    | null;
+};
+
 const GENERIC_MESSAGE = 'If that name, graduation year, and email match an alumni record, we sent a secure setup link to that email.';
 
 export async function POST(request: Request) {
@@ -34,13 +43,14 @@ export async function POST(request: Request) {
       .eq('email', normalizedEmail)
       .maybeSingle();
 
-    const profile = Array.isArray((lookup.data as any)?.alumni_profiles)
-      ? (lookup.data as any)?.alumni_profiles?.[0]
-      : (lookup.data as any)?.alumni_profiles;
+    const lookupData = lookup.data as AlumniPrivateDetailsLookup | null;
+    const profile = Array.isArray(lookupData?.alumni_profiles)
+      ? lookupData?.alumni_profiles?.[0]
+      : lookupData?.alumni_profiles;
 
     const isEligible =
-      Boolean(lookup.data?.alumni_profile_id) &&
-      Boolean(profile) &&
+      Boolean(lookupData?.alumni_profile_id) &&
+      profile != null &&
       profile.full_name === fullName &&
       Number(profile.graduation_year) === graduationYear &&
       profile.alumni_access_enabled !== false &&

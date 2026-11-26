@@ -115,7 +115,7 @@ async function createUniqueSlug(
     .ilike("slug", `${base}%`);
 
   const existing = new Set(
-    (data || []).map((row: any) => row.slug).filter(Boolean)
+    ((data || []) as { slug: string | null }[]).map((row) => row.slug).filter(Boolean)
   );
 
   if (!existing.has(base)) return base;

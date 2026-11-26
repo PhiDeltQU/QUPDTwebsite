@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { requireSession } from '@/lib/auth/session';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
+import { escapeLikePattern } from '@/lib/utils/escape-like';
 
 export const runtime = 'nodejs';
 
@@ -21,7 +22,7 @@ export async function POST(request: Request) {
   if (!parsed.success) return NextResponse.json({ error: 'Enter a valid email address.' }, { status: 400 });
 
   const email = parsed.data.email.trim().toLowerCase();
-  const { data: existing } = await supabase.from('admin_users').select('id').ilike('email', email.replace(/[\%_]/g, (m) => `\${m}`)).limit(1);
+  const { data: existing } = await supabase.from('admin_users').select('id').ilike('email', escapeLikePattern(email)).limit(1);
   if (existing && existing.length > 0) return NextResponse.json({ error: `${email} is already an admin.` }, { status: 400 });
 
   const { error } = await supabase.from('admin_users').insert({ email, full_name: parsed.data.fullName || null });

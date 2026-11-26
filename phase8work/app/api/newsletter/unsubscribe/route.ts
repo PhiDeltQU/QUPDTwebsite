@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { siteBaseUrl, verifyUnsubscribeToken } from '@/lib/email/unsubscribe';
+import { escapeLikePattern } from '@/lib/utils/escape-like';
 
 export const runtime = 'nodejs';
 
@@ -13,7 +14,7 @@ async function unsubscribe(email: string, token: string) {
   const { error } = await supabase
     .from('newsletter_subscribers')
     .update({ is_active: false })
-    .ilike('email', email.replace(/[\%_]/g, (m) => `\${m}`));
+    .ilike('email', escapeLikePattern(email));
 
   if (error) {
     console.error('[newsletter/unsubscribe]', error.message);

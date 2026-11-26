@@ -39,7 +39,7 @@ export default async function AdminMentorshipPage() {
           <h2 className="text-2xl">Approved mentors</h2>
           <div className="mt-6 space-y-4">
             {mentors.length ? (
-              mentors.map((mentor: any) => (
+              mentors.map((mentor) => (
                 <div
                   key={mentor.id}
                   className="rounded-2xl border border-black/10 bg-white/70 p-4"
@@ -67,7 +67,7 @@ export default async function AdminMentorshipPage() {
           <h2 className="text-2xl">Open mentee requests</h2>
           <div className="mt-6 space-y-6">
             {mentees.length ? (
-              mentees.map((mentee: any) => {
+              mentees.map((mentee) => {
                 const suggestions = suggestionsByMentee[mentee.id] || [];
                 return (
                   <div
@@ -93,9 +93,9 @@ export default async function AdminMentorshipPage() {
                       </p>
 
                       {suggestions.length ? (
-                        suggestions.map((suggestion: any) => {
+                        suggestions.map((suggestion) => {
                           const mentor = mentors.find(
-                            (m: any) => m.id === suggestion.mentorId
+                            (m) => m.id === suggestion.mentorId
                           );
                           if (!mentor) return null;
 
@@ -150,7 +150,7 @@ export default async function AdminMentorshipPage() {
         <h2 className="text-2xl">Alumni-posted opportunities</h2>
         <div className="mt-6 space-y-4">
           {opportunities.length ? (
-            opportunities.map((opportunity: any) => (
+            opportunities.map((opportunity) => (
               <div
                 key={opportunity.id}
                 className="rounded-2xl border border-black/10 bg-white/70 p-4"
@@ -182,7 +182,7 @@ export default async function AdminMentorshipPage() {
         <h2 className="text-2xl">Opportunity applications</h2>
         <div className="mt-6 space-y-4">
           {applications.length ? (
-            applications.map((application: any) => (
+            applications.map((application) => (
               <div
                 key={application.id}
                 className="rounded-2xl border border-black/10 bg-white/70 p-4"
@@ -218,7 +218,7 @@ export default async function AdminMentorshipPage() {
         <h2 className="text-2xl">Existing matches</h2>
         <div className="mt-6 space-y-4">
           {matches.length ? (
-            matches.map((match: any) => (
+            matches.map((match) => (
               <div
                 key={match.id}
                 className="rounded-2xl border border-black/10 bg-white/70 p-4"

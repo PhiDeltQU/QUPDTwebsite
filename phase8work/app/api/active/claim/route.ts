@@ -5,6 +5,12 @@ import { issueActiveClaimToken } from '@/lib/auth/active-claim';
 import { sendActiveClaimEmail } from '@/lib/email/send-active-claim-email';
 import { checkRateLimit, getClientIp } from '@/lib/auth/rate-limit';
 
+type AlumniPrivateDetailsLookup = {
+  alumni_profile_id: string;
+  email: string;
+  alumni_profiles: { member_status: string | null } | { member_status: string | null }[] | null;
+};
+
 export async function POST(request: Request) {
   const ip = getClientIp(request);
   if (!checkRateLimit(`active-claim-request:${ip}`, 5, 10 * 60 * 1000)) {
@@ -30,9 +36,10 @@ export async function POST(request: Request) {
       .eq('email', normalizedEmail)
       .maybeSingle();
 
-    const profile = Array.isArray((lookup.data as any)?.alumni_profiles)
-      ? (lookup.data as any)?.alumni_profiles?.[0]
-      : (lookup.data as any)?.alumni_profiles;
+    const lookupData = lookup.data as AlumniPrivateDetailsLookup | null;
+    const profile = Array.isArray(lookupData?.alumni_profiles)
+      ? lookupData?.alumni_profiles?.[0]
+      : lookupData?.alumni_profiles;
 
     if (!lookup.data?.alumni_profile_id || profile?.member_status !== 'active') {
       return NextResponse.json({

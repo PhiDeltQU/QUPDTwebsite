@@ -1,9 +1,6 @@
 import { cache } from 'react';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
-
-function escapeLike(value: string) {
-  return value.replace(/[\%_]/g, (match) => `\${match}`);
-}
+import { escapeLikePattern } from '@/lib/utils/escape-like';
 
 export type AdminLookup = 'allowed' | 'denied' | 'no-database';
 
@@ -20,7 +17,7 @@ export const lookupAdminEmail = cache(async (email: string): Promise<AdminLookup
   const { data, error } = await supabase
     .from('admin_users')
     .select('email')
-    .ilike('email', escapeLike(email.trim()))
+    .ilike('email', escapeLikePattern(email.trim()))
     .limit(1);
 
   if (error) {

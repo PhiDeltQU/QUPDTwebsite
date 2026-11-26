@@ -5,6 +5,21 @@ import { getGraduationDate, parseReleaseDateInput, type GraduationTerm } from "@
 import { requireSession } from "@/lib/auth/session";
 import { checkRateLimit, getClientIp } from "@/lib/auth/rate-limit";
 
+type LinkedAlumniProfile = {
+  id: string;
+  full_name: string;
+  graduation_year: number | null;
+  graduation_term: string | null;
+  member_status: string | null;
+  alumni_access_enabled: boolean | null;
+};
+
+type AlumniPrivateDetailsLookup = {
+  alumni_profile_id: string;
+  email: string;
+  alumni_profiles: LinkedAlumniProfile | LinkedAlumniProfile[] | null;
+};
+
 export const runtime = "nodejs";
 
 const ALLOWED_MIME_TYPES = [
@@ -141,9 +156,10 @@ export async function POST(request: Request) {
       );
     }
 
-    const profile = Array.isArray((privateDetails as any).alumni_profiles)
-      ? (privateDetails as any).alumni_profiles[0]
-      : (privateDetails as any).alumni_profiles;
+    const typedPrivateDetails = privateDetails as AlumniPrivateDetailsLookup;
+    const profile = Array.isArray(typedPrivateDetails.alumni_profiles)
+      ? typedPrivateDetails.alumni_profiles[0]
+      : typedPrivateDetails.alumni_profiles;
 
     if (!profile) {
       return NextResponse.json(
@@ -160,7 +176,7 @@ export async function POST(request: Request) {
     }
 
     const allowedStatuses = ["active", "graduating", "alumni"];
-    const hasAllowedStatus = allowedStatuses.includes(profile.member_status);
+    const hasAllowedStatus = allowedStatuses.includes(profile.member_status ?? "");
 
     if (!hasAllowedStatus && !profile.alumni_access_enabled) {
       return NextResponse.json(
@@ -192,7 +208,7 @@ export async function POST(request: Request) {
 
     let storageBucket: string | null = null;
     let storagePath: string | null = null;
-    let fileUrl: string | null = null;
+    const fileUrl: string | null = null;
 
     if (file && file.size > 0) {
       if (!ALLOWED_MIME_TYPES.includes(file.type)) {

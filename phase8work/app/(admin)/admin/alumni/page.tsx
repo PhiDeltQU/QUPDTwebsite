@@ -6,10 +6,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select } from '@/components/ui/select';
 import { AdminRecordCard } from '@/components/admin/admin-record-card';
 import { AdminTable } from '@/components/admin/admin-table';
-import { getAdminAlumniRecords, getAdminOverview } from '@/lib/queries/admin';
+import { getAdminAlumniRecords } from '@/lib/queries/admin';
 
 export default async function AlumniAdminPage() {
-  const [overview, rows] = await Promise.all([getAdminOverview(), getAdminAlumniRecords()]);
+  const rows = await getAdminAlumniRecords();
 
   return (
     <div className="space-y-8 py-2">
@@ -17,7 +17,7 @@ export default async function AlumniAdminPage() {
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-fraternity-azure">Admin</p>
         <h1 className="mt-3 text-4xl capitalize">Alumni and members</h1>
         <p className="mt-4 max-w-3xl text-fraternity-slate">
-          Add, edit, or remove alumni and active members. To add a lot of people at once, use CSV Import. Turn on "alumni access" so someone can claim an account and sign in.
+          Add, edit, or remove alumni and active members. To add a lot of people at once, use CSV Import. Turn on “alumni access” so someone can claim an account and sign in.
         </p>
       </div>
 

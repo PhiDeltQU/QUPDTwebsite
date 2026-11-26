@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight, Instagram, Linkedin, Mail } from 'lucide-react';
 import { Container } from '@/components/layout/container';
@@ -40,7 +41,7 @@ export async function SiteFooter() {
       <Container className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.35fr_0.8fr_0.8fr_0.9fr]">
         <div>
           <div className="flex items-center gap-3">
-            <img src="/brand/phi-delt-crest.webp" alt="" width={30} height={44} aria-hidden="true" className="shrink-0" />
+            <Image src="/brand/phi-delt-crest.webp" alt="" width={30} height={44} aria-hidden="true" className="h-[44px] w-[30px] shrink-0" />
             <h3 className="text-xl font-semibold text-white">{c.brandName}</h3>
           </div>
           <p className="mt-4 text-xs font-semibold uppercase tracking-[0.2em] text-fraternity-argent">{c.brandChapter}</p>

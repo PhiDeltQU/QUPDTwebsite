@@ -156,8 +156,8 @@ export default async function AdminLegacyReviewPage() {
                       />
                     ) : (
                       <div className="rounded-2xl bg-fraternity-cream p-4 text-sm text-fraternity-slate">
-                        This attachment type does not support inline preview. Use the "Open
-                        attachment" link above.
+                        This attachment type does not support inline preview. Use the “Open
+                        attachment” link above.
                       </div>
                     )}
                   </div>

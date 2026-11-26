@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { requireSession } from '@/lib/auth/session';
-import { getAdminAlumniRecords, getAdminEventRecords, getAdminNewsletterRecords } from '@/lib/queries/admin';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { toCsv } from '@/lib/utils/csv';
 

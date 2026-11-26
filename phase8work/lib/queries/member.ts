@@ -1,7 +1,7 @@
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { readDemoStore } from '@/lib/demo-store';
 import { getSessionUser } from '@/lib/auth/session';
-import { MemberDirectoryProfile, MemberProfileRecord } from '@/types';
+import { GraduationTerm, MemberDirectoryProfile, MemberProfileRecord, MemberStatus } from '@/types';
 
 type DirectoryRow = {
   full_name: string;
@@ -189,8 +189,8 @@ export async function getCurrentMemberProfile(): Promise<MemberProfileRecord | n
     email: details?.email || session.email,
     fullName: row.full_name,
     graduationYear: row.graduation_year ?? 0,
-    graduationTerm: (row.graduation_term as any) ?? 'spring',
-    memberStatus: (row.member_status as any) ?? 'alumni',
+    graduationTerm: (row.graduation_term as GraduationTerm | null) ?? 'spring',
+    memberStatus: (row.member_status as MemberStatus | null) ?? 'alumni',
     alumniAccessEnabled: Boolean(row.alumni_access_enabled ?? true),
     major: row.major ?? '',
     company: row.company ?? '',

@@ -66,7 +66,7 @@ export default async function AdminLayout({
               </p>
               <p className="mt-3 text-4xl font-serif tracking-tight text-fraternity-charcoal">Admin Workspace</p>
               <p className="mt-4 text-fraternity-slate">
-                Signed in as {session.email}. New here? Start with "How to use this."
+                Signed in as {session.email}. New here? Start with “How to use this.”
               </p>
             </div>
 
