@@ -4,6 +4,12 @@ import { getNewsletters } from '@/lib/queries/public';
 import { NewsletterCard } from '@/components/cards/newsletter-card';
 import { NewsletterSignupForm } from '@/components/forms/newsletter-signup-form';
 import { getPageContent } from '@/lib/content/get-content';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Newsletter',
+  description: 'Read chapter news and updates from Phi Delta Theta Connecticut Epsilon at Quinnipiac University.',
+};
 
 export const revalidate = 300;
 

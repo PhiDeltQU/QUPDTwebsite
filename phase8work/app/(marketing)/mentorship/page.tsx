@@ -7,6 +7,12 @@ import { MenteeRequestForm } from "@/components/forms/mentee-request-form";
 import { getPublicMentorshipOpportunities } from "@/lib/queries/mentorship-opportunities";
 import { getAlumniProfiles } from "@/lib/queries/public";
 import { getPageContent } from "@/lib/content/get-content";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Mentorship",
+  description: "Connect alumni and active members through the chapter's mentorship program at Phi Delta Theta Connecticut Epsilon.",
+};
 
 export const dynamic = "force-dynamic";
 

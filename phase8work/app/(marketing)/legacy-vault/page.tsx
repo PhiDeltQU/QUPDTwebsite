@@ -4,6 +4,12 @@ import { getLegacyVaultItems } from '@/lib/queries/public';
 import { CTASection } from '@/components/sections/cta-section';
 import { Button } from '@/components/ui/button';
 import { getPageContent } from '@/lib/content/get-content';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Legacy Vault',
+  description: "The chapter's historical archive of photos, documents, and memorabilia from Phi Delta Theta Connecticut Epsilon.",
+};
 
 export const revalidate = 300;
 

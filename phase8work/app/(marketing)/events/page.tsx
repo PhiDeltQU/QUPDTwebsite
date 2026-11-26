@@ -7,6 +7,12 @@ import { CTASection } from '@/components/sections/cta-section';
 import { Button } from '@/components/ui/button';
 import { items } from '@/lib/content/fields';
 import { getPageContent } from '@/lib/content/get-content';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Events',
+  description: 'Upcoming and past events hosted by Phi Delta Theta Connecticut Epsilon at Quinnipiac University.',
+};
 
 export const revalidate = 300;
 
